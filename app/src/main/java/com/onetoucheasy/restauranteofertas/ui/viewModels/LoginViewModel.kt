@@ -1,0 +1,35 @@
+package com.onetoucheasy.restauranteofertas.ui.viewModels
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.onetoucheasy.restauranteofertas.repository.Repository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.Credentials
+import java.nio.charset.Charset
+import javax.inject.Inject
+
+@HiltViewModel
+class LoginViewModel @Inject constructor(
+    private val repository: Repository
+): ViewModel() {
+
+    private val _loginState = MutableStateFlow(false)
+    val loginState: StateFlow<Boolean> get() = _loginState
+
+    fun performLogin(email: String, password: String){
+        //Encoding + Charset
+        val headerAuthorizationData = Credentials.basic(email, password, Charset.defaultCharset())
+        viewModelScope.launch {
+            val result = withContext(Dispatchers.IO){
+                repository.performLogin(headerAuthorizationData)
+            }
+            _loginState.value = result != ""
+        }
+    }
+}
+

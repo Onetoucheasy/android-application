@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">RestauranteOfertas</string>
+    <string name="login_customer_access">Acceso Clientes</string>
+    <string name="login_email_hint">Ingrese su password</string>
+    <string name="login_login_button">Acceder</string>
+    <string name="login_no_account_customer">No tengo cuenta</string>
+    <string name="login_no_account_company">Alta profesionales</string>
+    <string name="login_background_image_description">Fondo de la pantalla de acceso.</string>
+</resources>
