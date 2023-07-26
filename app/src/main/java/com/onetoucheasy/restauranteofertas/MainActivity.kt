@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.onetoucheasy.restauranteofertas.ui.navigation.NavigationGraph
 import com.onetoucheasy.restauranteofertas.ui.scaffolds.LoginScreen
 import com.onetoucheasy.restauranteofertas.ui.theme.RestauranteOfertasTheme
 import com.onetoucheasy.restauranteofertas.ui.viewModels.LoginViewModel
@@ -23,13 +24,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             RestauranteOfertasTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("Android")
-                }
+               NavigationGraph(loginViewModel = loginViewModel)
 
             }
         }
