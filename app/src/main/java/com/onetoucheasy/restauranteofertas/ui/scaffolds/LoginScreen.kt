@@ -48,13 +48,15 @@ fun LoginScreen(viewModel: LoginViewModel,onRegisterClicked: () -> (Unit) , onLo
 
     val loginStatus by viewModel.loginState.observeAsState()
 
+
+
     LaunchedEffect(loginStatus){
         if(loginStatus == true){
             onLoginFinished()
         }
     }
 
-    LoginScreenContent(true, onRegisterClicked) { user, password ->
+    LoginScreenContent(onRegisterClicked) { user, password ->
         viewModel.performLogin(user, password)
     }
 }
@@ -62,7 +64,11 @@ fun LoginScreen(viewModel: LoginViewModel,onRegisterClicked: () -> (Unit) , onLo
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreenContent(isCompany: Boolean, onRegisterClicked: () -> (Unit),onLoginClicked: (String, String) -> (Unit)) {
+fun LoginScreenContent(onRegisterClicked: () -> (Unit),onLoginClicked: (String, String) -> (Unit)) {
+
+    var isCompany by remember {
+        mutableStateOf(false)
+    }
 
     var email by remember {
         mutableStateOf("")
@@ -88,7 +94,7 @@ fun LoginScreenContent(isCompany: Boolean, onRegisterClicked: () -> (Unit),onLog
                )
             //TODO Add dynamic width and padding values depending on the screen size
            Text(
-               text = stringResource(id = R.string.login_customer_access),
+               text = if(isCompany){stringResource(id = R.string.login_company_access)} else {stringResource(id = R.string.login_customer_access)},
                modifier = Modifier
                    .width(230.dp)
                    .padding(start = 70.dp, top = 70.dp),
@@ -125,14 +131,14 @@ fun LoginScreenContent(isCompany: Boolean, onRegisterClicked: () -> (Unit),onLog
 
                //TODO this button has to be a more elaborated component to switch between customer and company
                Button(onClick = { onRegisterClicked() }, colors = ButtonDefaults.buttonColors(Transparent,Black, Gray,Black)) {
-                   Text(stringResource(id = R.string.login_no_account_customer))
+                   Text(if(isCompany){stringResource(id = R.string.login_no_account_company)}else{stringResource(id = R.string.login_no_account_customer)})
 
                }
            }
 
-           Button(onClick = {/*TODO*/} , modifier = Modifier.align(Alignment.BottomEnd), colors = ButtonDefaults.buttonColors(
+           Button(onClick = { isCompany = !isCompany} , modifier = Modifier.align(Alignment.BottomEnd), colors = ButtonDefaults.buttonColors(
                Transparent, Black,  Gray, Black)) {
-               Text(stringResource(id = R.string.login_company_access))
+               Text(if(isCompany){stringResource(id = R.string.login_customer_access)}else{stringResource(id = R.string.login_company_access)})
 
            }
 
@@ -145,7 +151,7 @@ fun LoginScreenContent(isCompany: Boolean, onRegisterClicked: () -> (Unit),onLog
 @Preview
 @Composable
 fun LoginScreen_Preview() {
-    LoginScreenContent(true, {}) {_,_ ->}
+    LoginScreenContent( {}) {_,_ ->}
 }
 
 
