@@ -10,9 +10,8 @@ class DefaultRemoteDataSource @Inject constructor(
 ) : RemoteDataSource{
     private var token = ""
 
-    override suspend fun performLogin(loginData: String): String {
+    override suspend fun performLogin(loginData: String): Boolean {
         this.token = api.performLogin(loginData)
-        Log.d("token", token)
-        return token //TODO If the token stay in the REpository, it should not be sent to the repository and so on
+        return token.isNotEmpty()
     }
 }

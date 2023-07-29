@@ -1,5 +1,7 @@
 package com.onetoucheasy.restauranteofertas.ui.viewModels
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.onetoucheasy.restauranteofertas.repository.Repository
@@ -18,8 +20,12 @@ class LoginViewModel @Inject constructor(
     private val repository: Repository
 ): ViewModel() {
 
-    private val _loginState = MutableStateFlow(false)
-    val loginState: StateFlow<Boolean> get() = _loginState
+//    private val _loginState = MutableStateFlow(false)
+//    val loginState: StateFlow<Boolean> get() = _loginState
+
+
+    private val _loginState = MutableLiveData(false)
+    val loginState: LiveData<Boolean> get() = _loginState
 
     fun performLogin(email: String, password: String){
         //Encoding + Charset
@@ -28,7 +34,7 @@ class LoginViewModel @Inject constructor(
             val result = withContext(Dispatchers.IO){
                 repository.performLogin(headerAuthorizationData)
             }
-            _loginState.value = result != ""
+            _loginState.value = result
         }
     }
 }
