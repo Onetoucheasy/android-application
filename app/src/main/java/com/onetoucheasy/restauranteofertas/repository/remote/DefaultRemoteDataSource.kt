@@ -1,5 +1,6 @@
 package com.onetoucheasy.restauranteofertas.repository.remote
 
+import android.util.Log
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -11,6 +12,7 @@ class DefaultRemoteDataSource @Inject constructor(
 
     override suspend fun performLogin(loginData: String): String {
         this.token = api.performLogin(loginData)
-        return token
+        Log.d("token", token)
+        return token //TODO If the token stay in the REpository, it should not be sent to the repository and so on
     }
 }
