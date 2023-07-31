@@ -20,10 +20,12 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -47,6 +49,7 @@ import com.onetoucheasy.restauranteofertas.ui.viewModels.LoginViewModel
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -95,6 +98,11 @@ fun LoginScreenContent(onRegisterClicked: () -> (Unit),onLoginClicked: (String, 
     var passwordValid by remember {
         mutableStateOf(false)
     }
+
+    var invalidCredentials by remember{
+        mutableStateOf(false)
+    }
+
     Scaffold(
        modifier = Modifier
    ) {
@@ -118,18 +126,22 @@ fun LoginScreenContent(onRegisterClicked: () -> (Unit),onLoginClicked: (String, 
 
                FormField(text = email, leadingIcon = Icons.Default.Email, onValueChange = {
                    email = it
+                   invalidCredentials = false
                    emailValid = it.contains("@")
                },
-                   screenWidth = width
+                   screenWidth = width,
+                   isInvalidCredential = invalidCredentials
                ){
                    FormLabel(hint = stringResource(id = R.string.login_email_hint))
                }
 
                FormField(text = password, leadingIcon = Icons.Default.Lock, trailingIcon = Icons.Default.Warning, isPassword = true, onValueChange = {
                    password = it
+                   invalidCredentials = false
                    //  passwordValid = it.length > 8 && it.contains()
                    passwordValid = it.length > 8 //TODO Add RegEx?
                }, screenWidth = width,
+                   isInvalidCredential = invalidCredentials
                ){
                    FormLabel(hint = stringResource(id = R.string.login_password_hint))
 
@@ -138,7 +150,13 @@ fun LoginScreenContent(onRegisterClicked: () -> (Unit),onLoginClicked: (String, 
                //TODO add access button and the button to turn the login form to professional form and viceversa
                Button(onClick = {
                    Log.d("Token", "Login access started")
-                   onLoginClicked(email,password)
+                   if(!emailValid || !passwordValid){
+                       invalidCredentials = true
+                   }
+                   if(!invalidCredentials){
+                       onLoginClicked(email,password)
+                   }
+
                    },
                    modifier = Modifier.width(width * 3.0f / 4).align(CenterHorizontally).padding(top = 50.dp), colors = ButtonDefaults.buttonColors(MainYellow, Black, Gray, Black)) {
                     Text(stringResource(id = R.string.login_login_button))
@@ -181,10 +199,11 @@ fun FormField(text: String,
               trailingIcon:ImageVector? = null,
               screenWidth: Dp,
               isPassword: Boolean = false,
+              isInvalidCredential: Boolean,
               onValueChange: (String) -> (Unit),
               label: (@Composable () -> (Unit))? = null) {
 
-    FormFieldContent(text, leadingIcon, trailingIcon,screenWidth,isPassword,onValueChange,label)
+    FormFieldContent(text, leadingIcon, trailingIcon,screenWidth,isPassword,isInvalidCredential,onValueChange,label)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -194,13 +213,14 @@ fun FormFieldContent(text: String,
                      trailingIcon:ImageVector? = null,
                      screenWidth: Dp,
                      isPassword: Boolean = false,
+                     isInvalidCredential: Boolean,
                      onValueChange: (String) -> (Unit),
                      label: (@Composable () -> (Unit))? = null)
 {
     TextField(value = text,
     onValueChange = onValueChange,
         modifier = Modifier.width(screenWidth * 4.0f / 5).background(White).padding(5.dp).clip(RoundedCornerShape(8.dp)).border(
-            BorderStroke(3.dp, Black),RoundedCornerShape(8.dp)
+            BorderStroke(3.dp, if(isInvalidCredential){Red}else{Black}),RoundedCornerShape(8.dp)
         ),
     leadingIcon = {
         Icon(imageVector = leadingIcon, contentDescription = leadingIcon.name)
@@ -210,20 +230,25 @@ fun FormFieldContent(text: String,
                 Icon(imageVector = it, contentDescription  = trailingIcon.name)
             }
         },
+        textStyle = if(isInvalidCredential){
+            LocalTextStyle.current.copy(Red)}else{
+            LocalTextStyle.current},
         placeholder = {
             if (label != null){
                 label()
             }
         },
+        isError = isInvalidCredential, //TODO Fix
         visualTransformation = if (isPassword){PasswordVisualTransformation()}else{VisualTransformation.None},
         singleLine = true,
+       // colors = TextFieldColors(Black)
     )
 }
 
 @Preview
 @Composable
 fun FormField_Preview() {
-    FormFieldContent("", Icons.Default.Lock, Icons.Default.Warning, screenWidth = 500.dp ,true , {_->Unit}, {
+    FormFieldContent("", Icons.Default.Lock, Icons.Default.Warning, screenWidth = 500.dp ,true , false,{_->Unit}, {
         FormLabel(
         hint = "Password", TextDecoration.None
     )
@@ -235,3 +260,10 @@ fun FormField_Preview() {
 fun FormLabel(hint: String, textDecoration: TextDecoration = TextDecoration.None){
     Text(text = hint, textDecoration = textDecoration)
 }
+
+//
+//fun TextFieldErrorColors(): TextFieldColors{
+//    return TextFieldColors(isError = Red )
+//}Red
+//
+////

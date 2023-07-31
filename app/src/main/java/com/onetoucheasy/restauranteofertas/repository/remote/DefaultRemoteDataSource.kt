@@ -11,7 +11,11 @@ class DefaultRemoteDataSource @Inject constructor(
     private var token = ""
 
     override suspend fun performLogin(loginData: String): Boolean {
-        this.token = api.performLogin(loginData)
-        return token.isNotEmpty()
+        return try {
+            this.token = api.performLogin(loginData)
+            token.isNotEmpty()
+        }catch (exception: Exception){
+            false
+        }
     }
 }
