@@ -2,12 +2,16 @@ package com.onetoucheasy.restauranteofertas.ui.scaffolds
 
 import android.annotation.SuppressLint
 import android.util.Log
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
@@ -41,14 +45,20 @@ import com.onetoucheasy.restauranteofertas.ui.theme.MainYellow
 import com.onetoucheasy.restauranteofertas.ui.theme.Transparent
 import com.onetoucheasy.restauranteofertas.ui.viewModels.LoginViewModel
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.unit.Dp
+import com.onetoucheasy.restauranteofertas.ui.theme.White
 
 //TODO add internet permission
 @Composable
 fun LoginScreen(viewModel: LoginViewModel,onRegisterClicked: () -> (Unit) , onLoginFinished:() -> (Unit)) {
 
     val loginStatus by viewModel.loginState.observeAsState()
-
-
 
     LaunchedEffect(loginStatus){
         if(loginStatus == true){
@@ -65,6 +75,7 @@ fun LoginScreen(viewModel: LoginViewModel,onRegisterClicked: () -> (Unit) , onLo
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreenContent(onRegisterClicked: () -> (Unit),onLoginClicked: (String, String) -> (Unit)) {
+    val width = LocalConfiguration.current.screenWidthDp.dp
 
     var isCompany by remember {
         mutableStateOf(false)
@@ -90,7 +101,8 @@ fun LoginScreenContent(onRegisterClicked: () -> (Unit),onLoginClicked: (String, 
        Box(modifier = Modifier.fillMaxSize()) {
            Image(painter = painterResource(R.mipmap.login_background),
                contentDescription = stringResource(id = R.string.login_background_image_description),
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.fillMaxSize(),
+               contentScale = ContentScale.FillBounds
                )
             //TODO Add dynamic width and padding values depending on the screen size
            Text(
@@ -107,7 +119,9 @@ fun LoginScreenContent(onRegisterClicked: () -> (Unit),onLoginClicked: (String, 
                FormField(text = email, leadingIcon = Icons.Default.Email, onValueChange = {
                    email = it
                    emailValid = it.contains("@")
-               }){
+               },
+                   screenWidth = width
+               ){
                    FormLabel(hint = stringResource(id = R.string.login_email_hint))
                }
 
@@ -115,22 +129,25 @@ fun LoginScreenContent(onRegisterClicked: () -> (Unit),onLoginClicked: (String, 
                    password = it
                    //  passwordValid = it.length > 8 && it.contains()
                    passwordValid = it.length > 8 //TODO Add RegEx?
-               }){
+               }, screenWidth = width,
+               ){
                    FormLabel(hint = stringResource(id = R.string.login_password_hint))
 
                }
 
-               //TODO add access button and the button to turn the login form to profesional form and viceversa
+               //TODO add access button and the button to turn the login form to professional form and viceversa
                Button(onClick = {
                    Log.d("Token", "Login access started")
                    onLoginClicked(email,password)
                    },
-                   modifier = Modifier.padding(top = 50.dp), colors = ButtonDefaults.buttonColors(MainYellow, Black, Gray, Black)) {
+                   modifier = Modifier.width(width * 3.0f / 4).align(CenterHorizontally).padding(top = 50.dp), colors = ButtonDefaults.buttonColors(MainYellow, Black, Gray, Black)) {
                     Text(stringResource(id = R.string.login_login_button))
                }
 
                //TODO this button has to be a more elaborated component to switch between customer and company
-               Button(onClick = { onRegisterClicked() }, colors = ButtonDefaults.buttonColors(Transparent,Black, Gray,Black)) {
+               Button(onClick = { onRegisterClicked() },
+                   modifier = Modifier.width(width * 2.0f / 3).align(CenterHorizontally),
+                   colors = ButtonDefaults.buttonColors(Transparent,Black, Gray,Black)) {
                    Text(if(isCompany){stringResource(id = R.string.login_no_account_company)}else{stringResource(id = R.string.login_no_account_customer)})
 
                }
@@ -162,11 +179,12 @@ fun LoginScreen_Preview() {
 fun FormField(text: String,
               leadingIcon: ImageVector,
               trailingIcon:ImageVector? = null,
+              screenWidth: Dp,
               isPassword: Boolean = false,
               onValueChange: (String) -> (Unit),
               label: (@Composable () -> (Unit))? = null) {
 
-    FormFieldContent(text, leadingIcon, trailingIcon,isPassword,onValueChange,label)
+    FormFieldContent(text, leadingIcon, trailingIcon,screenWidth,isPassword,onValueChange,label)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -174,12 +192,16 @@ fun FormField(text: String,
 fun FormFieldContent(text: String,
                      leadingIcon: ImageVector,
                      trailingIcon:ImageVector? = null,
+                     screenWidth: Dp,
                      isPassword: Boolean = false,
                      onValueChange: (String) -> (Unit),
                      label: (@Composable () -> (Unit))? = null)
 {
     TextField(value = text,
     onValueChange = onValueChange,
+        modifier = Modifier.width(screenWidth * 4.0f / 5).background(White).padding(5.dp).clip(RoundedCornerShape(8.dp)).border(
+            BorderStroke(3.dp, Black),RoundedCornerShape(8.dp)
+        ),
     leadingIcon = {
         Icon(imageVector = leadingIcon, contentDescription = leadingIcon.name)
     },
@@ -192,14 +214,16 @@ fun FormFieldContent(text: String,
             if (label != null){
                 label()
             }
-        }
+        },
+        visualTransformation = if (isPassword){PasswordVisualTransformation()}else{VisualTransformation.None},
+        singleLine = true,
     )
 }
 
 @Preview
 @Composable
 fun FormField_Preview() {
-    FormFieldContent("", Icons.Default.Lock, Icons.Default.Warning, true , {_->Unit}, {
+    FormFieldContent("", Icons.Default.Lock, Icons.Default.Warning, screenWidth = 500.dp ,true , {_->Unit}, {
         FormLabel(
         hint = "Password", TextDecoration.None
     )
