@@ -48,6 +48,7 @@ import com.onetoucheasy.restauranteofertas.ui.theme.Transparent
 import com.onetoucheasy.restauranteofertas.ui.viewModels.LoginViewModel
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.layout.ContentScale
@@ -56,6 +57,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.Dp
 import com.onetoucheasy.restauranteofertas.ui.theme.White
+import com.onetoucheasy.restauranteofertas.ui.viewModels.LoginState
 
 //TODO add internet permission
 @Composable
@@ -64,20 +66,22 @@ fun LoginScreen(viewModel: LoginViewModel,onRegisterClicked: () -> (Unit) , onLo
     val loginStatus by viewModel.loginState.observeAsState()
 
     LaunchedEffect(loginStatus){
-        if(loginStatus == true){
+        if(loginStatus == LoginState.SUCCESS){
             onLoginFinished()
         }
     }
 
-    LoginScreenContent(onRegisterClicked) { user, password ->
+    loginStatus?.let {
+        LoginScreenContent(it,onRegisterClicked) { user, password ->
         viewModel.performLogin(user, password)
+        }
     }
 }
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreenContent(onRegisterClicked: () -> (Unit),onLoginClicked: (String, String) -> (Unit)) {
+fun LoginScreenContent(loginState: LoginState,onRegisterClicked: () -> (Unit),onLoginClicked: (String, String) -> (Unit)) {
     val width = LocalConfiguration.current.screenWidthDp.dp
 
     var isCompany by remember {
@@ -123,7 +127,19 @@ fun LoginScreenContent(onRegisterClicked: () -> (Unit),onLoginClicked: (String, 
            )
 
            Column(modifier = Modifier.align(Alignment.Center)) {
-
+               Text(text = stringResource(id = R.string.login_authentication_error),
+               modifier = Modifier
+                   .width(width * 4.0f / 5)
+                   .padding(5.dp)
+                   .alpha(
+                       if (loginState == LoginState.FAILURE) {
+                           1.0f
+                       } else {
+                           0.0f
+                       }
+                   ),
+                   color = Red
+                   )
                FormField(text = email, leadingIcon = Icons.Default.Email, onValueChange = {
                    email = it
                    invalidCredentials = false
@@ -158,13 +174,18 @@ fun LoginScreenContent(onRegisterClicked: () -> (Unit),onLoginClicked: (String, 
                    }
 
                    },
-                   modifier = Modifier.width(width * 3.0f / 4).align(CenterHorizontally).padding(top = 50.dp), colors = ButtonDefaults.buttonColors(MainYellow, Black, Gray, Black)) {
+                   modifier = Modifier
+                       .width(width * 3.0f / 4)
+                       .align(CenterHorizontally)
+                       .padding(top = 50.dp), colors = ButtonDefaults.buttonColors(MainYellow, Black, Gray, Black)) {
                     Text(stringResource(id = R.string.login_login_button))
                }
 
                //TODO this button has to be a more elaborated component to switch between customer and company
                Button(onClick = { onRegisterClicked() },
-                   modifier = Modifier.width(width * 2.0f / 3).align(CenterHorizontally),
+                   modifier = Modifier
+                       .width(width * 2.0f / 3)
+                       .align(CenterHorizontally),
                    colors = ButtonDefaults.buttonColors(Transparent,Black, Gray,Black)) {
                    Text(if(isCompany){stringResource(id = R.string.login_no_account_company)}else{stringResource(id = R.string.login_no_account_customer)})
 
@@ -186,7 +207,7 @@ fun LoginScreenContent(onRegisterClicked: () -> (Unit),onLoginClicked: (String, 
 @Preview
 @Composable
 fun LoginScreen_Preview() {
-    LoginScreenContent( {}) {_,_ ->}
+    LoginScreenContent( LoginState.NONE,{}) { _, _ ->}
 }
 
 
@@ -219,9 +240,20 @@ fun FormFieldContent(text: String,
 {
     TextField(value = text,
     onValueChange = onValueChange,
-        modifier = Modifier.width(screenWidth * 4.0f / 5).background(White).padding(5.dp).clip(RoundedCornerShape(8.dp)).border(
-            BorderStroke(3.dp, if(isInvalidCredential){Red}else{Black}),RoundedCornerShape(8.dp)
-        ),
+        modifier = Modifier
+            .width(screenWidth * 4.0f / 5)
+            .background(White)
+            .padding(5.dp)
+            .clip(RoundedCornerShape(8.dp))
+            .border(
+                BorderStroke(
+                    3.dp, if (isInvalidCredential) {
+                        Red
+                    } else {
+                        Black
+                    }
+                ), RoundedCornerShape(8.dp)
+            ),
     leadingIcon = {
         Icon(imageVector = leadingIcon, contentDescription = leadingIcon.name)
     },
@@ -260,10 +292,3 @@ fun FormField_Preview() {
 fun FormLabel(hint: String, textDecoration: TextDecoration = TextDecoration.None){
     Text(text = hint, textDecoration = textDecoration)
 }
-
-//
-//fun TextFieldErrorColors(): TextFieldColors{
-//    return TextFieldColors(isError = Red )
-//}Red
-//
-////

@@ -14,7 +14,11 @@ import kotlinx.coroutines.withContext
 import okhttp3.Credentials
 import java.nio.charset.Charset
 import javax.inject.Inject
-
+enum class LoginState{
+    NONE,
+    SUCCESS,
+    FAILURE
+}
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val repository: Repository
@@ -24,8 +28,10 @@ class LoginViewModel @Inject constructor(
 //    val loginState: StateFlow<Boolean> get() = _loginState
 
 
-    private val _loginState = MutableLiveData(false)
-    val loginState: LiveData<Boolean> get() = _loginState
+//    private val _loginState = MutableLiveData(false)
+//    val loginState: LiveData<Boolean> get() = _loginState
+    private val _loginState = MutableLiveData(LoginState.NONE)
+    val loginState: LiveData<LoginState> get() = _loginState
 
     fun performLogin(email: String, password: String){
         //Encoding + Charset
@@ -34,7 +40,12 @@ class LoginViewModel @Inject constructor(
             val result = withContext(Dispatchers.IO){
                 repository.performLogin(headerAuthorizationData)
             }
-            _loginState.value = result
+            if(result){
+                _loginState.value = LoginState.SUCCESS
+            }else{
+                _loginState.value = LoginState.FAILURE
+            }
+          //  _loginState.value = result
         }
     }
 }

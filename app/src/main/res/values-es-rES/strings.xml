@@ -9,4 +9,5 @@
     <string name="login_background_image_description">Fondo de la pantalla de acceso.</string>
     <string name="login_password_hint">Contraseña</string>
     <string name="login_company_access">Acceso Empresa</string>
+    <string name="login_authentication_error">Error: Credenciales no válidas, intentelo de nuevo.</string>
 </resources>
