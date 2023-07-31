@@ -59,7 +59,6 @@ import androidx.compose.ui.unit.Dp
 import com.onetoucheasy.restauranteofertas.ui.theme.White
 import com.onetoucheasy.restauranteofertas.ui.viewModels.LoginState
 
-//TODO add internet permission
 @Composable
 fun LoginScreen(viewModel: LoginViewModel,onRegisterClicked: () -> (Unit) , onLoginFinished:() -> (Unit)) {
 
@@ -116,7 +115,6 @@ fun LoginScreenContent(loginState: LoginState,onRegisterClicked: () -> (Unit),on
                 modifier = Modifier.fillMaxSize(),
                contentScale = ContentScale.FillBounds
                )
-            //TODO Add dynamic width and padding values depending on the screen size
            Text(
                text = if(isCompany){stringResource(id = R.string.login_company_access)} else {stringResource(id = R.string.login_customer_access)},
                modifier = Modifier
@@ -163,7 +161,6 @@ fun LoginScreenContent(loginState: LoginState,onRegisterClicked: () -> (Unit),on
 
                }
 
-               //TODO add access button and the button to turn the login form to professional form and viceversa
                Button(onClick = {
                    Log.d("Token", "Login access started")
                    if(!emailValid || !passwordValid){
@@ -181,7 +178,6 @@ fun LoginScreenContent(loginState: LoginState,onRegisterClicked: () -> (Unit),on
                     Text(stringResource(id = R.string.login_login_button))
                }
 
-               //TODO this button has to be a more elaborated component to switch between customer and company
                Button(onClick = { onRegisterClicked() },
                    modifier = Modifier
                        .width(width * 2.0f / 3)
@@ -270,7 +266,7 @@ fun FormFieldContent(text: String,
                 label()
             }
         },
-        isError = isInvalidCredential, //TODO Fix
+        isError = isInvalidCredential, //TODO Fix, isError only change some elements colors (ex. it does not change the text or border color)
         visualTransformation = if (isPassword){PasswordVisualTransformation()}else{VisualTransformation.None},
         singleLine = true,
        // colors = TextFieldColors(Black)
