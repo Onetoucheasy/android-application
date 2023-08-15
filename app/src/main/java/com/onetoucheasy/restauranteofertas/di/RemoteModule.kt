@@ -1,6 +1,6 @@
 package com.onetoucheasy.restauranteofertas.di
 
-import com.onetoucheasy.restauranteofertas.repository.remote.DragonBallApi
+import com.onetoucheasy.restauranteofertas.repository.remote.OneTouchApi
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -39,14 +39,14 @@ object RemoteModule {
     fun provideRetrofit(okHttpClient: OkHttpClient, moshi: Moshi): Retrofit {
         return Retrofit
             .Builder()
-            .baseUrl("https://dragonball.keepcoding.education")
+            .baseUrl("http://10.0.2.3:80/api/")
             .client(okHttpClient)
             .addConverterFactory(MoshiConverterFactory.create(moshi).asLenient())
             .build()
     }
 
     @Provides
-    fun provideApi(retrofit:Retrofit): DragonBallApi{
-        return retrofit.create(DragonBallApi::class.java)
+    fun provideApi(retrofit:Retrofit): OneTouchApi{
+        return retrofit.create(OneTouchApi::class.java)
     }
 }

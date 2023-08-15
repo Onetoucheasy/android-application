@@ -12,7 +12,9 @@ fun RegisterScreen() {
 @Composable
 fun RegisterScreenContent() {
     Text("This is the registration screen ")
+
 }
+
 
 @Preview
 @Composable

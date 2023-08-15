@@ -80,7 +80,7 @@ fun LoginScreen(viewModel: LoginViewModel,onRegisterClicked: () -> (Unit) , onLo
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreenContent(loginState: LoginState,onRegisterClicked: () -> (Unit),onLoginClicked: (String, String) -> (Unit)) {
+fun LoginScreenContent(loginState: LoginState, onRegisterClicked: () -> (Unit),onLoginClicked: (String, String) -> (Unit)) {
     val width = LocalConfiguration.current.screenWidthDp.dp
 
     var isCompany by remember {
@@ -162,11 +162,13 @@ fun LoginScreenContent(loginState: LoginState,onRegisterClicked: () -> (Unit),on
                }
 
                Button(onClick = {
-                   Log.d("Token", "Login access started")
                    if(!emailValid || !passwordValid){
                        invalidCredentials = true
                    }
+                   Log.d("Token", "Login access started")
+                   Log.d("Token", "$invalidCredentials")
                    if(!invalidCredentials){
+                       Log.d("Token", "Login on click")
                        onLoginClicked(email,password)
                    }
 
@@ -193,9 +195,6 @@ fun LoginScreenContent(loginState: LoginState,onRegisterClicked: () -> (Unit),on
                Text(if(isCompany){stringResource(id = R.string.login_customer_access)}else{stringResource(id = R.string.login_company_access)})
 
            }
-
-
-
        }
    }
 }
