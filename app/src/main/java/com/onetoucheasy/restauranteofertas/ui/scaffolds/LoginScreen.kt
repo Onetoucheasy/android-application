@@ -141,7 +141,8 @@ fun LoginScreenContent(loginState: LoginState, onRegisterClicked: () -> (Unit),o
                FormField(text = email, leadingIcon = Icons.Default.Email, onValueChange = {
                    email = it
                    invalidCredentials = false
-                   emailValid = it.contains("@")
+                   //emailValid = it.contains("@")
+                   emailValid = true
                },
                    screenWidth = width,
                    isInvalidCredential = invalidCredentials
@@ -153,7 +154,8 @@ fun LoginScreenContent(loginState: LoginState, onRegisterClicked: () -> (Unit),o
                    password = it
                    invalidCredentials = false
                    //  passwordValid = it.length > 8 && it.contains()
-                   passwordValid = it.length > 8 //TODO Add RegEx?
+                   //passwordValid = it.length > 8 //TODO Add RegEx?
+                   passwordValid = true
                }, screenWidth = width,
                    isInvalidCredential = invalidCredentials
                ){
@@ -186,7 +188,6 @@ fun LoginScreenContent(loginState: LoginState, onRegisterClicked: () -> (Unit),o
                        .align(CenterHorizontally),
                    colors = ButtonDefaults.buttonColors(Transparent,Black, Gray,Black)) {
                    Text(if(isCompany){stringResource(id = R.string.login_no_account_company)}else{stringResource(id = R.string.login_no_account_customer)})
-
                }
            }
 
