@@ -141,8 +141,8 @@ fun LoginScreenContent(loginState: LoginState, onRegisterClicked: () -> (Unit),o
                FormField(text = email, leadingIcon = Icons.Default.Email, onValueChange = {
                    email = it
                    invalidCredentials = false
-                   //emailValid = it.contains("@")
-                   emailValid = true
+                   emailValid = it.contains("@")
+                   //emailValid = true
                },
                    screenWidth = width,
                    isInvalidCredential = invalidCredentials
@@ -154,8 +154,8 @@ fun LoginScreenContent(loginState: LoginState, onRegisterClicked: () -> (Unit),o
                    password = it
                    invalidCredentials = false
                    //  passwordValid = it.length > 8 && it.contains()
-                   //passwordValid = it.length > 8 //TODO Add RegEx?
-                   passwordValid = true
+                   passwordValid = it.length > 8 //TODO Add RegEx?
+                   //passwordValid = true
                }, screenWidth = width,
                    isInvalidCredential = invalidCredentials
                ){
