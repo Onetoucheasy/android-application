@@ -1,7 +1,7 @@
 package com.onetoucheasy.restauranteofertas.repository.remote
 
 import android.util.Log
-import com.auth0.android.jwt.JWT
+import com.onetoucheasy.restauranteofertas.repository.remote.request.SignUpRequestBody
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -14,11 +14,21 @@ class DefaultRemoteDataSource @Inject constructor(
 
     override suspend fun performLogin(loginData: String): Boolean {
         return try {
-            this.token = api.performLogin(this.apiKey,loginData)
+            this.token = api.performLogin(this.apiKey, loginData)
             token.isNotEmpty()
-        }catch (exception: Exception){
+        } catch (exception: Exception) {
             Log.d("Exception Login", "${exception.message}")
             false
         }
+    }
+    override suspend fun performSignUp(signUpRequestBody: SignUpRequestBody): String {
+        return try {
+            this.token = api.performSignUp(this.apiKey, signUpRequestBody)
+            return this.token
+        } catch (exception: Exception) {
+            Log.d("Exception SignUP", "${exception.message}")
+            throw exception
+        }
+
     }
 }

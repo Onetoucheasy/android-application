@@ -39,7 +39,7 @@ object RemoteModule {
     fun provideRetrofit(okHttpClient: OkHttpClient, moshi: Moshi): Retrofit {
         return Retrofit
             .Builder()
-            .baseUrl("http://10.0.2.3:80/api/")
+            .baseUrl("http://10.0.2.3/api/")
             .client(okHttpClient)
             .addConverterFactory(MoshiConverterFactory.create(moshi).asLenient())
             .build()
