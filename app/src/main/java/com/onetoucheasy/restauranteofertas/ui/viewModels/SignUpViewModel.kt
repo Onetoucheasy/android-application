@@ -11,8 +11,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import okhttp3.Credentials
+import java.nio.charset.Charset
 import javax.inject.Inject
-
 enum class SignUpState {
     NONE,
     SUCCESS,
@@ -39,7 +40,7 @@ class SignUpViewModel @Inject constructor(
                 try {
                     var isCompany: Boolean = false
                     when(userType){
-                      "company" -> isCompany = true
+                        "company" -> isCompany = true
                         "user"-> isCompany = false
                     }
                     val signUpBody = SignUpRequestBody(name, email, password, isCompany)

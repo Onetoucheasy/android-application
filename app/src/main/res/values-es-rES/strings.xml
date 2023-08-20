@@ -10,4 +10,10 @@
     <string name="login_password_hint">Contraseña</string>
     <string name="login_company_access">Acceso Empresa</string>
     <string name="login_authentication_error">Error: Credenciales no válidas, intentelo de nuevo.</string>
+    <string name="sign_up_company">Registro Profesionales</string>
+    <string name="sign_up_customer">Registro Clientes</string>
+    <string name="password_hint">Contraseña</string>
+    <string name="repeat_password_hint">Repita Contraseña</string>
+    <string name="sign_up_already_have_account">Ya estoy registrado :)</string>
+    <string name="sign_up_login_button">Registrarme</string>
 </resources>

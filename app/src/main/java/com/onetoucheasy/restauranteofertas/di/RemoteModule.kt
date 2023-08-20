@@ -11,6 +11,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -36,6 +37,7 @@ object RemoteModule {
     }
     //TODO Change base URL in provideRetrofit
     @Provides
+    @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient, moshi: Moshi): Retrofit {
         return Retrofit
             .Builder()
@@ -46,6 +48,7 @@ object RemoteModule {
     }
 
     @Provides
+    @Singleton
     fun provideApi(retrofit:Retrofit): OneTouchApi{
         return retrofit.create(OneTouchApi::class.java)
     }
