@@ -1,18 +1,25 @@
 <resources>
     <string name="app_name">RestauranteOfertas</string>
+
+    <string name="form_name_hint">Name</string>
+    <string name="form_surname_hint">Surname</string>
+    <string name="form_email_hint">Email</string>
+    <string name="form_password_hint">Password</string>
+    <string name="form_repeat_password_hint">Repeat Password</string>
+    <string name="form_phone_number_hint">Phone Number</string>
+
     <string name="login_customer_access">Customers Sign In</string>
-    <string name="login_email_hint">Email</string>
     <string name="login_login_button">Sign In</string>
     <string name="login_no_account_customer">I don\'t have an account</string>
     <string name="login_no_account_company">Company Sign Up</string>
     <string name="login_background_image_description">Login screen background</string>
-    <string name="login_password_hint">Password</string>
     <string name="login_company_access">Company Sign In</string>
     <string name="login_authentication_error">Error: Invalid credentials, try again.</string>
+
     <string name="sign_up_company">Company Sign Up</string>
     <string name="sign_up_customer">Customers Sign Up</string>
-    <string name="password_hint">Password</string>
-    <string name="repeat_password_hint">Repeat Password</string>
     <string name="sign_up_already_have_account">I already have an account :)</string>
     <string name="sign_up_login_button">Sign Up</string>
+
+
 </resources>

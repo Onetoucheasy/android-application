@@ -147,7 +147,7 @@ fun LoginScreenContent(loginState: LoginState, onRegisterClicked: () -> (Unit),o
                    screenWidth = width,
                    isInvalidCredential = invalidCredentials
                ){
-                   FormLabel(hint = stringResource(id = R.string.login_email_hint))
+                   FormLabel(hint = stringResource(id = R.string.form_email_hint))
                }
 
                FormField(text = password, leadingIcon = Icons.Default.Lock, trailingIcon = Icons.Default.Warning, isPassword = true, onValueChange = {
@@ -159,7 +159,7 @@ fun LoginScreenContent(loginState: LoginState, onRegisterClicked: () -> (Unit),o
                }, screenWidth = width,
                    isInvalidCredential = invalidCredentials
                ){
-                   FormLabel(hint = stringResource(id = R.string.login_password_hint))
+                   FormLabel(hint = stringResource(id = R.string.form_password_hint))
 
                }
 
@@ -217,10 +217,11 @@ fun FormField(text: String,
               screenWidth: Dp,
               isPassword: Boolean = false,
               isInvalidCredential: Boolean,
+              visible: Boolean = true,
               onValueChange: (String) -> (Unit),
               label: (@Composable () -> (Unit))? = null) {
 
-    FormFieldContent(text, leadingIcon, trailingIcon,screenWidth,isPassword,isInvalidCredential,onValueChange,label)
+    FormFieldContent(text, leadingIcon, trailingIcon,screenWidth,isPassword,isInvalidCredential,visible,onValueChange,label)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -231,6 +232,7 @@ fun FormFieldContent(text: String,
                      screenWidth: Dp,
                      isPassword: Boolean = false,
                      isInvalidCredential: Boolean,
+                     visible: Boolean = true,
                      onValueChange: (String) -> (Unit),
                      label: (@Composable () -> (Unit))? = null)
 {
@@ -243,12 +245,24 @@ fun FormFieldContent(text: String,
             .clip(RoundedCornerShape(8.dp))
             .border(
                 BorderStroke(
-                    1.dp, if (isInvalidCredential) {
-                        Red
+                    1.dp, if (!visible) {
+                        Transparent
                     } else {
-                        Black
+                        if (isInvalidCredential) {
+                            Red
+                        } else {
+                            Black
+                        }
                     }
-                ), RoundedCornerShape(8.dp)
+                )
+                ,RoundedCornerShape(8.dp)
+            )
+            .alpha(
+                if (visible) {
+                    1.0f
+                } else {
+                    0.0f
+                }
             ),
     leadingIcon = {
         Icon(imageVector = leadingIcon, contentDescription = leadingIcon.name)
@@ -276,7 +290,7 @@ fun FormFieldContent(text: String,
 @Preview
 @Composable
 fun FormField_Preview() {
-    FormFieldContent("", Icons.Default.Lock, Icons.Default.Warning, screenWidth = 500.dp ,true , false,{_->Unit}, {
+    FormFieldContent("", Icons.Default.Lock, Icons.Default.Warning, screenWidth = 500.dp ,true , false, true, {_->Unit}, {
         FormLabel(
         hint = "Password", TextDecoration.None
     )

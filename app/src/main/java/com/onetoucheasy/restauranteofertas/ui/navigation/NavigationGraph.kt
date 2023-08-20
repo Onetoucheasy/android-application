@@ -27,7 +27,7 @@ fun NavigationGraph(loginViewModel: LoginViewModel, signUpViewModel: SignUpViewM
         }
 
         composable(Screens.RegisterScreen.route){
-            SingUpScreen(viewModel = signUpViewModel, {navController.navigate(Screens.RegisterScreen.route)}){
+            SingUpScreen(viewModel = signUpViewModel, {navController.navigate(Screens.LoginScreen.route)}){
                 navController.navigate(Screens.LoginScreen.route)
             }
         }
