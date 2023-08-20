@@ -41,7 +41,7 @@ object RemoteModule {
             .Builder()
             .baseUrl("http://10.0.2.2:8080/api/")
             .client(okHttpClient)
-            .addConverterFactory(MoshiConverterFactory.create(moshi).asLenient())
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
     }
 
