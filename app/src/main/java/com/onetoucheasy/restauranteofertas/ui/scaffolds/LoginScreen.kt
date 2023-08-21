@@ -189,6 +189,7 @@ fun LoginScreenContent(loginState: LoginState, onRegisterClicked: () -> (Unit),o
                        .width(width * 2.0f / 3)
                        .align(CenterHorizontally),
                    colors = ButtonDefaults.buttonColors(Transparent,Black, Gray,Black)) {
+                   Text(stringResource(id = R.string.login_no_account_customer))
                }
            }
        }
