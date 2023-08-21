@@ -14,7 +14,8 @@
     <string name="login_no_account_customer">No tengo cuenta</string>
     <string name="login_no_account_company">Alta profesionales</string>
     <string name="login_background_image_description">Fondo de la pantalla de acceso.</string>
-    <string name="login_company_access">Acceso Empresa</string>
+    <string name="login_password_hint">Contraseña</string>
+    <string name="login_access">Acceso</string>
     <string name="login_authentication_error">Error: Credenciales no válidas, intentelo de nuevo.</string>
 
     <string name="sign_up_company">Registro Profesionales</string>

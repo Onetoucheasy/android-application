@@ -13,7 +13,8 @@
     <string name="login_no_account_customer">I don\'t have an account</string>
     <string name="login_no_account_company">Company Sign Up</string>
     <string name="login_background_image_description">Login screen background</string>
-    <string name="login_company_access">Company Sign In</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_access">Sing In</string>
     <string name="login_authentication_error">Error: Invalid credentials, try again.</string>
 
     <string name="sign_up_company">Company Sign Up</string>
