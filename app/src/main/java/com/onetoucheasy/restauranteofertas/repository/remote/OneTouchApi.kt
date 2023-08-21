@@ -2,6 +2,7 @@ package com.onetoucheasy.restauranteofertas.repository.remote
 
 import com.onetoucheasy.restauranteofertas.repository.remote.request.SignUpRequestBody
 import com.onetoucheasy.restauranteofertas.repository.remote.response.JWTResponse
+import com.onetoucheasy.restauranteofertas.repository.remote.response.OffersResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -20,4 +21,9 @@ interface OneTouchApi {
         @Header("CDS-ApiKey") apiKey: String,
         @Body signUpRequestBody: SignUpRequestBody
     ): JWTResponse
+
+    @GET("offers")
+    suspend fun getOffers(
+        @Header("CDS-ApiKey") apiKey: String
+    ): OffersResponse
 }

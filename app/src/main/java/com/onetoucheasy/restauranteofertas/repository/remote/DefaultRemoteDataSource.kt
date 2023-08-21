@@ -4,6 +4,7 @@ import android.util.Log
 import com.auth0.android.jwt.JWT
 import com.onetoucheasy.restauranteofertas.repository.remote.request.SignUpRequestBody
 import com.onetoucheasy.restauranteofertas.repository.remote.response.JWTResponse
+import com.onetoucheasy.restauranteofertas.repository.remote.response.OffersResponse
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -29,6 +30,15 @@ class DefaultRemoteDataSource @Inject constructor(
             this.tokenData
         } catch (exception: Exception) {
             Log.d("Exception SignUP", "${exception.message}")
+            throw exception
+        }
+    }
+
+    override suspend fun getOffers(): OffersResponse {
+        return try {
+            api.getOffers(this.apiKey)
+        }catch (exception: Exception){
+            Log.d("Exception get offers", "${exception.message}")
             throw exception
         }
     }

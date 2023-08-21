@@ -61,15 +61,17 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.Dp
 import com.onetoucheasy.restauranteofertas.ui.theme.White
 import com.onetoucheasy.restauranteofertas.ui.viewModels.LoginState
+import com.onetoucheasy.restauranteofertas.ui.viewModels.LoginType
 
 @Composable
-fun LoginScreen(viewModel: LoginViewModel, onRegisterClicked:() -> (Unit) , onLoginFinished:() -> (Unit)) {
+fun LoginScreen(viewModel: LoginViewModel, onRegisterClicked:() -> (Unit) , onLoginFinished:(loginType: LoginType) -> (Unit)) {
 
     val loginStatus by viewModel.loginState.observeAsState()
+    val loginType by viewModel.loginType.observeAsState()
 
     LaunchedEffect(loginStatus){
         if(loginStatus == LoginState.SUCCESS){
-            onLoginFinished()
+            loginType?.let { onLoginFinished(it)}
         }
     }
 
