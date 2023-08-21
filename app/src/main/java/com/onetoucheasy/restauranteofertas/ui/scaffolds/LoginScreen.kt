@@ -26,6 +26,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldColors
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -50,6 +51,8 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Blue
 import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
@@ -237,7 +240,7 @@ fun FormFieldContent(text: String,
                      label: (@Composable () -> (Unit))? = null)
 {
     TextField(value = text,
-    onValueChange = onValueChange,
+        onValueChange = onValueChange,
         modifier = Modifier
             .width(screenWidth * 4.0f / 5)
             .background(White)
@@ -264,9 +267,9 @@ fun FormFieldContent(text: String,
                     0.0f
                 }
             ),
-    leadingIcon = {
-        Icon(imageVector = leadingIcon, contentDescription = leadingIcon.name)
-    },
+        leadingIcon = {
+            Icon(imageVector = leadingIcon, contentDescription = leadingIcon.name)
+        },
         trailingIcon = {
             trailingIcon?.let {
                 Icon(imageVector = it, contentDescription  = trailingIcon.name)
@@ -283,7 +286,7 @@ fun FormFieldContent(text: String,
         isError = isInvalidCredential, //TODO Fix, isError only change some elements colors (ex. it does not change the text or border color)
         visualTransformation = if (isPassword){PasswordVisualTransformation()}else{VisualTransformation.None},
         singleLine = true,
-       // colors = TextFieldColors(Black)
+        colors = TextFieldDefaults.textFieldColors(containerColor = Color.White)
     )
 }
 

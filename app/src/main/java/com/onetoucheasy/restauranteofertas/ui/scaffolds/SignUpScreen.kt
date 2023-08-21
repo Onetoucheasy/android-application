@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
@@ -41,7 +42,6 @@ import com.onetoucheasy.restauranteofertas.ui.theme.Black
 import com.onetoucheasy.restauranteofertas.ui.theme.Gray
 import com.onetoucheasy.restauranteofertas.ui.theme.MainYellow
 import com.onetoucheasy.restauranteofertas.ui.theme.Transparent
-import com.onetoucheasy.restauranteofertas.ui.viewModels.LoginState
 import com.onetoucheasy.restauranteofertas.ui.viewModels.SignUpState
 import com.onetoucheasy.restauranteofertas.ui.viewModels.SignUpViewModel
 
@@ -100,7 +100,7 @@ fun SignUpScreenContent(signUpState: SignUpState, onLoginClicked: () -> (Unit), 
     var passwordValid by remember {
         mutableStateOf(false)
     }
-    var invalidCredentials by remember{
+    var invalidSignUpData by remember{
         mutableStateOf(false)
     }
 
@@ -141,30 +141,30 @@ fun SignUpScreenContent(signUpState: SignUpState, onLoginClicked: () -> (Unit), 
 
                 FormField(text = name, leadingIcon = Icons.Default.Person, onValueChange = {
                     name = it
-                    invalidCredentials = false
+                    invalidSignUpData = false
                 },
                     screenWidth = width,
-                    isInvalidCredential = invalidCredentials
+                    isInvalidCredential = invalidSignUpData
                 ){
                     FormLabel(hint = stringResource(id = R.string.form_name_hint))
                 }
                 if (isCompany){
                     FormField(text = surname, leadingIcon = Icons.Default.Person, onValueChange = {
                         surname = it
-                        invalidCredentials = false
+                        invalidSignUpData = false
                     },
                         screenWidth = width,
-                        isInvalidCredential = invalidCredentials
+                        isInvalidCredential = invalidSignUpData
                     ){
                         FormLabel(hint = stringResource(id = R.string.form_surname_hint))
                     }
 
                     FormField(text = phoneNumber, leadingIcon = Icons.Default.Person, onValueChange = {
                         phoneNumber = it
-                        invalidCredentials = false
+                        invalidSignUpData = false
                     },
                         screenWidth = width,
-                        isInvalidCredential = invalidCredentials
+                        isInvalidCredential = invalidSignUpData
                     ){
                         FormLabel(hint = stringResource(id = R.string.form_phone_number_hint))
                     }
@@ -172,56 +172,68 @@ fun SignUpScreenContent(signUpState: SignUpState, onLoginClicked: () -> (Unit), 
 
                 FormField(text = email, leadingIcon = Icons.Default.Email, onValueChange = {
                     email = it
-                    invalidCredentials = false
-                    //emailValid = it.contains("@")
-                    emailValid = true
+                    invalidSignUpData = false
+                    emailValid = it.contains("@")
                 },
                     screenWidth = width,
-                    isInvalidCredential = invalidCredentials
+                    isInvalidCredential = invalidSignUpData
                 ){
                     FormLabel(hint = stringResource(id = R.string.form_email_hint))
                 }
 
                 FormField(text = password, leadingIcon = Icons.Default.Lock, trailingIcon = Icons.Default.Warning, isPassword = true, onValueChange = {
                     password = it
-                    invalidCredentials = false
-                    //  passwordValid = it.length > 8 && it.contains()
-                    // passwordValid = it.length > 8 //TODO Add RegEx?
-                    passwordValid = true
+                    invalidSignUpData = false
+                    passwordValid = it.length > 8 //TODO Add RegEx?
                 }, screenWidth = width,
-                    isInvalidCredential = invalidCredentials
+                    isInvalidCredential = invalidSignUpData
                 ){
                     FormLabel(hint = stringResource(id = R.string.form_password_hint))
                 }
 
                 FormField(text = repeatPassword, leadingIcon = Icons.Default.Lock, trailingIcon = Icons.Default.Warning, isPassword = true, onValueChange = {
                     repeatPassword = it
-                    invalidCredentials = false
-                    //  passwordValid = it.length > 8 && it.contains()
-                    // passwordValid = it.length > 8 //TODO Add RegEx?
-                    passwordValid = true
+                    invalidSignUpData = false
+                    passwordValid = it.length > 8 && it == password //TODO Add RegEx?
                 }, screenWidth = width,
-                    isInvalidCredential = invalidCredentials
+                    isInvalidCredential = invalidSignUpData
                 ){
                     FormLabel(hint = stringResource(id = R.string.form_repeat_password_hint))
                 }
 
-                Button(onClick = {
-                    if(!emailValid || !passwordValid){
-                        invalidCredentials = true
-                    }
-                    Log.d("SignUp", "Sign Up Started")
-                    Log.d("SignUp", "$invalidCredentials")
-                    if(!invalidCredentials){
-                        Log.d("SignUp", "SignUp process started...")
-                        onRegisterlicked(name, email, password, userType)
-                    }
+                Button(
+                    onClick = {
+                        if(!emailValid || !passwordValid){
+                            invalidSignUpData = true
+                        }
+                        Log.d("SignUp", "$invalidSignUpData")
+                        if(!invalidSignUpData){
+                            Log.d("SignUp", "SignUp process started...")
+                            if(isCompany){
+                                userType = "company"
+                            }else {
+                                userType = "user"
+                            }
+                            onRegisterlicked(name, email, password, userType)
+                        }
+                        else{
+                            Log.d("SignUp", "SignUp data not valid...")
+                        }
 
-                },
+                    },
                     modifier = Modifier
                         .width(width * 3.0f / 4)
                         .align(Alignment.CenterHorizontally)
-                        .padding(top = 20.dp), colors = ButtonDefaults.buttonColors(MainYellow, Black, Gray, Black)) {
+                        .padding(top = 20.dp), colors = ButtonDefaults.buttonColors(MainYellow, Black, Gray, Black),
+                    shape = RoundedCornerShape(20),
+                    elevation = ButtonDefaults.buttonElevation(
+                        defaultElevation = 10.dp,
+                        pressedElevation = 5.dp,
+                        disabledElevation = 0.dp,
+                        hoveredElevation = 10.dp,
+                        focusedElevation = 10.dp
+                    )
+                ) {
                     Text(stringResource(id = R.string.sign_up_login_button))
                 }
 

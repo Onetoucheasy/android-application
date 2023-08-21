@@ -38,10 +38,10 @@ class SignUpViewModel @Inject constructor(
         viewModelScope.launch {
             val result = withContext(Dispatchers.IO) {
                 try {
-                    var isCompany: Boolean = false
+                    var isCompany: String = "false"
                     when(userType){
-                        "company" -> isCompany = true
-                        "user"-> isCompany = false
+                        "company" -> isCompany = "true"
+                        "user"-> isCompany = "false"
                     }
                     val signUpBody = SignUpRequestBody(name, email, password, isCompany)
                     val jwt = repository.performSignUp(signUpBody)
@@ -52,7 +52,7 @@ class SignUpViewModel @Inject constructor(
                     decodedJwt?.let {
                         _signUpState.postValue(SignUpState.SUCCESS)
 
-                        if (isCompany){
+                        if (isCompany == "true"){
                             _signUpType.postValue(SignUpType.COMPANY)
                         }else{
                             _signUpType.postValue(SignUpType.USER)
