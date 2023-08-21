@@ -119,7 +119,7 @@ fun LoginScreenContent(loginState: LoginState, onRegisterClicked: () -> (Unit),o
                contentScale = ContentScale.FillBounds
                )
            Text(
-               text = if(isCompany){stringResource(id = R.string.login_company_access)} else {stringResource(id = R.string.login_customer_access)},
+               text = stringResource(id = R.string.login_access),
                modifier = Modifier
                    .width(230.dp)
                    .padding(start = 70.dp, top = 70.dp),
@@ -144,8 +144,8 @@ fun LoginScreenContent(loginState: LoginState, onRegisterClicked: () -> (Unit),o
                FormField(text = email, leadingIcon = Icons.Default.Email, onValueChange = {
                    email = it
                    invalidCredentials = false
-                   //emailValid = it.contains("@")
-                   emailValid = true
+                   emailValid = it.contains("@")
+                   //emailValid = true
                },
                    screenWidth = width,
                    isInvalidCredential = invalidCredentials
@@ -157,8 +157,8 @@ fun LoginScreenContent(loginState: LoginState, onRegisterClicked: () -> (Unit),o
                    password = it
                    invalidCredentials = false
                    //  passwordValid = it.length > 8 && it.contains()
-                   // passwordValid = it.length > 8 //TODO Add RegEx?
-                   passwordValid = true
+                   passwordValid = it.length > 8 //TODO Add RegEx?
+                   //passwordValid = true
                }, screenWidth = width,
                    isInvalidCredential = invalidCredentials
                ){
@@ -189,14 +189,7 @@ fun LoginScreenContent(loginState: LoginState, onRegisterClicked: () -> (Unit),o
                        .width(width * 2.0f / 3)
                        .align(CenterHorizontally),
                    colors = ButtonDefaults.buttonColors(Transparent,Black, Gray,Black)) {
-                   Text(if(isCompany){stringResource(id = R.string.login_no_account_company)}else{stringResource(id = R.string.login_no_account_customer)})
                }
-           }
-
-           Button(onClick = { isCompany = !isCompany} , modifier = Modifier.align(Alignment.BottomEnd), colors = ButtonDefaults.buttonColors(
-               Transparent, Black,  Gray, Black)) {
-               Text(if(isCompany){stringResource(id = R.string.login_customer_access)}else{stringResource(id = R.string.login_company_access)})
-
            }
        }
    }
