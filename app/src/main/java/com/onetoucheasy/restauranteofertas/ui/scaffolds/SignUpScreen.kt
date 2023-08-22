@@ -8,11 +8,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -40,7 +40,6 @@ import androidx.compose.ui.unit.dp
 import com.onetoucheasy.restauranteofertas.R
 import com.onetoucheasy.restauranteofertas.ui.theme.Black
 import com.onetoucheasy.restauranteofertas.ui.theme.Gray
-import com.onetoucheasy.restauranteofertas.ui.theme.MainYellow
 import com.onetoucheasy.restauranteofertas.ui.theme.Transparent
 import com.onetoucheasy.restauranteofertas.ui.viewModels.SignUpState
 import com.onetoucheasy.restauranteofertas.ui.viewModels.SignUpViewModel
@@ -159,7 +158,7 @@ fun SignUpScreenContent(signUpState: SignUpState, onLoginClicked: () -> (Unit), 
                         FormLabel(hint = stringResource(id = R.string.form_surname_hint))
                     }
 
-                    FormField(text = phoneNumber, leadingIcon = Icons.Default.Person, onValueChange = {
+                    FormField(text = phoneNumber, leadingIcon = Icons.Default.Phone, onValueChange = {
                         phoneNumber = it
                         invalidSignUpData = false
                     },
@@ -201,41 +200,29 @@ fun SignUpScreenContent(signUpState: SignUpState, onLoginClicked: () -> (Unit), 
                     FormLabel(hint = stringResource(id = R.string.form_repeat_password_hint))
                 }
 
-                Button(
-                    onClick = {
-                        if(!emailValid || !passwordValid){
-                            invalidSignUpData = true
-                        }
-                        Log.d("SignUp", "$invalidSignUpData")
-                        if(!invalidSignUpData){
-                            Log.d("SignUp", "SignUp process started...")
-                            if(isCompany){
-                                userType = "company"
-                            }else {
-                                userType = "user"
-                            }
-                            onRegisterlicked(name, email, password, userType)
-                        }
-                        else{
-                            Log.d("SignUp", "SignUp data not valid...")
-                        }
 
-                    },
+                ButtonPrincipal(onClick = {
+                    if(!emailValid || !passwordValid){
+                        invalidSignUpData = true
+                    }
+                    Log.d("SignUp", "$invalidSignUpData")
+                    if(!invalidSignUpData){
+                        Log.d("SignUp", "SignUp process started...")
+                        if(isCompany){
+                            userType = "company"
+                        }else {
+                            userType = "user"
+                        }
+                        onRegisterlicked(name, email, password, userType)
+                    }
+                    else{
+                        Log.d("SignUp", "SignUp data not valid...")
+                    }
+
+                }, width = (width * 3.0f / 4),
+                    stringResource = R.string.sign_up_login_button,
                     modifier = Modifier
-                        .width(width * 3.0f / 4)
-                        .align(Alignment.CenterHorizontally)
-                        .padding(top = 20.dp), colors = ButtonDefaults.buttonColors(MainYellow, Black, Gray, Black),
-                    shape = RoundedCornerShape(20),
-                    elevation = ButtonDefaults.buttonElevation(
-                        defaultElevation = 10.dp,
-                        pressedElevation = 5.dp,
-                        disabledElevation = 0.dp,
-                        hoveredElevation = 10.dp,
-                        focusedElevation = 10.dp
-                    )
-                ) {
-                    Text(stringResource(id = R.string.sign_up_login_button))
-                }
+                        .align(Alignment.CenterHorizontally))
 
                 Button(onClick = { onLoginClicked() },
                     modifier = Modifier

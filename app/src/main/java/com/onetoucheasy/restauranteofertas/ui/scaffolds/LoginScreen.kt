@@ -9,6 +9,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -25,7 +26,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -52,7 +52,6 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion.Blue
 import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
@@ -167,24 +166,20 @@ fun LoginScreenContent(loginState: LoginState, onRegisterClicked: () -> (Unit),o
                    FormLabel(hint = stringResource(id = R.string.form_password_hint))
 
                }
-               Button(onClick = {
+
+               ButtonPrincipal(onClick = {
                    if(!emailValid || !passwordValid){
                        invalidCredentials = true
                    }
-                   Log.d("Token", "Login access started")
                    Log.d("Token", "$invalidCredentials")
                    if(!invalidCredentials){
-                       Log.d("Token", "Login on click")
                        onLoginClicked(email,password)
                    }
 
-                   },
-                   modifier = Modifier
-                       .width(width * 3.0f / 4)
-                       .align(CenterHorizontally)
-                       .padding(top = 50.dp), colors = ButtonDefaults.buttonColors(MainYellow, Black, Gray, Black)) {
-                    Text(stringResource(id = R.string.login_login_button))
-               }
+               }, width = (width * 3.0f / 4),
+               stringResource = R.string.login_login_button,
+               modifier = Modifier
+                   .align(CenterHorizontally))
 
                Button(onClick = { onRegisterClicked() },
                    modifier = Modifier
@@ -252,8 +247,7 @@ fun FormFieldContent(text: String,
                             Black
                         }
                     }
-                )
-                ,RoundedCornerShape(8.dp)
+                ), RoundedCornerShape(8.dp)
             )
             .alpha(
                 if (visible) {
@@ -299,4 +293,24 @@ fun FormField_Preview() {
 @Composable
 fun FormLabel(hint: String, textDecoration: TextDecoration = TextDecoration.None){
     Text(text = hint, textDecoration = textDecoration)
+}
+
+@Composable
+fun ButtonPrincipal(width: Dp, stringResource: Int, modifier: Modifier, onClick:() -> Unit = {}){
+    Button(onClick = onClick,
+        modifier = modifier
+            .width(width)
+            .padding(top = 20.dp),
+        colors = ButtonDefaults.buttonColors(MainYellow, Black, Gray, Black),
+        shape = RoundedCornerShape(20),
+        elevation = ButtonDefaults.buttonElevation(
+            defaultElevation = 10.dp,
+            pressedElevation = 5.dp,
+            disabledElevation = 0.dp,
+            hoveredElevation = 10.dp,
+            focusedElevation = 10.dp
+        )
+    ){
+        Text(stringResource(stringResource))
+    }
 }
