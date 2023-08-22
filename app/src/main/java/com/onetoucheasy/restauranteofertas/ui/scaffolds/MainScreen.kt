@@ -15,12 +15,9 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -50,7 +47,6 @@ fun MainScreen_Preview() {
 @Composable
 fun SearchBar(text: String,
                  screenWidth: Dp,
-                 visible: Boolean = true,
                  onValueChange: (String) -> (Unit))
 {
     TextField(value = text,
@@ -67,15 +63,13 @@ fun SearchBar(text: String,
                 ), RoundedCornerShape(8.dp)
             ),
         trailingIcon = {
-            Icon(Icons.Default.Search, contentDescription  = "Búsqueda", tint = Color.Black)
+            Icon(Icons.Default.Search,
+                contentDescription  = stringResource(id = R.string.main_view_search_bar_hint),
+                tint = Color.Black)
         },
         placeholder = {
                 FormLabel(hint = stringResource(R.string.main_view_search_bar_hint), TextDecoration.None)
         },
-        visualTransformation = if (true){
-            PasswordVisualTransformation()
-        }else{
-            VisualTransformation.None},
         singleLine = true,
         colors = TextFieldDefaults.textFieldColors(containerColor = Color.White)
     )
@@ -84,5 +78,5 @@ fun SearchBar(text: String,
 @Preview
 @Composable
 fun SearchBar_Preview() {
-    SearchBar("", screenWidth = 500.dp ,true , { _->Unit})
+    SearchBar("", screenWidth = 500.dp) { _ -> }
 }
