@@ -22,4 +22,6 @@
     <string name="sign_up_customer">Registro Clientes</string>
     <string name="sign_up_already_have_account">Ya estoy registrado :)</string>
     <string name="sign_up_login_button">Registrarme</string>
+
+    <string name="main_view_search_bar_hint">Busca un artículo o un establecimiento</string>
 </resources>
