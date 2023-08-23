@@ -1,29 +1,22 @@
 package com.onetoucheasy.restauranteofertas.ui.scaffolds
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -39,17 +32,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.Role.Companion.Image
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import coil.compose.SubcomposeAsyncImage
 import com.onetoucheasy.restauranteofertas.R
-import com.onetoucheasy.restauranteofertas.ui.theme.Black
+import com.onetoucheasy.restauranteofertas.repository.remote.response.Offers
 import com.onetoucheasy.restauranteofertas.ui.theme.White
 import com.onetoucheasy.restauranteofertas.ui.viewModels.MainScreenViewModel
 
@@ -60,7 +50,14 @@ fun MainScreen(viewModel: MainScreenViewModel, userType: String) {
 
 @Composable
 fun MainScreenContent() {
+    var offerList = mutableListOf<Offers>()
+    offerList.add(oferta)
+    offerList.add(oferta2)
     Text("This is the main screen")
+    Column() {
+        CustomSearchBar("", screenWidth = 500.dp) { _ -> }
+        OffersList(offerList)
+    }
 }
 
 @Preview
@@ -69,9 +66,27 @@ fun MainScreen_Preview() {
     MainScreenContent()
 }
 
+@Composable
+fun OffersList(offers: List<Offers>){
+    if(offers.isNotEmpty()){
+        LazyRow(
+            Modifier.padding(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+            items(offers,
+                key = { it.description}) {
+                OfferItem(500.dp, oferta)
+            }
+        }
+    }
+    else{
+        //MyCircularProgressIndicator()
+    }
+}
+
+
 
 @Composable
-fun OfferItem(screenWidth: Dp, modifier: Modifier = Modifier) {
+fun OfferItem(screenWidth: Dp, offer: Offers, modifier: Modifier = Modifier) {
     ElevatedCard(
         modifier = modifier
             .width(screenWidth * 4f / 5)
@@ -94,7 +109,7 @@ fun OfferItem(screenWidth: Dp, modifier: Modifier = Modifier) {
             .weight(1f)){
             AsyncImage(
                 model = "https://www.equipamientointegraldeoficinas.com/wp-content/uploads/Post-11-6.png",//serie.thumbnail.path + "."+ serie.thumbnail.extension,
-                contentDescription = "",//${NombreRestaruante}",
+                contentDescription = offer.description,
                 placeholder = painterResource(R.mipmap.image_resto_example),
                 modifier = Modifier
                     .fillMaxSize(),
@@ -112,12 +127,12 @@ fun OfferItem(screenWidth: Dp, modifier: Modifier = Modifier) {
         }
 
         Text(
-            text = "20% de descuento en carta",
+            text = offer.offerName,
             style = MaterialTheme.typography.titleMedium,
             modifier = Modifier
                 .padding(start = 20.dp, top= 20.dp))
         Text(
-            text = "De 15:30 a 18:30",
+            text = "De ${offer.startTime} a ${offer.endTime}",
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier
                 .padding(start = 20.dp, bottom = 20.dp, top = 10.dp))
@@ -127,11 +142,8 @@ fun OfferItem(screenWidth: Dp, modifier: Modifier = Modifier) {
 @Preview
 @Composable
 fun OfferItem_Preview() {
-    OfferItem(500.dp)
+    OfferItem(500.dp, Offers("1", "2x1 en Carta", "2x1 en toda la carta, excepto postres y bebidas.", "", "14:30", "17:30", ""))
 }
-
-
-
 
 
 
@@ -172,5 +184,21 @@ fun CustomSearchBar(text: String,
 fun CustomSearchBar_Preview() {
     CustomSearchBar("", screenWidth = 500.dp) { _ -> }
 }
+
+var oferta = Offers("1",
+    "2x1 en Carta",
+    "2x1 en toda la carta, excepto postres y bebidas.",
+    "",
+    "14:30",
+    "17:30",
+    "")
+var oferta2 = Offers("2",
+    "3x1 en Carta",
+    "3x1 en toda la carta, excepto postres y bebidas.",
+    "",
+    "19:30",
+    "20:30",
+    "")
+
 
 
