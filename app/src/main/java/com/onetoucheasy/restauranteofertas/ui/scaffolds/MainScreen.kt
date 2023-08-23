@@ -98,7 +98,6 @@ fun OfferItem(screenWidth: Dp, modifier: Modifier = Modifier) {
                 placeholder = painterResource(R.mipmap.image_resto_example),
                 modifier = Modifier
                     .fillMaxSize(),
-                    //.weight(1f),
                 contentScale = ContentScale.Crop,
             )
             Row() {
