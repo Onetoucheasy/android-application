@@ -89,7 +89,7 @@ fun OffersList(offers: List<Offers>){
 fun OfferItem(screenWidth: Dp, offer: Offers, modifier: Modifier = Modifier) {
     ElevatedCard(
         modifier = modifier
-            .width(screenWidth * 4f / 5)
+            .width(screenWidth * 4f / 7)
             .height(200.dp)
             .shadow(
                 elevation = 4.dp,
@@ -184,6 +184,7 @@ fun CustomSearchBar(text: String,
 fun CustomSearchBar_Preview() {
     CustomSearchBar("", screenWidth = 500.dp) { _ -> }
 }
+
 
 var oferta = Offers("1",
     "2x1 en Carta",
