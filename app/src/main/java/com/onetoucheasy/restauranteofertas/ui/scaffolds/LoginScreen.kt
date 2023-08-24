@@ -164,7 +164,6 @@ fun LoginScreenContent(loginState: LoginState, onRegisterClicked: () -> (Unit),o
                    isInvalidCredential = invalidCredentials
                ){
                    FormLabel(hint = stringResource(id = R.string.form_password_hint))
-
                }
 
                ButtonPrincipal(onClick = {
