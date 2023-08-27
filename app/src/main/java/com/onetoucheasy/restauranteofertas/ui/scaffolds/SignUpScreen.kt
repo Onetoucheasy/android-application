@@ -38,6 +38,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.onetoucheasy.restauranteofertas.R
+import com.onetoucheasy.restauranteofertas.repository.UserType
 import com.onetoucheasy.restauranteofertas.ui.theme.Black
 import com.onetoucheasy.restauranteofertas.ui.theme.Gray
 import com.onetoucheasy.restauranteofertas.ui.theme.Transparent
@@ -65,7 +66,7 @@ fun SingUpScreen(viewModel: SignUpViewModel, onLogInClicked:() -> (Unit), onSign
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignUpScreenContent(signUpState: SignUpState, onLoginClicked: () -> (Unit), onRegisterlicked: (String, String, String, String) -> (Unit)) {
+fun SignUpScreenContent(signUpState: SignUpState, onLoginClicked: () -> (Unit), onRegisterlicked: (String, String, String, UserType) -> (Unit)) {
     Text("This is the registration screen ")
     val width = LocalConfiguration.current.screenWidthDp.dp
 
@@ -73,7 +74,7 @@ fun SignUpScreenContent(signUpState: SignUpState, onLoginClicked: () -> (Unit), 
         mutableStateOf(false)
     }
     var userType by remember {
-        mutableStateOf("")
+        mutableStateOf(UserType.CUSTOMER)
     }
     var name by remember {
         mutableStateOf("")
@@ -209,9 +210,9 @@ fun SignUpScreenContent(signUpState: SignUpState, onLoginClicked: () -> (Unit), 
                     if(!invalidSignUpData){
                         Log.d("SignUp", "SignUp process started...")
                         if(isCompany){
-                            userType = "company"
+                            userType = UserType.COMPANY
                         }else {
-                            userType = "user"
+                            userType = UserType.CUSTOMER
                         }
                         onRegisterlicked(name, email, password, userType)
                     }

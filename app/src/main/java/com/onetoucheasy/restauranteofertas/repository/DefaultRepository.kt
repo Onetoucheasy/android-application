@@ -1,13 +1,19 @@
 package com.onetoucheasy.restauranteofertas.repository
 
+import com.onetoucheasy.restauranteofertas.repository.local.model.LocalOffer
+import com.onetoucheasy.restauranteofertas.repository.local.model.LocalRestaurant
+import com.onetoucheasy.restauranteofertas.repository.mappers.RemoteToLocalMapper
 import com.onetoucheasy.restauranteofertas.repository.remote.response.JWTResponse
 import com.onetoucheasy.restauranteofertas.repository.remote.RemoteDataSource
 import com.onetoucheasy.restauranteofertas.repository.remote.request.SignUpRequestBody
 import com.onetoucheasy.restauranteofertas.repository.remote.response.OffersResponse
+import com.onetoucheasy.restauranteofertas.repository.remote.response.Restaurant
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class DefaultRepository @Inject constructor(
-    private val remoteDataSource: RemoteDataSource
+    private val remoteDataSource: RemoteDataSource,
+    private val remoteToLocalMapper: RemoteToLocalMapper,
 ): Repository {
     override suspend fun performLogin(loginData: String): JWTResponse? {
         return remoteDataSource.performLogin(loginData)
@@ -15,7 +21,12 @@ class DefaultRepository @Inject constructor(
     override suspend fun performSignUp(signUpRequestBody: SignUpRequestBody): JWTResponse? {
         return remoteDataSource.performSignUp(signUpRequestBody)
     }
-    override suspend fun getOffers(): OffersResponse {
-        return remoteDataSource.getOffers()
+
+    override suspend fun getOfferList(): List<LocalOffer> {
+        return remoteToLocalMapper.mapRestaurantsResponseToLocalOffers(remoteDataSource.getOffers())
+    }
+
+    override suspend fun getRestaurantList(): List<LocalRestaurant> {
+        return remoteToLocalMapper.mapRestaurantsResponseToLocalRestaurants(remoteDataSource.getRestaurants())
     }
 }

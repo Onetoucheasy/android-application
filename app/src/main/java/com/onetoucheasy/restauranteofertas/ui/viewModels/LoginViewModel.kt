@@ -48,13 +48,7 @@ class LoginViewModel @Inject constructor(
                         _loginType.postValue(LoginType.USER)
                     }
                     _loginState.postValue(LoginState.SUCCESS)
-                    //TODO para cambio de tipo de user en backend
 
-                      /*   when (decodedJwt) {
-                             "company" -> _loginType.value = LoginType.COMPANY
-                             "user" -> _loginType.value = LoginType.USER
-                             else -> {}
-                     }*/
                 } catch (exception: Exception) {
                     _loginState.postValue(LoginState.FAILURE)
                     Log.d("Exception login", "${exception.message}")

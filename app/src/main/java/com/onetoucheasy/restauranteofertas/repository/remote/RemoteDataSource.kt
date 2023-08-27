@@ -8,4 +8,5 @@ interface RemoteDataSource {
     suspend fun performLogin(loginData: String): JWTResponse?
     suspend fun performSignUp(signUpRequestBody: SignUpRequestBody): JWTResponse?
     suspend fun getOffers(): OffersResponse
+    suspend fun getRestaurants(): OffersResponse
 }
