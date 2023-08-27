@@ -26,4 +26,9 @@ interface OneTouchApi {
     suspend fun getOffers(
         @Header("CDS-ApiKey") apiKey: String
     ): OffersResponse
+
+    @GET("restaurants")
+    suspend fun getRestaurants(
+        @Header("CDS-ApiKey") apiKey: String
+    ): OffersResponse
 }

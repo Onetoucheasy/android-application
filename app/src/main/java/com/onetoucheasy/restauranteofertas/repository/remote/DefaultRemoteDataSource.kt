@@ -42,4 +42,13 @@ class DefaultRemoteDataSource @Inject constructor(
             throw exception
         }
     }
+
+    override suspend fun getRestaurants(): OffersResponse {
+        return try {
+            api.getRestaurants(this.apiKey)
+        }catch (exception: Exception){
+            Log.d("Exception get restaurants", "${exception.message}")
+            throw exception
+        }
+    }
 }
