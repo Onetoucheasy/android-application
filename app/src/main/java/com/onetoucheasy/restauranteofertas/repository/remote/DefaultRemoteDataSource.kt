@@ -36,7 +36,8 @@ class DefaultRemoteDataSource @Inject constructor(
 
     override suspend fun getOffers(): OffersResponse {
         return try {
-            api.getOffers(this.apiKey)
+            api.getOffersEndpoint2("https://us-central1-projectkc-6ca03.cloudfunctions.net/offers")
+            //api.getOffers(this.apiKey)
         }catch (exception: Exception){
             Log.d("Exception get offers", "${exception.message}")
             throw exception
@@ -45,7 +46,8 @@ class DefaultRemoteDataSource @Inject constructor(
 
     override suspend fun getRestaurants(): OffersResponse {
         return try {
-            api.getRestaurants(this.apiKey)
+            api.getOffersEndpoint2("https://oneapibackend.free.beeceptor.com/api/offers")
+            //api.getRestaurants(this.apiKey)
         }catch (exception: Exception){
             Log.d("Exception get restaurants", "${exception.message}")
             throw exception

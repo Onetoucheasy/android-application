@@ -6,26 +6,28 @@ import com.onetoucheasy.restauranteofertas.repository.local.model.LocalRestauran
 import com.onetoucheasy.restauranteofertas.repository.remote.response.Offers
 import com.onetoucheasy.restauranteofertas.repository.remote.response.OffersResponse
 import com.onetoucheasy.restauranteofertas.repository.remote.response.Restaurant
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
 import javax.inject.Inject
 
 class RemoteToLocalMapper @Inject constructor(){
 
-    fun mapRestaurantsResponseToLocalOffers(getOfferResponse: OffersResponse): List<LocalOffer> {
+    fun mapRestaurantsResponseToLocalOffers(getOfferResponse: OffersResponse): Flow<List<LocalOffer>> {
         var localOffers =  getOfferResponse.restaurants.map { mapGetRestaurantResponseToLocalOfferList(it) }
-        return localOffers.flatten()
+        return localOffers.asFlow()
     }
 
-    fun mapRestaurantsResponseToLocalRestaurants(getRestaurantResponse: OffersResponse): List<LocalRestaurant> {
-        var localOffers =  getRestaurantResponse.restaurants.map { mapGetRestaurantResponseToLocalRestaurantList(it) }
-        return localOffers
+    fun mapRestaurantsResponseToLocalRestaurants(getRestaurantResponse: OffersResponse): Flow<List<LocalRestaurant>> {
+        var localRestaurants =  getRestaurantResponse.restaurants.map { mapGetRestaurantResponseToLocalRestaurantList(it) }
+        return localRestaurants.asFlow()
     }
 
     private fun mapGetRestaurantResponseToLocalOfferList(restaurant: Restaurant): List<LocalOffer> {
         return restaurant.offers.map { mapGetOffers(it, restaurant)}
     }
 
-    private fun mapGetRestaurantResponseToLocalRestaurantList(restaurant: Restaurant): LocalRestaurant {
-        return LocalRestaurant(
+    private fun mapGetRestaurantResponseToLocalRestaurantList(restaurant: Restaurant): List<LocalRestaurant> {
+        return listOf(LocalRestaurant(
             restaurant.id,
             restaurant.name,
             restaurant.type ,
@@ -34,7 +36,7 @@ class RemoteToLocalMapper @Inject constructor(){
             restaurant.openingHour,
             restaurant.closingHour,
             restaurant.offers
-        )
+        ))
     }
 
     private fun mapGetOffers(offer: Offers, restaurant: Restaurant): LocalOffer{

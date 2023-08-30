@@ -19,9 +19,16 @@ fun NavigationGraph(loginViewModel: LoginViewModel, signUpViewModel: SignUpViewM
     //TODO Add ViewModels here as dependencies
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Screens.LoginScreen.route){
+
         composable(Screens.LoginScreen.route){
             LoginScreen(viewModel = loginViewModel, { navController.navigate(Screens.RegisterScreen.route)}) {
                 navController.navigate(Screens.MainScreen.createRouteWithArgs(it.toString()))
+            }
+        }
+
+        composable(Screens.RegisterScreen.route){
+            SingUpScreen(viewModel = signUpViewModel, {navController.navigate(Screens.LoginScreen.route)}){
+                navController.navigate(Screens.LoginScreen.route)
             }
         }
 
@@ -35,11 +42,6 @@ fun NavigationGraph(loginViewModel: LoginViewModel, signUpViewModel: SignUpViewM
                 MainScreen(viewModel = mainViewModel, userType)
             }else{
                 navController.navigateUp()
-            }
-        }
-        composable(Screens.RegisterScreen.route){
-            SingUpScreen(viewModel = signUpViewModel, {navController.navigate(Screens.LoginScreen.route)}){
-                navController.navigate(Screens.LoginScreen.route)
             }
         }
     }

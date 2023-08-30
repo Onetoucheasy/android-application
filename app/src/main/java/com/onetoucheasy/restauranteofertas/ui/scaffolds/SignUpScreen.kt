@@ -38,7 +38,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.onetoucheasy.restauranteofertas.R
-import com.onetoucheasy.restauranteofertas.repository.UserType
+import com.onetoucheasy.restauranteofertas.domain.model.UserType
 import com.onetoucheasy.restauranteofertas.ui.theme.Black
 import com.onetoucheasy.restauranteofertas.ui.theme.Gray
 import com.onetoucheasy.restauranteofertas.ui.theme.Transparent

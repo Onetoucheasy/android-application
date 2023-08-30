@@ -22,11 +22,11 @@ class DefaultRepository @Inject constructor(
         return remoteDataSource.performSignUp(signUpRequestBody)
     }
 
-    override suspend fun getOfferList(): List<LocalOffer> {
+    override suspend fun getOfferList(): Flow<List<LocalOffer>> {
         return remoteToLocalMapper.mapRestaurantsResponseToLocalOffers(remoteDataSource.getOffers())
     }
 
-    override suspend fun getRestaurantList(): List<LocalRestaurant> {
+    override suspend fun getRestaurantList(): Flow<List<LocalRestaurant>> {
         return remoteToLocalMapper.mapRestaurantsResponseToLocalRestaurants(remoteDataSource.getRestaurants())
     }
 }

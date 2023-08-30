@@ -9,7 +9,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -30,37 +29,37 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.onetoucheasy.restauranteofertas.R
 import com.onetoucheasy.restauranteofertas.ui.theme.Black
 import com.onetoucheasy.restauranteofertas.ui.theme.Gray
 import com.onetoucheasy.restauranteofertas.ui.theme.MainYellow
 import com.onetoucheasy.restauranteofertas.ui.theme.Transparent
-import com.onetoucheasy.restauranteofertas.ui.viewModels.LoginViewModel
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion.Red
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.unit.Dp
 import com.onetoucheasy.restauranteofertas.ui.theme.White
 import com.onetoucheasy.restauranteofertas.ui.viewModels.LoginState
 import com.onetoucheasy.restauranteofertas.ui.viewModels.LoginType
+import com.onetoucheasy.restauranteofertas.ui.viewModels.LoginViewModel
 
 @Composable
 fun LoginScreen(viewModel: LoginViewModel, onRegisterClicked:() -> (Unit) , onLoginFinished:(loginType: LoginType) -> (Unit)) {
@@ -86,10 +85,6 @@ fun LoginScreen(viewModel: LoginViewModel, onRegisterClicked:() -> (Unit) , onLo
 @Composable
 fun LoginScreenContent(loginState: LoginState, onRegisterClicked: () -> (Unit),onLoginClicked: (String, String) -> (Unit)) {
     val width = LocalConfiguration.current.screenWidthDp.dp
-
-    var isCompany by remember {
-        mutableStateOf(false)
-    }
 
     var email by remember {
         mutableStateOf("")
@@ -281,7 +276,7 @@ fun FormFieldContent(text: String,
 @Preview
 @Composable
 fun FormField_Preview() {
-    FormFieldContent("", Icons.Default.Lock, Icons.Default.Warning, screenWidth = 500.dp ,true , false, true, {_->Unit}, {
+    FormFieldContent("", Icons.Default.Lock, Icons.Default.Warning, screenWidth = 500.dp ,isPassword = true , isInvalidCredential = false, visible = true, { }, {
         FormLabel(
         hint = "Password", TextDecoration.None
     )

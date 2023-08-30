@@ -10,7 +10,7 @@ data class OffersResponse(
 data class Restaurant(
     @Json(name = "id") val id: String,
     @Json(name = "name") val name: String,
-    @Json(name = "type") val type: String,
+    @Json(name = "type") val type: String = "",
     @Json(name = "latitude") val latitude: String,
     @Json(name = "longitude") val longitude: String,
     @Json(name = "openingHour") val openingHour: String,

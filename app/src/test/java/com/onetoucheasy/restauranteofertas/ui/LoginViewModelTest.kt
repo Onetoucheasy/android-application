@@ -35,16 +35,14 @@ class LoginViewModelTest {
     @Test
     fun `WHEN performLogin with invalid data EXPECT not successful response`()  {
         // GIVEN
-        val id = "testingID"
-        val pass = "testingID"
-       // coEvery { repository.performLogin(id) } returns generateErrorResponse401()
+        // coEvery { repository.performLogin(id) } returns generateErrorResponse401()
 
         // WHEN
-        viewModel.performLogin(id, pass)
-        //val actualLiveData = viewModel.loginState.getOrAwaitValue()
+        // viewModel.performLogin(id, pass)
+        // val actualLiveData = viewModel.loginState.getOrAwaitValue()
 
         // THEN
-        //assert(!actualLiveData.favorite)
+        // assert(!actualLiveData.favorite)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)

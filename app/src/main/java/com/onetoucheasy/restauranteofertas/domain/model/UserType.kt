@@ -1,4 +1,4 @@
-package com.onetoucheasy.restauranteofertas.repository
+package com.onetoucheasy.restauranteofertas.domain.model
 
 enum class UserType {
     CUSTOMER,

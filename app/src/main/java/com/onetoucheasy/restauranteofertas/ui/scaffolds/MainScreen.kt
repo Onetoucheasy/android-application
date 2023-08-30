@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.onetoucheasy.restauranteofertas.R
 import com.onetoucheasy.restauranteofertas.repository.local.model.LocalOffer
+import com.onetoucheasy.restauranteofertas.repository.local.model.LocalRestaurant
 import com.onetoucheasy.restauranteofertas.repository.local.model.LocalRestaurantShortInfo
 import com.onetoucheasy.restauranteofertas.ui.theme.White
 import com.onetoucheasy.restauranteofertas.ui.viewModels.MainScreenViewModel
@@ -51,23 +52,30 @@ import com.onetoucheasy.restauranteofertas.ui.viewModels.MainScreenViewModel
 fun MainScreen(viewModel: MainScreenViewModel, userType: String, onOfferClick: (String)-> Unit = { _->}) {
 
     val offerList by viewModel.stateOffers.collectAsState()
-    val restaurantList by viewModel.stateOffers.collectAsState()
+    val restaurantList by viewModel.stateRestaurants.collectAsState()
 
     LaunchedEffect(Unit){
-        viewModel.getOffersList()
+        viewModel.getOffers()
+    }
+
+    LaunchedEffect(Unit){
+        viewModel.getRestaurants()
     }
 
     fun onOfferFavClicked(offerID: String) {
-        //viewModel.updateFavClicked(offerID)
+        //viewModel.updateFavClicked(offerID) // TODO: to save Favs Offers
     }
 
-    MainScreenContent(offerList, onOfferClicked= onOfferClick) { offer ->
+
+    MainScreenContent(offerList, restaurantList, onOfferClicked= onOfferClick) { offer ->
         onOfferFavClicked(offer)
     }
+
 }
 
 @Composable
 fun MainScreenContent(offers: List<LocalOffer>,
+                      restaurants: List<LocalRestaurant>,
                       onOfferClicked: (String) -> Unit,
                       onOfferFavClicked: (String) -> Unit) {
 
@@ -94,18 +102,11 @@ fun MainScreenContent(offers: List<LocalOffer>,
     }
 }
 
-/*
-@Preview(showBackground = true)
-@Composable
-fun MainScreen_Preview() {
-    MainScreenContent()
-}*/
-
 
 @Composable
 fun TabScreen(modifier: Modifier = Modifier,
-              offers: @Composable() () -> Unit,
-              restaurants: @Composable() () -> Unit,) {
+              offers: @Composable () -> Unit,
+              restaurants: @Composable () -> Unit,) {
     var tabIndex by remember { mutableStateOf(0) }
     val tabs = listOf("Ofertas", "Restaurantes")
 
@@ -136,13 +137,13 @@ fun OffersList(offers: List<LocalOffer>){
             Modifier,
             verticalArrangement = Arrangement.spacedBy(16.dp)) {
             items(offers,
-                key = { it.description}) {
-                OfferItem(oferta)
+                key = { it.hashCode()}) {
+                OfferItem(it)
             }
         }
-    }
+    } // TODO: Incluir progressview para dar feedback de carga al usuario
     else{
-        //MyCircularProgressIndicator()
+
     }
 }
 
@@ -160,8 +161,6 @@ fun OfferItem(offer: LocalOffer, modifier: Modifier = Modifier) {
                 spotColor = Color(0x40000000),
                 ambientColor = Color(0x40000000)
             ),
-
-        //elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
         shape = CardDefaults.elevatedShape,
         colors = CardDefaults.cardColors(
             containerColor = Color(0xFFFFF9E8)
@@ -172,7 +171,7 @@ fun OfferItem(offer: LocalOffer, modifier: Modifier = Modifier) {
             .height(15.dp)
             .weight(1f)){
             AsyncImage(
-                model = "https://www.equipamientointegraldeoficinas.com/wp-content/uploads/Post-11-6.png",//serie.thumbnail.path + "."+ serie.thumbnail.extension,
+                model = offer.image,
                 contentDescription = offer.description,
                 placeholder = painterResource(R.mipmap.image_resto_example),
                 modifier = Modifier
@@ -181,7 +180,7 @@ fun OfferItem(offer: LocalOffer, modifier: Modifier = Modifier) {
             )
             Row() {
                 Text(
-                    text = "Restaurante Pepito",
+                    text = offer.restaurant.name,
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
                     color = Color.White,
@@ -196,19 +195,12 @@ fun OfferItem(offer: LocalOffer, modifier: Modifier = Modifier) {
             modifier = Modifier
                 .padding(start = 20.dp, top= 20.dp))
         Text(
-            text = "De ${offer.startTime} a ${offer.endTime}",
+            text = "De ${offer.startTime} a ${offer.endTime}", // TODO: Add to Strings Resources
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier
                 .padding(start = 20.dp, bottom = 20.dp, top = 10.dp))
     }
 }
-
-@Preview
-@Composable
-fun OfferItem_Preview() {
-    OfferItem(LocalOffer("1", restaurant = LocalRestaurantShortInfo("1", "NombreRestaurante"),"2x1 en Carta", "2x1 en toda la carta, excepto postres y bebidas.", "", "14:30", "17:30", ""))
-}
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -221,7 +213,6 @@ fun CustomSearchBar(text: String,
         onValueChange = onValueChange,
         modifier = Modifier
             .width(screenWidth * 4.0f / 5 - 50.dp)
-            //.fillMaxWidth()
             .background(White)
             .padding(5.dp)
             .clip(RoundedCornerShape(8.dp))
@@ -239,14 +230,31 @@ fun CustomSearchBar(text: String,
     )
 }
 
+
+@Preview(showBackground = true)
+@Composable
+fun MainScreen_Preview() {
+    offerMockList.add(offerMock1)
+    offerMockList.add(offerMock2)
+    MainScreenContent(offerMockList, restaurantMockList, { _ -> }, { _ -> })
+}
+
+
+@Preview
+@Composable
+fun OfferItem_Preview() {
+    OfferItem(LocalOffer("1", restaurant = LocalRestaurantShortInfo("1", "Restaurant Name"),"2x1 in Menu", "2x1 in all dishes (desserts and beverages not included).", "", "14:30", "17:30", ""))
+}
+
+
 @Preview
 @Composable
 fun CustomSearchBar_Preview() {
-    //CustomSearchBar( "", screenWidth = 500.dp) { _ -> }
+    CustomSearchBar( "", screenWidth = 500.dp, modifier = Modifier) { _ -> }
 }
 
-var oferta = LocalOffer("1",
-    restaurant = LocalRestaurantShortInfo(name = "Restaurante Pepito",
+var offerMock1 = LocalOffer("1",
+    restaurant = LocalRestaurantShortInfo(name = "Restaurant Name",
         id = "String"),
     "2x1 en Carta",
     "2x1 en toda la carta, excepto postres y bebidas.",
@@ -254,8 +262,9 @@ var oferta = LocalOffer("1",
     "14:30",
     "17:30",
     "")
-var oferta2 = LocalOffer("2",
-    restaurant = LocalRestaurantShortInfo(name = "Restaurante Pepito",
+
+var offerMock2 = LocalOffer("2",
+    restaurant = LocalRestaurantShortInfo(name = "Restaurant Name",
         id = "String"),
     "3x1 en Carta",
     "3x1 en toda la carta, excepto postres y bebidas.",
@@ -264,5 +273,6 @@ var oferta2 = LocalOffer("2",
     "20:30",
     "")
 
+var offerMockList = mutableListOf<LocalOffer>()
 
-var offerList = mutableListOf<LocalOffer>()
+var restaurantMockList = mutableListOf<LocalRestaurant>()

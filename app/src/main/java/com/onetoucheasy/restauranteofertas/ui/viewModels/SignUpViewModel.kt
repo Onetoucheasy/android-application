@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.auth0.android.jwt.JWT
 import com.onetoucheasy.restauranteofertas.repository.Repository
-import com.onetoucheasy.restauranteofertas.repository.UserType
+import com.onetoucheasy.restauranteofertas.domain.model.UserType
 import com.onetoucheasy.restauranteofertas.repository.remote.request.SignUpRequestBody
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
