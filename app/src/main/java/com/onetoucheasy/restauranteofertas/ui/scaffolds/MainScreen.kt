@@ -1,6 +1,8 @@
 package com.onetoucheasy.restauranteofertas.ui.scaffolds
 
+import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -49,13 +51,14 @@ import com.onetoucheasy.restauranteofertas.ui.theme.White
 import com.onetoucheasy.restauranteofertas.ui.viewModels.MainScreenViewModel
 
 @Composable
-fun MainScreen(viewModel: MainScreenViewModel, userType: String, onOfferClick: (String)-> Unit = { _->}) {
+fun MainScreen(viewModel: MainScreenViewModel, userType: String, onOfferClick: (String)-> Unit = { _->}) { // onOfferClick: (LocalOffer), not id since using memory
 
     val offerList by viewModel.stateOffers.collectAsState()
     val restaurantList by viewModel.stateRestaurants.collectAsState()
 
     LaunchedEffect(Unit){
         viewModel.getOffers()
+        Log.d("Tag","MainScreen...")
     }
 
     LaunchedEffect(Unit){
@@ -97,8 +100,8 @@ fun MainScreenContent(offers: List<LocalOffer>,
             }
         TabScreen(modifier = Modifier
             .padding(),
-            { OffersList(offers)},
-            { OffersList(offers)} )
+            { OffersList(offers, onOfferClick = onOfferClicked)},
+            { OffersList(offers, onOfferClicked)} )
     }
 }
 
@@ -130,7 +133,7 @@ fun TabScreen(modifier: Modifier = Modifier,
 
 
 @Composable
-fun OffersList(offers: List<LocalOffer>){
+fun OffersList(offers: List<LocalOffer>, onOfferClick: (String) -> Unit){ // LocalOffer instead of Sting?
 
     if(offers.isNotEmpty()){
         LazyColumn(
@@ -138,7 +141,7 @@ fun OffersList(offers: List<LocalOffer>){
             verticalArrangement = Arrangement.spacedBy(16.dp)) {
             items(offers,
                 key = { it.hashCode()}) {
-                OfferItem(it)
+                OfferItem(it, onOfferClick = onOfferClick)
             }
         }
     } // TODO: Incluir progressview para dar feedback de carga al usuario
@@ -150,7 +153,7 @@ fun OffersList(offers: List<LocalOffer>){
 
 
 @Composable
-fun OfferItem(offer: LocalOffer, modifier: Modifier = Modifier) {
+fun OfferItem(offer: LocalOffer, modifier: Modifier = Modifier, onOfferClick: (String) -> Unit) { // todo: change to UUID
     ElevatedCard(
         modifier = modifier
             .fillMaxWidth()
@@ -160,7 +163,8 @@ fun OfferItem(offer: LocalOffer, modifier: Modifier = Modifier) {
                 elevation = 10.dp,
                 spotColor = Color(0x40000000),
                 ambientColor = Color(0x40000000)
-            ),
+            )
+            .clickable { onOfferClick(offer.id) },
         shape = CardDefaults.elevatedShape,
         colors = CardDefaults.cardColors(
             containerColor = Color(0xFFFFF9E8)
@@ -243,7 +247,8 @@ fun MainScreen_Preview() {
 @Preview
 @Composable
 fun OfferItem_Preview() {
-    OfferItem(LocalOffer("1", restaurant = LocalRestaurantShortInfo("1", "Restaurant Name"),"2x1 in Menu", "2x1 in all dishes (desserts and beverages not included).", "", "14:30", "17:30", ""))
+    val onOfferClick: (String) -> Unit = {}
+    OfferItem(LocalOffer("1", restaurant = LocalRestaurantShortInfo("1", "Restaurant Name"),"2x1 in Menu", "2x1 in all dishes (desserts and beverages not included).", "", "14:30", "17:30", ""), onOfferClick = onOfferClick)
 }
 
 
