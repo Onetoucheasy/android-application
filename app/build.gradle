@@ -98,6 +98,9 @@ dependencies {
     kaptTest 'com.google.dagger:hilt-compiler:2.45'
     testImplementation("org.robolectric:robolectric:4.10.3")
     testImplementation 'app.cash.turbine:turbine:0.12.1'
+    testImplementation 'org.mockito:mockito-core:3.11.2' // added for DetailScreenTest
+    testImplementation 'org.mockito:mockito-android:3.11.2'
+//    androidTestImplementation 'androidx.compose.ui:ui-test-junit4:1.6.0-alpha04' // added for DetailScreenTest
 
     //JWT DECODE
     implementation 'com.auth0.android:jwtdecode:2.0.2'

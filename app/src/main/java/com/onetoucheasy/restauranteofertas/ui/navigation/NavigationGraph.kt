@@ -10,6 +10,7 @@ import androidx.navigation.navArgument
 import com.onetoucheasy.restauranteofertas.ui.scaffolds.DetailScreen
 import com.onetoucheasy.restauranteofertas.ui.scaffolds.LoginScreen
 import com.onetoucheasy.restauranteofertas.ui.scaffolds.MainScreen
+import com.onetoucheasy.restauranteofertas.ui.scaffolds.RestaurantScreen
 import com.onetoucheasy.restauranteofertas.ui.scaffolds.SingUpScreen
 import com.onetoucheasy.restauranteofertas.ui.viewModels.LoginViewModel
 import com.onetoucheasy.restauranteofertas.ui.viewModels.MainScreenViewModel
@@ -35,7 +36,7 @@ fun NavigationGraph(loginViewModel: LoginViewModel, signUpViewModel: SignUpViewM
             MainScreen(viewModel = mainViewModel, userType = "CUSTOMER") { id: String ->
                 navController.navigate(Screens.DetailScreen.createRouteWithArgs(id))
             }
-            Log.e("Tag","NavigationGraph > NavHost > composable > Screens.MainScreen.route")
+            Log.d("Tag","NavigationGraph > NavHost > composable > Screens.MainScreen.route")
         }
         // region Previous Screens.MainScreen
 //        composable(Screens.MainScreen.route, arguments = listOf(
@@ -54,14 +55,27 @@ fun NavigationGraph(loginViewModel: LoginViewModel, signUpViewModel: SignUpViewM
         composable(Screens.DetailScreen.route,
         arguments = listOf(
             navArgument(Screens.DetailScreen.ARG_OFFER_ID) {
-                type = NavType.StringType // LongType
+                type = NavType.StringType
             }
         )
         ) {
-            Log.e("Tag","NavigationGraph > NavHost > composable > Screens.DetailScreen.route")
+            Log.d("Tag","NavigationGraph > NavHost > composable > Screens.DetailScreen.route")
             val id = it.arguments?.getString(Screens.DetailScreen.ARG_OFFER_ID)
             if (id != null) {
                 DetailScreen(viewModel = mainViewModel, id = id)
+            }
+        }
+        composable(Screens.RestaurantScreen.route,
+            arguments = listOf(
+                navArgument(Screens.RestaurantScreen.ARG_RESTAURANT_ID) {
+                    type = NavType.StringType
+                }
+            )
+        ) {
+            Log.d("Tag","NavigationGraph > NavHost > composable > Screens.RestaurantScreen.route")
+            val id = it.arguments?.getString(Screens.RestaurantScreen.ARG_RESTAURANT_ID)
+            if (id != null) {
+                RestaurantScreen(viewModel = mainViewModel, id = id)
             }
         }
     }
