@@ -10,5 +10,5 @@ data class LocalRestaurant(
     val longitude: String,
     val openingHour: String,
     val closingHour: String,
-    val offers: List<Offers>
+    val offers: List<Offers> // try List<LocalOffer>
 )

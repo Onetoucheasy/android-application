@@ -6,8 +6,6 @@ import com.onetoucheasy.restauranteofertas.repository.mappers.RemoteToLocalMappe
 import com.onetoucheasy.restauranteofertas.repository.remote.response.JWTResponse
 import com.onetoucheasy.restauranteofertas.repository.remote.RemoteDataSource
 import com.onetoucheasy.restauranteofertas.repository.remote.request.SignUpRequestBody
-import com.onetoucheasy.restauranteofertas.repository.remote.response.OffersResponse
-import com.onetoucheasy.restauranteofertas.repository.remote.response.Restaurant
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -27,6 +25,6 @@ class DefaultRepository @Inject constructor(
     }
 
     override suspend fun getRestaurantList(): Flow<List<LocalRestaurant>> {
-        return remoteToLocalMapper.mapRestaurantsResponseToLocalRestaurants(remoteDataSource.getRestaurants())
+        return remoteToLocalMapper.mapRestaurantsResponseToLocalRestaurantsSingleList(remoteDataSource.getRestaurants())
     }
 }

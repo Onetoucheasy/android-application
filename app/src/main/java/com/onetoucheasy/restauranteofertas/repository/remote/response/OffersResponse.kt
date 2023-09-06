@@ -1,5 +1,6 @@
 package com.onetoucheasy.restauranteofertas.repository.remote.response
 
+import com.onetoucheasy.restauranteofertas.repository.local.model.LocalOffer
 import com.squareup.moshi.Json
 
 data class OffersResponse(
@@ -15,7 +16,7 @@ data class Restaurant(
     @Json(name = "longitude") val longitude: String,
     @Json(name = "openingHour") val openingHour: String,
     @Json(name = "closingHour") val closingHour: String,
-    @Json(name = "offers") val offers: List<Offers>
+    @Json(name = "offers") val offers: List<Offers> // try List<LocalOffer>
 )
 
 data class Offers(

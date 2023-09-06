@@ -8,6 +8,7 @@ import com.onetoucheasy.restauranteofertas.repository.remote.response.OffersResp
 import com.onetoucheasy.restauranteofertas.repository.remote.response.Restaurant
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
 
 class RemoteToLocalMapper @Inject constructor(){
@@ -39,7 +40,7 @@ class RemoteToLocalMapper @Inject constructor(){
         ))
     }
 
-    private fun mapGetOffers(offer: Offers, restaurant: Restaurant): LocalOffer{
+    private fun mapGetOffers(offer: Offers, restaurant: Restaurant): LocalOffer{ // try offer: LocalOffer??
         return LocalOffer(
             offer.id,
             LocalRestaurantShortInfo(restaurant.id, restaurant.name),
@@ -50,4 +51,10 @@ class RemoteToLocalMapper @Inject constructor(){
             offer.endTime,
             offer.postTime)
     }
+
+    fun mapRestaurantsResponseToLocalRestaurantsSingleList(getRestaurantResponse: OffersResponse): Flow<List<LocalRestaurant>> {
+        val localRestaurants = getRestaurantResponse.restaurants.flatMap { mapGetRestaurantResponseToLocalRestaurantList(it) }
+        return flowOf(localRestaurants)
+    }
+
 }

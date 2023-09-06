@@ -51,6 +51,7 @@ import com.onetoucheasy.restauranteofertas.R
 import com.onetoucheasy.restauranteofertas.repository.local.model.LocalOffer
 import com.onetoucheasy.restauranteofertas.repository.local.model.LocalRestaurant
 import com.onetoucheasy.restauranteofertas.repository.local.model.LocalRestaurantShortInfo
+import com.onetoucheasy.restauranteofertas.repository.remote.response.Offers
 import com.onetoucheasy.restauranteofertas.ui.theme.White
 import com.onetoucheasy.restauranteofertas.ui.viewModels.MainScreenViewModel
 
@@ -64,13 +65,14 @@ fun MainScreen(
 ) {
 
     val offerList by viewModel.stateOffers.collectAsState()
-//    val restaurantList by viewModel.stateRestaurants.collectAsState()
-    val restaurantList = restaurantsSim // mock here, not below
+    val offersList: List<Offers> = emptyList()
+    val restaurantList by viewModel.stateRestaurants.collectAsState()
+//    val restaurantList = restaurantsSim // mock here, not below
 
-    LaunchedEffect(Unit){
-        Log.d("Tag","MainScreen...")
-//        viewModel.getRestaurants() // crashes com.squareup.moshi.JsonDataException: Required value 'restaurant' missing at $.restaurants[0].offers[1]
-//        viewModel.getOffers() // crash: Required value 'restaurant' missing at $.restaurants[0].offers[1]
+    LaunchedEffect(Unit) {
+        Log.d("Tag", "MainScreen...")
+        viewModel.getRestaurants() // crashes com.squareup.moshi.JsonDataException: Required value 'restaurant' missing at $.restaurants[0].offers[1]
+        viewModel.getOffers() // crash: Required value 'restaurant' missing at $.restaurants[0].offers[1]
     }
 
     fun onOfferFavClicked(offerID: String) {
@@ -78,22 +80,23 @@ fun MainScreen(
     }
 
     MainScreenContent(
-        offerList,
+        offersList, // different than offerList
         restaurantList,
-        onOfferClicked= onOfferClick,
+        onOfferClicked = onOfferClick,
         onRestaurantClicked = onRestaurantClick,
     ) { offer ->
         onOfferFavClicked(offer)
     }
 
     Thread.sleep(500)
-    Log.d("Tag","MainScreen > MainScreenContent > sleep 500ms > restaurantList: $restaurantList") //
-    Log.d("Tag","MainScreen > MainScreenContent > sleep 500ms > offerList: $offerList") //
+    Log.d("Tag","🎉MainScreen > MainScreenContent > sleep 500ms > restaurantList:\n count = ${restaurantList.count()}\nvalue = $restaurantList") //
+//    Log.d("Tag","MainScreen > MainScreenContent > sleep 500ms > offerList: $offerList") //
 }
 
 @Composable
 fun MainScreenContent( // Blue
-    offers: List<LocalOffer>,
+    offers: List<Offers>, // a change fm List<LocalOffer>
+//    offers = restaurant.offers
     restaurants: List<LocalRestaurant>,
     onOfferClicked: (String) -> Unit,
     onRestaurantClicked: (String) -> Unit,
@@ -102,14 +105,14 @@ fun MainScreenContent( // Blue
     Column(modifier = Modifier
         .padding(8.dp)) {
         Row(modifier = Modifier
-            .background(Color.Blue) // todo: remove after testing
+//            .background(Color.Blue) // todo: remove after testing
             .fillMaxWidth())
         {
             CustomSearchBar( "", screenWidth = 500.dp, Modifier.weight(1f)) { _ -> }
             Box(modifier = Modifier.height(60.dp)) {
                 Icon(modifier = Modifier
                     .align(Alignment.Center)
-                    .background(Color.Gray) // todo: change back to white
+                    .background(Color.White) // todo: change back to white
                     .fillMaxWidth()
                     .padding(top = 5.dp, bottom = 5.dp),
                     imageVector = Icons.Default.Menu,
@@ -150,7 +153,7 @@ fun TabSection( // Green
     val tabs = listOf("Ofertas", "Restaurantes")
 
     Column(modifier = Modifier
-        .background(Color.Green)  // todo: remove after testing
+//        .background(Color.Green)  // todo: remove after testing
         .fillMaxWidth()
         .padding(16.dp)) {
         TabRow(
@@ -165,6 +168,10 @@ fun TabSection( // Green
                 )
             }
         }
+//        when (tabIndex) {
+//            0 -> OffersList(offersList, onOfferClick) // ⭐️ Fix for click nav??
+//            1 -> RestaurantList(restaurantsList, onRestaurantClick)
+//        }
         when (tabIndex) {
             0 -> offersList()
             1 -> restaurantsList()
@@ -175,19 +182,22 @@ fun TabSection( // Green
 @Composable // Red
 fun OfferTabSection(
     restaurants: List<LocalRestaurant>, // w List<Offers>
-    offers: List<LocalOffer>,
+//    offers: List<LocalOffer>,
+    offers: List<Offers>,
     onOfferClick: (String) -> Unit,
     onRestaurantClick: (String) -> Unit)
 {
     if(restaurants.isNotEmpty()){
-        Log.d("Tag","⭐️OfferTabSection > restaurants: $restaurants") // only 1 restaurant comes though... prints all restaurantsSim
-        Log.d("Tag","⭐️OfferTabSection > offers: $offers")
+        Log.d("Tag","⭐️OfferTabSection > restaurants:\ncount = ${restaurants.count()}\nvalue = $restaurants") // only 1 restaurant comes though... prints all restaurantsSim
+//        Log.d("Tag","⭐️OfferTabSection > offers: $offers")
         LazyColumn(
-            modifier = Modifier
-                .background(Color.Red), // todo: remove after testing
+            modifier = Modifier,
+//                .background(Color.Red), // todo: remove after testing
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             items(restaurants) { restaurant ->
+                var counter: Int = 1
+                Log.d("Tag","⭐️OfferTabSection > items(restaurant)$counter: ${restaurant.name}")
                 Text(text = restaurant.name, style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold))
                 LazyRow(
                     modifier = Modifier
@@ -195,14 +205,17 @@ fun OfferTabSection(
                         .padding(top = 8.dp),
                     horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
+                    var offersPack = restaurant.offers
 //                    items(offers) { offer ->
 //                        OfferItem(offer = offer, onOfferClick = onOfferClick)
 //                    }
-                    items(restaurant.offers, key = { it.hashCode()}) {
+//                    items(restaurant.offers, key = { it.hashCode()}) {
+                    items(offersPack, key = { it.hashCode()}) {
                         Log.d("Tag","offers.count() ${restaurant.offers.count()}")
                         OfferItem(it, onOfferClick = onOfferClick)
                     }
                 }
+                counter +=1
             }
         }
     } // TODO: Incluir progressview para dar feedback de carga al usuario
@@ -211,10 +224,10 @@ fun OfferTabSection(
 }
 
 @Composable
-fun OfferItem(offer: LocalOffer, modifier: Modifier = Modifier, onOfferClick: (String) -> Unit) { // todo: change to UUID
+fun OfferItem(offer: Offers, modifier: Modifier = Modifier, onOfferClick: (String) -> Unit) { // todo: change to UUID
     ElevatedCard(
         modifier = modifier
-            .background(Color.Blue) // todo: remove after debugging
+//            .background(Color.Blue) // todo: remove after debugging
             .fillMaxWidth()
             .height(200.dp)
             .padding(10.dp)
@@ -239,12 +252,12 @@ fun OfferItem(offer: LocalOffer, modifier: Modifier = Modifier, onOfferClick: (S
                 contentDescription = offer.description,
                 placeholder = painterResource(R.mipmap.image_resto_example),
                 modifier = Modifier
-                    .fillMaxSize(),
+                    .fillMaxWidth(), // or fillMaxSize()??
                 contentScale = ContentScale.Crop,
             )
             Row() {
                 Text(
-                    text = offer.restaurant.name,
+                    text = offer.offerName,
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
                     color = Color.White,
@@ -362,8 +375,8 @@ fun CustomSearchBar(text: String, screenWidth: Dp, modifier: Modifier, onValueCh
 @Composable
 fun MainScreen_Preview() {
     val onOfferFavClick: (String) -> Unit = {}
-    offerMockList.add(offerMock1)
-    offerMockList.add(offerMock2)
+    offerMockList.add(offerMock3)
+    offerMockList.add(offerMock4)
     MainScreenContent(offerMockList, restaurantMockList, { _ -> }, { _ -> }, onOfferFavClicked = onOfferFavClick)
 }
 
@@ -395,7 +408,8 @@ fun TabScreen_Preview(
 @Composable
 fun OfferItem_Preview() {
     val onOfferClick: (String) -> Unit = {}
-    OfferItem(LocalOffer("1", restaurant = LocalRestaurantShortInfo("1", "Restaurant Name"),"2x1 in Menu", "2x1 in all dishes (desserts and beverages not included).", "", "14:30", "17:30", ""), onOfferClick = onOfferClick)
+//    OfferItem(LocalOffer("1", restaurant = LocalRestaurantShortInfo("1", "Restaurant Name"),"2x1 in Menu", "2x1 in all dishes (desserts and beverages not included).", "", "14:30", "17:30", ""), onOfferClick = onOfferClick)
+    OfferItem(Offers("1","2x1 in Menu", "2x1 in all dishes (desserts and beverages not included).", "", "14:30", "17:30", ""), onOfferClick = onOfferClick)
 }
 //endregion
 
@@ -421,6 +435,24 @@ var offerMock2 = LocalOffer("2",
     "20:30",
     "")
 
+var offerMock3 = Offers(
+    "3",
+    "3x1 en Carta",
+    "3x1 en toda la carta, excepto postres y bebidas.",
+    "",
+    "14:30",
+    "17:30",
+    "")
+
+var offerMock4 = Offers(
+    "4",
+    "4x1 en Carta",
+    "4x1 en toda la carta, excepto postres y bebidas.",
+    "",
+    "14:30",
+    "17:30",
+    "")
+
 var restauranteMock1 = LocalRestaurant(
     id = "123",
     name = "Restaurante Mock 1",
@@ -430,12 +462,13 @@ var restauranteMock1 = LocalRestaurant(
     openingHour = "1000",
     closingHour = "2359",
     offers = listOf(
-        LocalOffer(
+//        LocalOffer(
+        Offers(
             id = "b2e21a5e-958f-4ab8-84fe-7d78b63b9101",
-            restaurant = LocalRestaurantShortInfo(
-                id = "123",
-                name = "Restaurante Mock 1"
-            ),
+//            restaurant = LocalRestaurantShortInfo(
+//                id = "123",
+//                name = "Restaurante Mock 1"
+//            ),
             offerName = "OfferNameMock1-1",
             description = "Mock description1-1 mock Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, ",
             image = "https://www.camarero10.com/wp-content/uploads/2020/02/como-distribuir-un-restaurante.jpg",
@@ -443,12 +476,13 @@ var restauranteMock1 = LocalRestaurant(
             endTime = "2023-08-09T17:00:00Z",
             postTime = "22023-08-09T11:00:00Z"
         ),
-        LocalOffer(
+//        LocalOffer(
+        Offers(
             id = "b2e21a5e-958f-4ab8-84fe-7d78b63b9102",
-            restaurant = LocalRestaurantShortInfo(
-                id = "123",
-                name = "Restaurante Mock 1"
-            ),
+//            restaurant = LocalRestaurantShortInfo(
+//                id = "123",
+//                name = "Restaurante Mock 1"
+//            ),
             offerName = "OfferNameMock1-2",
             description = "Mock description1-2 mock Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, ",
             image = "https://www.camarero10.com/wp-content/uploads/2020/02/como-distribuir-un-restaurante.jpg",
@@ -456,12 +490,13 @@ var restauranteMock1 = LocalRestaurant(
             endTime = "2023-08-09T17:00:00Z",
             postTime = "22023-08-09T11:00:00Z"
         ),
-        LocalOffer(
+//        LocalOffer(
+        Offers(
             id = "b2e21a5e-958f-4ab8-84fe-7d78b63b9103",
-            restaurant = LocalRestaurantShortInfo(
-                id = "123",
-                name = "Restaurante Mock 1"
-            ),
+//            restaurant = LocalRestaurantShortInfo(
+//                id = "123",
+//                name = "Restaurante Mock 1"
+//            ),
             offerName = "OfferNameMock1-3",
             description = "Mock description1-3 mock Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, ",
             image = "https://www.camarero10.com/wp-content/uploads/2020/02/como-distribuir-un-restaurante.jpg",
@@ -481,12 +516,13 @@ var restauranteMock2 = LocalRestaurant(
     openingHour = "1000",
     closingHour = "2359",
     offers = listOf(
-        LocalOffer(
+//        LocalOffer(
+        Offers(
             id = "b2e21a5e-958f-4ab8-84fe-7d78b63b9201",
-            restaurant = LocalRestaurantShortInfo(
-                id = "456",
-                name = "Restaurante Mock 2"
-            ),
+//            restaurant = LocalRestaurantShortInfo(
+//                id = "456",
+//                name = "Restaurante Mock 2"
+//            ),
             offerName = "OfferNameMock2-1",
             description = "Mock description2-1 mock Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, ",
             image = "https://www.camarero10.com/wp-content/uploads/2020/02/como-distribuir-un-restaurante.jpg",
@@ -494,12 +530,13 @@ var restauranteMock2 = LocalRestaurant(
             endTime = "2023-08-09T17:00:00Z",
             postTime = "22023-08-09T11:00:00Z"
         ),
-        LocalOffer(
+//        LocalOffer(
+            Offers(
             id = "b2e21a5e-958f-4ab8-84fe-7d78b63b9202",
-            restaurant = LocalRestaurantShortInfo(
-                id = "456",
-                name = "Restaurante Mock 2"
-            ),
+//            restaurant = LocalRestaurantShortInfo(
+//                id = "456",
+//                name = "Restaurante Mock 2"
+//            ),
             offerName = "OfferNameMock2-2",
             description = "Mock description2-2 mock Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, ",
             image = "https://www.camarero10.com/wp-content/uploads/2020/02/como-distribuir-un-restaurante.jpg",
@@ -507,12 +544,13 @@ var restauranteMock2 = LocalRestaurant(
             endTime = "2023-08-09T17:00:00Z",
             postTime = "22023-08-09T11:00:00Z"
         ),
-        LocalOffer(
+//        LocalOffer(
+            Offers(
             id = "b2e21a5e-958f-4ab8-84fe-7d78b63b9203",
-            restaurant = LocalRestaurantShortInfo(
-                id = "456",
-                name = "Restaurante Mock 2"
-            ),
+//            restaurant = LocalRestaurantShortInfo(
+//                id = "456",
+//                name = "Restaurante Mock 2"
+//            ),
             offerName = "OfferNameMock2-3",
             description = "Mock description2-3 mock Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, ",
             image = "https://www.camarero10.com/wp-content/uploads/2020/02/como-distribuir-un-restaurante.jpg",
@@ -532,12 +570,13 @@ var restauranteMock4 = LocalRestaurant(
     openingHour = "1004",
     closingHour = "2304",
     offers = listOf(
-        LocalOffer(
+//        LocalOffer(
+            Offers(
             id = "401",
-            restaurant = LocalRestaurantShortInfo(
-                id = "4",
-                name = "Rest Mock 4"
-            ),
+//            restaurant = LocalRestaurantShortInfo(
+//                id = "4",
+//                name = "Rest Mock 4"
+//            ),
             offerName = "OfferNameMock41",
             description = "Mock desc 41 mock",
             image = "https://www.camarero10.com/wp-content/uploads/2020/02/como-distribuir-un-restaurante.jpg",
@@ -545,12 +584,13 @@ var restauranteMock4 = LocalRestaurant(
             endTime = "1804",
             postTime = "1504"
         ),
-        LocalOffer(
+//        LocalOffer(
+            Offers(
             id = "402",
-            restaurant = LocalRestaurantShortInfo(
-                id = "4",
-                name = "Rest Mock 4"
-            ),
+//            restaurant = LocalRestaurantShortInfo(
+//                id = "4",
+//                name = "Rest Mock 4"
+//            ),
             offerName = "OfferNameMock42",
             description = "Mock desc 42 mock",
             image = "https://www.restaurantelua.com/wp-content/uploads/2020/11/01_slider_restaurante_movil.jpg",
@@ -558,12 +598,13 @@ var restauranteMock4 = LocalRestaurant(
             endTime = "1804",
             postTime = "1504"
         ),
-        LocalOffer(
+//        LocalOffer(
+            Offers(
             id = "403",
-            restaurant = LocalRestaurantShortInfo(
-                id = "4",
-                name = "Rest Mock 4"
-            ),
+//            restaurant = LocalRestaurantShortInfo(
+//                id = "4",
+//                name = "Rest Mock 4"
+//            ),
             offerName = "OfferNameMock43",
             description = "Mock desc 43 mock",
             image = "https://www.hotelaiguablava.com/media/restaurante/espacios/restaurante/01a-restaurante-hotel-aigua-blava.jpg",
@@ -582,12 +623,13 @@ var restauranteMock5 = LocalRestaurant(
     openingHour = "1005",
     closingHour = "2305",
     offers = listOf(
-        LocalOffer(
+//        LocalOffer(
+            Offers(
             id = "501",
-            restaurant = LocalRestaurantShortInfo(
-                id = "5",
-                name = "Rest Mock 5"
-            ),
+//            restaurant = LocalRestaurantShortInfo(
+//                id = "5",
+//                name = "Rest Mock 5"
+//            ),
             offerName = "OfferNameMock51",
             description = "Mock desc 51 mock",
             image = "https://www.image51.jpg",
@@ -595,12 +637,13 @@ var restauranteMock5 = LocalRestaurant(
             endTime = "1805",
             postTime = "1505"
         ),
-        LocalOffer(
+//        LocalOffer(
+            Offers(
             id = "502",
-            restaurant = LocalRestaurantShortInfo(
-                id = "5",
-                name = "Rest Mock 5"
-            ),
+//            restaurant = LocalRestaurantShortInfo(
+//                id = "5",
+//                name = "Rest Mock 5"
+//            ),
             offerName = "OfferNameMock52",
             description = "Mock desc 52 mock",
             image = "https://www.image52.jpg",
@@ -608,12 +651,13 @@ var restauranteMock5 = LocalRestaurant(
             endTime = "1805",
             postTime = "1505"
         ),
-        LocalOffer(
+//        LocalOffer(
+            Offers(
             id = "503",
-            restaurant = LocalRestaurantShortInfo(
-                id = "5",
-                name = "Rest Mock 5"
-            ),
+//            restaurant = LocalRestaurantShortInfo(
+//                id = "5",
+//                name = "Rest Mock 5"
+//            ),
             offerName = "OfferNameMock53",
             description = "Mock desc 53 mock",
             image = "https://www.image53.jpg",
@@ -632,12 +676,13 @@ var restauranteMock6 = LocalRestaurant(
     openingHour = "1006",
     closingHour = "2306",
     offers = listOf(
-        LocalOffer(
+//        LocalOffer(
+            Offers(
             id = "601",
-            restaurant = LocalRestaurantShortInfo(
-                id = "6",
-                name = "Rest Mock 6"
-            ),
+//            restaurant = LocalRestaurantShortInfo(
+//                id = "6",
+//                name = "Rest Mock 6"
+//            ),
             offerName = "OfferNameMock61",
             description = "Mock desc 61 mock",
             image = "https://www.image61.jpg",
@@ -645,12 +690,13 @@ var restauranteMock6 = LocalRestaurant(
             endTime = "1806",
             postTime = "1506"
         ),
-        LocalOffer(
+//        LocalOffer(
+            Offers(
             id = "602",
-            restaurant = LocalRestaurantShortInfo(
-                id = "6",
-                name = "Rest Mock 6"
-            ),
+//            restaurant = LocalRestaurantShortInfo(
+//                id = "6",
+//                name = "Rest Mock 6"
+//            ),
             offerName = "OfferNameMock62",
             description = "Mock desc 62 mock",
             image = "https://www.image62.jpg",
@@ -658,12 +704,13 @@ var restauranteMock6 = LocalRestaurant(
             endTime = "1806",
             postTime = "1506"
         ),
-        LocalOffer(
+//        LocalOffer(
+            Offers(
             id = "603",
-            restaurant = LocalRestaurantShortInfo(
-                id = "6",
-                name = "Rest Mock 6"
-            ),
+//            restaurant = LocalRestaurantShortInfo(
+//                id = "6",
+//                name = "Rest Mock 6"
+//            ),
             offerName = "OfferNameMock63",
             description = "Mock desc 63 mock",
             image = "https://www.image63.jpg",
@@ -682,12 +729,13 @@ var restauranteMock3 = LocalRestaurant(
     openingHour = "1000",
     closingHour = "2359",
     offers = listOf(
-        LocalOffer(
+//        LocalOffer(
+            Offers(
             id = "b2e21a5e-958f-4ab8-84fe-7d78b63b9301",
-            restaurant = LocalRestaurantShortInfo(
-                id = "789",
-                name = "Restaurante Mock 3"
-            ),
+//            restaurant = LocalRestaurantShortInfo(
+//                id = "789",
+//                name = "Restaurante Mock 3"
+//            ),
             offerName = "OfferNameMock3-1",
             description = "Mock description3-1 mock Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, ",
             image = "https://www.camarero10.com/wp-content/uploads/2020/02/como-distribuir-un-restaurante.jpg",
@@ -695,12 +743,13 @@ var restauranteMock3 = LocalRestaurant(
             endTime = "2023-08-09T17:00:00Z",
             postTime = "22023-08-09T11:00:00Z"
         ),
-        LocalOffer(
+//        LocalOffer(
+            Offers(
             id = "b2e21a5e-958f-4ab8-84fe-7d78b63b9302",
-            restaurant = LocalRestaurantShortInfo(
-                id = "789",
-                name = "Restaurante Mock 3"
-            ),
+//            restaurant = LocalRestaurantShortInfo(
+//                id = "789",
+//                name = "Restaurante Mock 3"
+//            ),
             offerName = "OfferNameMock3-2",
             description = "Mock description3-2 mock Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, ",
             image = "https://www.camarero10.com/wp-content/uploads/2020/02/como-distribuir-un-restaurante.jpg",
@@ -708,12 +757,13 @@ var restauranteMock3 = LocalRestaurant(
             endTime = "2023-08-09T17:00:00Z",
             postTime = "22023-08-09T11:00:00Z"
         ),
-        LocalOffer(
+//        LocalOffer(
+            Offers(
             id = "b2e21a5e-958f-4ab8-84fe-7d78b63b9303",
-            restaurant = LocalRestaurantShortInfo(
-                id = "789",
-                name = "Restaurante Mock 3"
-            ),
+//            restaurant = LocalRestaurantShortInfo(
+//                id = "789",
+//                name = "Restaurante Mock 3"
+//            ),
             offerName = "OfferNameMock3-3",
             description = "Mock description3-3 mock Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, ",
             image = "https://www.camarero10.com/wp-content/uploads/2020/02/como-distribuir-un-restaurante.jpg",
@@ -726,7 +776,8 @@ var restauranteMock3 = LocalRestaurant(
 
 var restaurantsSim = listOf<LocalRestaurant>(restauranteMock4, restauranteMock5, restauranteMock6)
 
-var offerMockList = mutableListOf<LocalOffer>()
+//var offerMockList = mutableListOf<LocalOffer>()
+var offerMockList = mutableListOf<Offers>()
 
 var restaurantMockList = mutableListOf<LocalRestaurant>()
 
