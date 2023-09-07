@@ -14,12 +14,12 @@ import javax.inject.Inject
 class RemoteToLocalMapper @Inject constructor(){
 
     fun mapRestaurantsResponseToLocalOffers(getOfferResponse: OffersResponse): Flow<List<LocalOffer>> {
-        var localOffers =  getOfferResponse.restaurants.map { mapGetRestaurantResponseToLocalOfferList(it) }
+        val localOffers =  getOfferResponse.restaurants.map { mapGetRestaurantResponseToLocalOfferList(it) }
         return localOffers.asFlow()
     }
 
     fun mapRestaurantsResponseToLocalRestaurants(getRestaurantResponse: OffersResponse): Flow<List<LocalRestaurant>> {
-        var localRestaurants =  getRestaurantResponse.restaurants.map { mapGetRestaurantResponseToLocalRestaurantList(it) }
+        val localRestaurants =  getRestaurantResponse.restaurants.map { mapGetRestaurantResponseToLocalRestaurantList(it) }
         return localRestaurants.asFlow()
     }
 
@@ -50,6 +50,18 @@ class RemoteToLocalMapper @Inject constructor(){
             offer.startTime,
             offer.endTime,
             offer.postTime)
+    }
+
+    fun mapLocalOfferToOffers(localOffer: LocalOffer): Offers {
+        return Offers(
+            id = localOffer.id,
+            offerName = localOffer.offerName,
+            description = localOffer.description,
+            image = localOffer.image,
+            startTime = localOffer.startTime,
+            endTime = localOffer.endTime,
+            postTime = localOffer.postTime
+        )
     }
 
     fun mapRestaurantsResponseToLocalRestaurantsSingleList(getRestaurantResponse: OffersResponse): Flow<List<LocalRestaurant>> {
