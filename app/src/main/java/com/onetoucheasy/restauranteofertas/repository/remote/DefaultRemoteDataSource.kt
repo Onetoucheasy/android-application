@@ -1,7 +1,6 @@
 package com.onetoucheasy.restauranteofertas.repository.remote
 
 import android.util.Log
-import com.auth0.android.jwt.JWT
 import com.onetoucheasy.restauranteofertas.repository.remote.request.SignUpRequestBody
 import com.onetoucheasy.restauranteofertas.repository.remote.response.JWTResponse
 import com.onetoucheasy.restauranteofertas.repository.remote.response.OffersResponse
@@ -36,8 +35,9 @@ class DefaultRemoteDataSource @Inject constructor(
 
     override suspend fun getOffers(): OffersResponse {
         return try {
-            api.getOffersEndpoint2("https://us-central1-projectkc-6ca03.cloudfunctions.net/offers")
-            //api.getOffers(this.apiKey)
+            val authHeaderValue = "Bearer ${tokenData.accessToken}"
+//            api.getOffersEndpoint2("https://us-central1-projectkc-6ca03.cloudfunctions.net/offers")
+            api.getOffers(this.apiKey, authHeaderValue)
         }catch (exception: Exception){
             Log.d("Exception get offers", "${exception.message}")
             throw exception
@@ -46,9 +46,10 @@ class DefaultRemoteDataSource @Inject constructor(
 
     override suspend fun getRestaurants(): OffersResponse {
         return try {
+            val authHeaderValue = "Bearer ${tokenData.accessToken}"
 //            api.getOffersEndpoint2("https://oneapibackend.free.beeceptor.com/api/offers")
-            api.getOffersEndpoint2("https://us-central1-projectkc-6ca03.cloudfunctions.net/offers")
-            //api.getRestaurants(this.apiKey)
+//            api.getOffersEndpoint2("https://us-central1-projectkc-6ca03.cloudfunctions.net/offers")
+            api.getRestaurants(this.apiKey, authHeaderValue)
         }catch (exception: Exception){
             Log.d("Exception get restaurants", "${exception.message}")
             throw exception
