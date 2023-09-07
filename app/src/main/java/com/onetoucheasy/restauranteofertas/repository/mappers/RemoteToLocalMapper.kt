@@ -32,10 +32,10 @@ class RemoteToLocalMapper @Inject constructor(){
             restaurant.id,
             restaurant.name,
             restaurant.type ,
-            restaurant.latitude,
-            restaurant.longitude,
-            restaurant.openingHour,
-            restaurant.closingHour,
+//            restaurant.latitude, // comment these out as they are not present in newer model
+//            restaurant.longitude,
+//            restaurant.openingHour,
+//            restaurant.closingHour,
             restaurant.offers
         ))
     }

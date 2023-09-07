@@ -60,7 +60,7 @@ fun MainScreen(
     viewModel: MainScreenViewModel,
     userType: String,
     onOfferClick: (String)-> Unit = { _->},
-    onRestaurantClick: (String)-> Unit = { _->}
+    onRestaurantClick: (String)-> Unit// = { _->}
 ) {
 
     val offerList by viewModel.stateOffers.collectAsState() //  List<LocalOffer>
@@ -70,7 +70,7 @@ fun MainScreen(
 
     LaunchedEffect(Unit) {
         viewModel.getRestaurants()
-        viewModel.getOffers()
+//        viewModel.getOffers()
     }
 
     fun onOfferFavClicked(offerID: String) {
@@ -461,10 +461,10 @@ var restauranteMock1 = LocalRestaurant(
     id = "123",
     name = "Restaurante Mock 1",
     type = "Tapas Mock",
-    latitude = "40.23",
-    longitude = "-4.56",
-    openingHour = "1000",
-    closingHour = "2359",
+//    latitude = "40.23",
+//    longitude = "-4.56",
+//    openingHour = "1000",
+//    closingHour = "2359",
     offers = listOf(
 //        LocalOffer(
         Offers(
@@ -515,10 +515,10 @@ var restauranteMock2 = LocalRestaurant(
     id = "456",
     name = "Restaurante Mock 2",
     type = "Shushi Mock",
-    latitude = "40.23",
-    longitude = "-4.56",
-    openingHour = "1000",
-    closingHour = "2359",
+//    latitude = "40.23",
+//    longitude = "-4.56",
+//    openingHour = "1000",
+//    closingHour = "2359",
     offers = listOf(
 //        LocalOffer(
         Offers(
@@ -569,10 +569,10 @@ var restauranteMock4 = LocalRestaurant(
     id = "4",
     name = "Rest Mock 4",
     type = "Type 4",
-    latitude = "40.04",
-    longitude = "-4.04",
-    openingHour = "1004",
-    closingHour = "2304",
+//    latitude = "40.04",
+//    longitude = "-4.04",
+//    openingHour = "1004",
+//    closingHour = "2304",
     offers = listOf(
 //        LocalOffer(
             Offers(
@@ -622,10 +622,10 @@ var restauranteMock5 = LocalRestaurant(
     id = "5",
     name = "Rest Mock 5",
     type = "Type 5",
-    latitude = "50.05",
-    longitude = "-5.05",
-    openingHour = "1005",
-    closingHour = "2305",
+//    latitude = "50.05",
+//    longitude = "-5.05",
+//    openingHour = "1005",
+//    closingHour = "2305",
     offers = listOf(
 //        LocalOffer(
             Offers(
@@ -675,10 +675,10 @@ var restauranteMock6 = LocalRestaurant(
     id = "6",
     name = "Rest Mock 6",
     type = "Type 6",
-    latitude = "60.06",
-    longitude = "-6.06",
-    openingHour = "1006",
-    closingHour = "2306",
+//    latitude = "60.06",
+//    longitude = "-6.06",
+//    openingHour = "1006",
+//    closingHour = "2306",
     offers = listOf(
 //        LocalOffer(
             Offers(
@@ -728,10 +728,10 @@ var restauranteMock3 = LocalRestaurant(
     id = "789",
     name = "Restaurante Mock 3",
     type = "Shushi Mock",
-    latitude = "40.23",
-    longitude = "-4.56",
-    openingHour = "1000",
-    closingHour = "2359",
+//    latitude = "40.23",
+//    longitude = "-4.56",
+//    openingHour = "1000",
+//    closingHour = "2359",
     offers = listOf(
 //        LocalOffer(
             Offers(

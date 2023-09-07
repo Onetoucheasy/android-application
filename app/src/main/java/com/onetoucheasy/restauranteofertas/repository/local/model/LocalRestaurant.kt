@@ -6,9 +6,9 @@ data class LocalRestaurant(
     val id: String,
     val name: String,
     val type: String,
-    val latitude: String,
-    val longitude: String,
-    val openingHour: String,
-    val closingHour: String,
+//    val latitude: String,  // for mock api, use this field
+//    val longitude: String,  // for mock api, use this field
+//    val openingHour: String,  // for mock api, use this field
+//    val closingHour: String,  // for mock api, use this field
     val offers: List<Offers> // try List<LocalOffer>
 )

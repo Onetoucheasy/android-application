@@ -35,9 +35,21 @@ interface OneTouchApi {
         @Header("Authorization") authHeader: String
     ): OffersResponse
 
-    @GET("restaurants")
+    @GET("restaurantsWithOffer") // use "restaurants" for mock api
     suspend fun getRestaurants(
         @Header("CDS-ApiKey") apiKey: String,
         @Header("Authorization") authHeader: String
     ): OffersResponse
+
+    @GET("offers/") // add <offerID> used to fetch offer for DetailScreen
+    suspend fun getOffersById(
+        @Header("CDS-ApiKey") apiKey: String,
+        @Header("Authorization") authHeader: String
+    ): OffersResponse
+
+//    @GET("restaurantsWithOffer")
+//    suspend fun getRestaurants(
+//        @Header("CDS-ApiKey") apiKey: String,
+//        @Header("Authorization") authHeader: String
+//    ): OffersResponse
 }
