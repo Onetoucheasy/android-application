@@ -14,10 +14,14 @@ fun RestaurantScreen (viewModel: MainScreenViewModel, id: String) {
     val restaurantState by viewModel.stateRestaurants.collectAsState()
     val remoteToLocalMapper = RemoteToLocalMapper() // only use this if wanting to convert LocalOffer to Offers for consistency
     val offer = offerState.find { it.id == id }
+    val restaurant = restaurantState.find { it.id == id }
     LaunchedEffect(Unit){
-        Log.d("Tag","RestaurantScreen...\nid: $id")
+        Log.d("Tag","🍕 RestaurantScreen > Restaurant id: $id")
+        if (restaurant != null) {
+            Log.d("Tag","🍕 RestaurantScreen > Restaurant id: $id, name: ${restaurant.name}")
+        }
     }
-    if (offer != null) {
-        DetailScreenContent(offer = remoteToLocalMapper.mapLocalOfferToOffers(offer)) // todo: consider LocalOffer too
-    }
+//    if (restaurant != null) {
+//        RestaurantScreenContent(offer = remoteToLocalMapper.mapLocalOfferToOffers(offer)) // todo: consider LocalOffer too
+//    }
 }

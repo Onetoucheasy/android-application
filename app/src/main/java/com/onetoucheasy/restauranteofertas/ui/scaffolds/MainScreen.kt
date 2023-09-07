@@ -61,7 +61,7 @@ fun MainScreen(
     viewModel: MainScreenViewModel,
     userType: String,
     onOfferClick: (String)-> Unit = { _->},
-    onRestaurantClick: (String)-> Unit// = { _->}
+    onRestaurantClick: (String)-> Unit = { _->}
 ) {
 
     val offerList by viewModel.stateOffers.collectAsState() //  List<LocalOffer>
@@ -89,7 +89,7 @@ fun MainScreen(
 
     Thread.sleep(100)
 //    Log.d("Tag","🎉MainScreen > MainScreenContent > sleep 500ms > restaurantList:\n count = ${restaurantList.count()}\nvalue = $restaurantList") //
-    Log.d("Tag","MainScreen > MainScreenContent > sleep 500ms > offerList: $offerList") //
+//    Log.d("Tag","MainScreen > MainScreenContent > sleep 500ms > offerList: $offerList") //
 }
 
 @Composable
@@ -187,7 +187,7 @@ fun OfferTabSection(
     onRestaurantClick: (String) -> Unit) // todo: remove?
 {
     if(restaurants.isNotEmpty()){
-        Log.d("Tag","⭐️OfferTabSection > restaurants:\ncount = ${restaurants.count()}\nvalue = $restaurants") // only 1 restaurant comes though... prints all restaurantsSim
+//        Log.d("Tag","⭐️OfferTabSection > restaurants:\ncount = ${restaurants.count()}\nvalue = $restaurants") // only 1 restaurant comes though... prints all restaurantsSim
 //        Log.d("Tag","⭐️OfferTabSection > offers: $offers")
         LazyColumn(
             modifier = Modifier,
@@ -196,7 +196,7 @@ fun OfferTabSection(
         ) {
             items(restaurants) { restaurant ->
                 var counter: Int = 1
-                Log.d("Tag","OfferTabSection > items(restaurant)$counter: ${restaurant.name}")
+//                Log.d("Tag","OfferTabSection > items(restaurant)$counter: ${restaurant.name}")
                 Text(text = restaurant.name, style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold))
                 LazyRow(
                     modifier = Modifier
@@ -210,7 +210,7 @@ fun OfferTabSection(
 //                    }
 //                    items(restaurant.offers, key = { it.hashCode()}) {
                     items(offersPack, key = { it.hashCode()}) {
-                        Log.d("Tag","   offers.count() ${restaurant.offers.count()}")
+//                        Log.d("Tag","   offers.count() ${restaurant.offers.count()}")
                         OfferItem(it, onOfferClick = onOfferClick)
                     }
                 }

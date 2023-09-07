@@ -40,18 +40,20 @@ import com.onetoucheasy.restauranteofertas.ui.viewModels.MainScreenViewModel
 fun DetailScreen (viewModel: MainScreenViewModel, id: String) {
     val offerState by viewModel.stateOffers.collectAsState()
     val offer = offerState.find { it.id == id }
+    val remoteToLocalMapper = RemoteToLocalMapper()
     LaunchedEffect(Unit){
-        Log.d("Tag","DetailScreen...")
+        Log.d("Tag", "🎉 DetailScreen > offer id: $id, offer: $offer")
+        // TODO: get offer using endpoint http://127.0.0.1:8080/api/offers/id=123...789
     }
     if (offer != null) {
-        DetailScreenContent(offer = offer)
+        DetailScreenContent(offer = remoteToLocalMapper.mapLocalOfferToOffers(offer))
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailScreenContent(
-    offer: LocalOffer
+    offer: Offers
 ){
     Scaffold(
     ) { it ->
@@ -59,26 +61,28 @@ fun DetailScreenContent(
             item {
                 Text(
                     text = "Oferta", // tested, pass
-//                    style = MaterialTheme.typography.h4,
+                    style = MaterialTheme.typography.headlineLarge,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp)
                 )
             }
             item {
-                OfferItem(offer = offer) // show full detail item card
+                DetailOfferItem(offer = offer) // show full detail item card
             }
+            item { ReviewSection() }
         }
     }
 }
 @Composable
-fun OfferItem(offer: LocalOffer, modifier: Modifier = Modifier) {
+fun DetailOfferItem(offer: Offers, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .height(450.dp)
+//            .height(550.dp)
     ) {
         Text(text = offer.offerName.toString(), style = MaterialTheme.typography.headlineSmall, modifier = Modifier.padding(8.dp))
+        Text(text = "${offer.startTime} - ${offer.endTime}", style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(8.dp))
         AsyncImage(
             model = offer.image,
             contentDescription = offer.description,
@@ -87,15 +91,40 @@ fun OfferItem(offer: LocalOffer, modifier: Modifier = Modifier) {
                 .weight(1f),
             contentScale = ContentScale.Crop
         )
-        Text(text = offer.restaurant.name.toString(), style = MaterialTheme.typography.headlineSmall, modifier = Modifier.padding(8.dp))
-        Text(text = offer.description.toString(), style = MaterialTheme.typography.headlineSmall, modifier = Modifier.padding(8.dp))
-        Text(text = "${offer.startTime} - ${offer.endTime}", style = MaterialTheme.typography.headlineSmall, modifier = Modifier.padding(8.dp))
+        Text(text = offer.description.toString(), style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(8.dp))
+        Box(modifier = Modifier.fillMaxSize()
+        ) {
+            QRCodeGenerator(
+                data = offer.id,
+                modifier = Modifier
+                    .width(200.dp)
+                    .height(200.dp)
+                    .align(Alignment.Center)
+            )
+        }
     }
 }
+@Composable
+fun ReviewSection(modifier: Modifier = Modifier) {
+    ElevatedCard (
+        modifier = modifier
+            .fillMaxWidth()
+            .height(450.dp)
+            .shadow(
+                elevation = 10.dp,
+                spotColor = Color(0x40000000),
+                ambientColor = Color(0x40000000)
+            )
+    ) {
+        Text(text = "Reseñas", style = MaterialTheme.typography.headlineSmall, modifier = Modifier.padding(8.dp))
+        Text(text = "¡Muy buena!", style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(8.dp))
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun DetailScreenPreview() {
-    DetailScreenContent(offerSample)
+    DetailScreenContent(offerMock4)
 }
 
 val offerSample = LocalOffer(

@@ -35,9 +35,12 @@ fun NavigationGraph(loginViewModel: LoginViewModel, signUpViewModel: SignUpViewM
             }
         }
         composable(Screens.MainScreen.route) {
-            MainScreen(viewModel = mainViewModel, userType = "CUSTOMER") { id: String ->
-                navController.navigate(Screens.DetailScreen.createRouteWithArgs(id))
-            }
+            MainScreen(
+                viewModel = mainViewModel,
+                userType = "CUSTOMER",
+                onOfferClick = { offerId: String -> navController.navigate(Screens.DetailScreen.createRouteWithArgs(offerId)) },
+                onRestaurantClick = { restaurantId: String -> navController.navigate(Screens.RestaurantScreen.createRouteWithArgs(restaurantId)) }
+            )
             Log.d("Tag","NavigationGraph > NavHost > composable > Screens.MainScreen.route")
         }
         // region Previous Screens.MainScreen
@@ -67,7 +70,7 @@ fun NavigationGraph(loginViewModel: LoginViewModel, signUpViewModel: SignUpViewM
                 DetailScreen(viewModel = mainViewModel, id = id)
                 Log.d("Tag","NavigationGraph > NavHost > composable > Screens.DetailScreen.route\nid != null, ARG_OFFER_ID: $ARG_OFFER_ID\nid: $id")
             } else {
-                Log.d("Tag","id != null")
+                Log.d("Tag","id == null")
             }
         }
         composable(Screens.RestaurantScreen.route,
@@ -83,7 +86,7 @@ fun NavigationGraph(loginViewModel: LoginViewModel, signUpViewModel: SignUpViewM
                 RestaurantScreen(viewModel = mainViewModel, id = id)
                 Log.d("Tag","NavigationGraph > NavHost > composable > Screens.RestaurantScreen.route\nid != null, ARG_OFFER_ID: $ARG_RESTAURANT_ID\nid: $id")
             } else {
-                Log.d("Tag","id != null")
+                Log.d("Tag","id == null")
             }
         }
     }
