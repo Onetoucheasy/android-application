@@ -7,6 +7,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.onetoucheasy.restauranteofertas.ui.navigation.Screens.DetailScreen.ARG_OFFER_ID
+import com.onetoucheasy.restauranteofertas.ui.navigation.Screens.RestaurantScreen.ARG_RESTAURANT_ID
 import com.onetoucheasy.restauranteofertas.ui.scaffolds.DetailScreen
 import com.onetoucheasy.restauranteofertas.ui.scaffolds.LoginScreen
 import com.onetoucheasy.restauranteofertas.ui.scaffolds.MainScreen
@@ -59,10 +61,13 @@ fun NavigationGraph(loginViewModel: LoginViewModel, signUpViewModel: SignUpViewM
             }
         )
         ) {
-            Log.d("Tag","NavigationGraph > NavHost > composable > Screens.DetailScreen.route")
+            Log.d("Tag","NavigationGraph > NavHost > composable > Screens.DetailScreen.route\nARG_OFFER_ID: $ARG_OFFER_ID")
             val id = it.arguments?.getString(Screens.DetailScreen.ARG_OFFER_ID)
             if (id != null) {
                 DetailScreen(viewModel = mainViewModel, id = id)
+                Log.d("Tag","NavigationGraph > NavHost > composable > Screens.DetailScreen.route\nid != null, ARG_OFFER_ID: $ARG_OFFER_ID\nid: $id")
+            } else {
+                Log.d("Tag","id != null")
             }
         }
         composable(Screens.RestaurantScreen.route,
@@ -76,6 +81,9 @@ fun NavigationGraph(loginViewModel: LoginViewModel, signUpViewModel: SignUpViewM
             val id = it.arguments?.getString(Screens.RestaurantScreen.ARG_RESTAURANT_ID)
             if (id != null) {
                 RestaurantScreen(viewModel = mainViewModel, id = id)
+                Log.d("Tag","NavigationGraph > NavHost > composable > Screens.RestaurantScreen.route\nid != null, ARG_OFFER_ID: $ARG_RESTAURANT_ID\nid: $id")
+            } else {
+                Log.d("Tag","id != null")
             }
         }
     }

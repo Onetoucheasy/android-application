@@ -13,7 +13,7 @@ sealed class Screens(val route: String) {
             return SCREEN3_BASE_ROUTE_TO_FORMAT.format(userType)
         }
     }
-    object DetailScreen: Screens(SCREEN4_BASE_ROUTE_TEMPLATE) {
+    object DetailScreen: Screens(SCREEN4_BASE_ROUTE_TEMPLATE) { // DetailScreen/offerId
         const val ARG_OFFER_ID = "offerId"
         fun createRouteWithArgs(id: String): String {
             return SCREEN4_BASE_ROUTE_TO_FORMAT.format(id)
@@ -33,7 +33,7 @@ sealed class Screens(val route: String) {
         private const val SCREEN3_BASE_ROUTE_TEMPLATE = "$SCREEN2_BASE_ROUTE/{$ARG_USER_TYPE}"
         private const val SCREEN4_BASE_ROUTE = "DetailScreen"
         private const val SCREEN4_BASE_ROUTE_TO_FORMAT = "$SCREEN4_BASE_ROUTE/%s"
-        private const val SCREEN4_BASE_ROUTE_TEMPLATE = "$SCREEN4_BASE_ROUTE/{$ARG_OFFER_ID}"
+        private const val SCREEN4_BASE_ROUTE_TEMPLATE = "$SCREEN4_BASE_ROUTE/{$ARG_OFFER_ID}" // DetailScreen/offerId
         private const val SCREEN5_BASE_ROUTE = "RestaurantScreen"
         private const val SCREEN5_BASE_ROUTE_TO_FORMAT = "$SCREEN5_BASE_ROUTE/%s"
         private const val SCREEN5_BASE_ROUTE_TEMPLATE = "$SCREEN5_BASE_ROUTE/{$ARG_RESTAURANT_ID}"

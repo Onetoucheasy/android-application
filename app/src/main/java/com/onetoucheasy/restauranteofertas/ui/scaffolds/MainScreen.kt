@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -64,15 +63,14 @@ fun MainScreen(
     onRestaurantClick: (String)-> Unit = { _->}
 ) {
 
-    val offerList by viewModel.stateOffers.collectAsState()
+    val offerList by viewModel.stateOffers.collectAsState() //  List<LocalOffer>
     val offersList: List<Offers> = emptyList()
     val restaurantList by viewModel.stateRestaurants.collectAsState()
 //    val restaurantList = restaurantsSim // mock here, not below
 
     LaunchedEffect(Unit) {
-        Log.d("Tag", "MainScreen...")
-        viewModel.getRestaurants() // crashes com.squareup.moshi.JsonDataException: Required value 'restaurant' missing at $.restaurants[0].offers[1]
-        viewModel.getOffers() // crash: Required value 'restaurant' missing at $.restaurants[0].offers[1]
+        viewModel.getRestaurants()
+        viewModel.getOffers()
     }
 
     fun onOfferFavClicked(offerID: String) {
@@ -80,7 +78,7 @@ fun MainScreen(
     }
 
     MainScreenContent(
-        offersList, // different than offerList
+        offersList, // List<Offers>, different than offerList
         restaurantList,
         onOfferClicked = onOfferClick,
         onRestaurantClicked = onRestaurantClick,
@@ -88,9 +86,9 @@ fun MainScreen(
         onOfferFavClicked(offer)
     }
 
-    Thread.sleep(500)
-    Log.d("Tag","🎉MainScreen > MainScreenContent > sleep 500ms > restaurantList:\n count = ${restaurantList.count()}\nvalue = $restaurantList") //
-//    Log.d("Tag","MainScreen > MainScreenContent > sleep 500ms > offerList: $offerList") //
+    Thread.sleep(100)
+//    Log.d("Tag","🎉MainScreen > MainScreenContent > sleep 500ms > restaurantList:\n count = ${restaurantList.count()}\nvalue = $restaurantList") //
+    Log.d("Tag","MainScreen > MainScreenContent > sleep 500ms > offerList: $offerList") //
 }
 
 @Composable
@@ -183,9 +181,9 @@ fun TabSection( // Green
 fun OfferTabSection(
     restaurants: List<LocalRestaurant>, // w List<Offers>
 //    offers: List<LocalOffer>,
-    offers: List<Offers>,
+    offers: List<Offers>, // todo: remove?
     onOfferClick: (String) -> Unit,
-    onRestaurantClick: (String) -> Unit)
+    onRestaurantClick: (String) -> Unit) // todo: remove?
 {
     if(restaurants.isNotEmpty()){
         Log.d("Tag","⭐️OfferTabSection > restaurants:\ncount = ${restaurants.count()}\nvalue = $restaurants") // only 1 restaurant comes though... prints all restaurantsSim
@@ -197,7 +195,7 @@ fun OfferTabSection(
         ) {
             items(restaurants) { restaurant ->
                 var counter: Int = 1
-                Log.d("Tag","⭐️OfferTabSection > items(restaurant)$counter: ${restaurant.name}")
+                Log.d("Tag","OfferTabSection > items(restaurant)$counter: ${restaurant.name}")
                 Text(text = restaurant.name, style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold))
                 LazyRow(
                     modifier = Modifier
@@ -211,7 +209,7 @@ fun OfferTabSection(
 //                    }
 //                    items(restaurant.offers, key = { it.hashCode()}) {
                     items(offersPack, key = { it.hashCode()}) {
-                        Log.d("Tag","offers.count() ${restaurant.offers.count()}")
+                        Log.d("Tag","   offers.count() ${restaurant.offers.count()}")
                         OfferItem(it, onOfferClick = onOfferClick)
                     }
                 }
@@ -236,14 +234,17 @@ fun OfferItem(offer: Offers, modifier: Modifier = Modifier, onOfferClick: (Strin
                 spotColor = Color(0x40000000),
                 ambientColor = Color(0x40000000)
             )
-            .clickable { onOfferClick(offer.id) },
+            .clickable {
+                Log.d("Tag","⭐️ OfferItem > ElevatedCard > click > \noffer.name: ${offer.offerName}\n${offer.id}")
+                onOfferClick(offer.id)
+            },
         shape = CardDefaults.elevatedShape,
         colors = CardDefaults.cardColors(
             containerColor = Color(0xFFFFF9E8)
         )
 
     ) {
-        Log.d("Tag","OfferItem offer: $offer")
+        Log.d("Tag","      OfferItem offer: $offer")
         Box(modifier = Modifier
             .height(15.dp)
             .weight(1f)){
@@ -271,7 +272,7 @@ fun OfferItem(offer: Offers, modifier: Modifier = Modifier, onOfferClick: (Strin
             modifier = Modifier
                 .padding(start = 20.dp, top= 20.dp))
         Text(
-            text = "De ${offer.startTime} a ${offer.endTime}", // TODO: Add to Strings Resources
+            text = "De ${offer.startTime.substringAfter("T").substringBefore(":00Z")} a ${offer.endTime.substringAfter("T").substringBefore(":00Z")}", // TODO: Add to Strings Resources
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier
                 .padding(start = 20.dp, bottom = 20.dp, top = 10.dp))
@@ -309,7 +310,10 @@ fun RestaurantItem(restaurant: LocalRestaurant, modifier: Modifier = Modifier, o
                 spotColor = Color(0x40000000),
                 ambientColor = Color(0x40000000)
             )
-            .clickable { onRestaurantClick(restaurant.id) },
+            .clickable {
+                Log.d("Tag","⭐ Restaurant Click! ⭐️ RestaurantItem > ElevatedCard > click > \nrestaurant.name: ${restaurant.name}\n${restaurant.id}")
+                onRestaurantClick(restaurant.id) // print is correct
+            },
         shape = CardDefaults.elevatedShape,
         colors = CardDefaults.cardColors(containerColor = Color(0xFFFFF9E8))
     ) {
@@ -446,9 +450,9 @@ var offerMock3 = Offers(
 
 var offerMock4 = Offers(
     "4",
-    "4x1 en Carta",
-    "4x1 en toda la carta, excepto postres y bebidas.",
-    "",
+    "40% descuento ahora!",
+    "4x1 en toda la carta, excepto postres y bebidas. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+    "https://www.camarero10.com/wp-content/uploads/2020/02/como-distribuir-un-restaurante.jpg",
     "14:30",
     "17:30",
     "")
