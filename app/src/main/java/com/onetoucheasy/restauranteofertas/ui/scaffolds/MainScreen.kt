@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -320,14 +321,14 @@ fun RestaurantItem(restaurant: LocalRestaurant, modifier: Modifier = Modifier, o
         Box(modifier = Modifier
             .height(15.dp)
             .weight(1f)){
-//            AsyncImage(
-//                model = restaurant.image, // doesn't exist yet
-//                contentDescription = restaurant.description,
-//                placeholder = painterResource(R.mipmap.image_resto_example),
-//                modifier = Modifier
-//                    .fillMaxSize(),
-//                contentScale = ContentScale.Crop,
-//            )
+            AsyncImage(
+                model = restaurant.picture,
+                contentDescription = restaurant.name,
+                placeholder = painterResource(R.mipmap.image_resto_example),
+                modifier = Modifier
+                    .fillMaxSize(),
+                contentScale = ContentScale.Crop,
+            )
             Row() {
                 Text(
                     text = restaurant.name,
@@ -461,6 +462,7 @@ var restauranteMock1 = LocalRestaurant(
     id = "123",
     name = "Restaurante Mock 1",
     type = "Tapas Mock",
+    picture = "https://images.pexels.com/photos/18078297/pexels-photo-18078297/free-photo-of-ciudad-calle-barra-urbano.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
 //    latitude = "40.23",
 //    longitude = "-4.56",
 //    openingHour = "1000",
@@ -515,6 +517,7 @@ var restauranteMock2 = LocalRestaurant(
     id = "456",
     name = "Restaurante Mock 2",
     type = "Shushi Mock",
+    picture = "https://images.pexels.com/photos/18078297/pexels-photo-18078297/free-photo-of-ciudad-calle-barra-urbano.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
 //    latitude = "40.23",
 //    longitude = "-4.56",
 //    openingHour = "1000",
@@ -569,6 +572,7 @@ var restauranteMock4 = LocalRestaurant(
     id = "4",
     name = "Rest Mock 4",
     type = "Type 4",
+    picture = "https://images.pexels.com/photos/3421920/pexels-photo-3421920.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
 //    latitude = "40.04",
 //    longitude = "-4.04",
 //    openingHour = "1004",
@@ -622,6 +626,7 @@ var restauranteMock5 = LocalRestaurant(
     id = "5",
     name = "Rest Mock 5",
     type = "Type 5",
+    picture = "https://images.pexels.com/photos/18078297/pexels-photo-18078297/free-photo-of-ciudad-calle-barra-urbano.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
 //    latitude = "50.05",
 //    longitude = "-5.05",
 //    openingHour = "1005",
@@ -675,6 +680,7 @@ var restauranteMock6 = LocalRestaurant(
     id = "6",
     name = "Rest Mock 6",
     type = "Type 6",
+    picture = "https://images.pexels.com/photos/18078297/pexels-photo-18078297/free-photo-of-ciudad-calle-barra-urbano.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
 //    latitude = "60.06",
 //    longitude = "-6.06",
 //    openingHour = "1006",
@@ -728,6 +734,7 @@ var restauranteMock3 = LocalRestaurant(
     id = "789",
     name = "Restaurante Mock 3",
     type = "Shushi Mock",
+    picture = "https://images.pexels.com/photos/18078297/pexels-photo-18078297/free-photo-of-ciudad-calle-barra-urbano.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
 //    latitude = "40.23",
 //    longitude = "-4.56",
 //    openingHour = "1000",
