@@ -2,17 +2,27 @@ package com.onetoucheasy.restauranteofertas.ui.scaffolds
 
 import android.annotation.SuppressLint
 import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredHeight
+import androidx.compose.foundation.layout.requiredHeightIn
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -25,28 +35,38 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.min
 import coil.compose.AsyncImage
+import com.onetoucheasy.restauranteofertas.R
 import com.onetoucheasy.restauranteofertas.repository.local.model.LocalOffer
 import com.onetoucheasy.restauranteofertas.repository.local.model.LocalRestaurantShortInfo
-import com.onetoucheasy.restauranteofertas.repository.mappers.RemoteToLocalMapper
 import com.onetoucheasy.restauranteofertas.repository.remote.response.Offers
 import com.onetoucheasy.restauranteofertas.ui.QRCodeGenerator
 import com.onetoucheasy.restauranteofertas.ui.viewModels.MainScreenViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun DetailScreen (viewModel: MainScreenViewModel, id: String) {
-    val offerState by viewModel.stateOffers.collectAsState()
-    val offer = offerState.find { it.id == id }
-    val remoteToLocalMapper = RemoteToLocalMapper()
+fun DetailScreen (viewModel: MainScreenViewModel, offerId: String) {
+//    val offerState by viewModel.stateOffers.collectAsState() // ⚠️Issue: trouble fetching offers due to decoding array
+//    val localOffer = offerState.find { it.id == offerId }
+//    val remoteToLocalMapper = RemoteToLocalMapper()
+//    val detailState by viewModel.detailState.collectAsState()
+
+    val restaurantState by viewModel.stateRestaurants.collectAsState()
+    val offer = restaurantState.find { restaurant ->
+        restaurant.offers.any { offer -> offer.id == offerId }
+    }?.offers?.find { it.id == offerId }
+
     LaunchedEffect(Unit){
-        Log.d("Tag", "🎉 DetailScreen > offer id: $id, offer: $offer")
+        Log.d("Tag", "🎉 DetailScreen > offer id: $offerId")
+//        viewModel.getOfferById(offerId) // not working
         // TODO: get offer using endpoint http://127.0.0.1:8080/api/offers/id=123...789
     }
     if (offer != null) {
-        DetailScreenContent(offer = remoteToLocalMapper.mapLocalOfferToOffers(offer))
+        DetailScreenContent(offer = offer) // try detailState too
     }
 }
 
@@ -79,29 +99,55 @@ fun DetailOfferItem(offer: Offers, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
             .fillMaxWidth()
-//            .height(550.dp)
+//            .height(750.dp),
+//        .fillMaxHeight(), // image doesn't appear using this
+            .requiredHeightIn(min(200.dp, 200.dp), max = 650.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color(0xFFFFF9E8))
     ) {
-        Text(text = offer.offerName.toString(), style = MaterialTheme.typography.headlineSmall, modifier = Modifier.padding(8.dp))
-        Text(text = "${offer.startTime} - ${offer.endTime}", style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(8.dp))
+        Row(modifier = Modifier) {
+            Text(text = offer.offerName.toString(), style = MaterialTheme.typography.headlineSmall, modifier = Modifier.padding(8.dp).weight(1f))
+            FavoriteHeart(modifier = Modifier
+                .align(Alignment.Bottom)
+                .padding(12.dp)
+            )
+        }
+//        Text(text = offer.offerName.toString(), style = MaterialTheme.typography.headlineSmall, modifier = Modifier.padding(8.dp))
+        Text(text = "De ${offer.startTime.substringAfter("T").substringBefore(":00Z")} a ${offer.endTime.substringAfter("T").substringBefore(":00Z")}", style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(8.dp))
         AsyncImage(
             model = offer.image,
             contentDescription = offer.description,
+            placeholder = painterResource(R.mipmap.image_resto_example),
             modifier = Modifier
                 .fillMaxSize()
                 .weight(1f),
             contentScale = ContentScale.Crop
         )
         Text(text = offer.description.toString(), style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(8.dp))
-        Box(modifier = Modifier.fillMaxSize()
-        ) {
-            QRCodeGenerator(
-                data = offer.id,
-                modifier = Modifier
-                    .width(200.dp)
-                    .height(200.dp)
-                    .align(Alignment.Center)
-            )
+        QRCodeGenerator(
+            data = offer.id,
+            modifier = Modifier
+                .width(200.dp)
+                .height(200.dp)
+                .align(Alignment.CenterHorizontally)
+        )
+    }
+}
+
+@Composable
+fun FavoriteHeart(modifier: Modifier = Modifier) {
+    Row (
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.clickable {
+            Log.d("Tag","Favorite clicked!")
         }
+    ) {
+        Icon(
+            imageVector = Icons.Default.Favorite,
+            contentDescription = "Favorite",
+//            tint = if (hero.favorite) Color.Yellow else Color.LightGray,
+            modifier = Modifier.size(32.dp)
+        )
     }
 }
 @Composable
@@ -113,7 +159,7 @@ fun ReviewSection(modifier: Modifier = Modifier) {
             .shadow(
                 elevation = 10.dp,
                 spotColor = Color(0x40000000),
-                ambientColor = Color(0x40000000)
+                ambientColor = Color(0xFFFFF9E8)
             )
     ) {
         Text(text = "Reseñas", style = MaterialTheme.typography.headlineSmall, modifier = Modifier.padding(8.dp))

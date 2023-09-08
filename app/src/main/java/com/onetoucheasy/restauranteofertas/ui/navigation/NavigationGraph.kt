@@ -67,7 +67,7 @@ fun NavigationGraph(loginViewModel: LoginViewModel, signUpViewModel: SignUpViewM
             Log.d("Tag","NavigationGraph > NavHost > composable > Screens.DetailScreen.route\nARG_OFFER_ID: $ARG_OFFER_ID")
             val id = it.arguments?.getString(Screens.DetailScreen.ARG_OFFER_ID)
             if (id != null) {
-                DetailScreen(viewModel = mainViewModel, id = id)
+                DetailScreen(viewModel = mainViewModel, offerId = id)
                 Log.d("Tag","NavigationGraph > NavHost > composable > Screens.DetailScreen.route\nid != null, ARG_OFFER_ID: $ARG_OFFER_ID\nid: $id")
             } else {
                 Log.d("Tag","id == null")

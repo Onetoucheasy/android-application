@@ -2,6 +2,7 @@ package com.onetoucheasy.restauranteofertas.repository.remote
 
 import com.onetoucheasy.restauranteofertas.repository.remote.request.SignUpRequestBody
 import com.onetoucheasy.restauranteofertas.repository.remote.response.JWTResponse
+import com.onetoucheasy.restauranteofertas.repository.remote.response.Offers
 import com.onetoucheasy.restauranteofertas.repository.remote.response.OffersResponse
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -44,8 +45,9 @@ interface OneTouchApi {
     @GET("offers/") // add <offerID> used to fetch offer for DetailScreen
     suspend fun getOffersById(
         @Header("CDS-ApiKey") apiKey: String,
-        @Header("Authorization") authHeader: String
-    ): OffersResponse
+        @Header("Authorization") authHeader: String,
+        @Header("") offerId: String
+    ): Offers
 
 //    @GET("restaurantsWithOffer")
 //    suspend fun getRestaurants(

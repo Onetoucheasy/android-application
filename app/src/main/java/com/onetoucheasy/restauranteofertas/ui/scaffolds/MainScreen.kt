@@ -71,7 +71,7 @@ fun MainScreen(
 
     LaunchedEffect(Unit) {
         viewModel.getRestaurants()
-//        viewModel.getOffers()
+//        viewModel.getOffers() // ⚠️ Error: Expected BEGIN_OBJECT but was BEGIN_ARRAY at path $
     }
 
     fun onOfferFavClicked(offerID: String) {
@@ -452,10 +452,10 @@ var offerMock3 = Offers(
 var offerMock4 = Offers(
     "4",
     "40% descuento ahora!",
-    "4x1 en toda la carta, excepto postres y bebidas. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+    "4x1 en toda la carta, excepto postres y bebidas. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "https://www.camarero10.com/wp-content/uploads/2020/02/como-distribuir-un-restaurante.jpg",
-    "14:30",
-    "17:30",
+    "2023-08-09T13:00:00Z\"",
+    "2023-08-09T15:00:00Z",
     "")
 
 var restauranteMock1 = LocalRestaurant(
