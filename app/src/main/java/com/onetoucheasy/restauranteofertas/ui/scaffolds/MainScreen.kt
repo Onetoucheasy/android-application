@@ -31,10 +31,12 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -55,7 +57,6 @@ import com.onetoucheasy.restauranteofertas.repository.remote.response.Offers
 import com.onetoucheasy.restauranteofertas.ui.theme.White
 import com.onetoucheasy.restauranteofertas.ui.viewModels.MainScreenViewModel
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun MainScreen(
     viewModel: MainScreenViewModel,
@@ -63,8 +64,6 @@ fun MainScreen(
     onOfferClick: (String)-> Unit = { _->},
     onRestaurantClick: (String)-> Unit = { _->}
 ) {
-
-    val offerList by viewModel.stateOffers.collectAsState() //  List<LocalOffer>
     val offersList: List<Offers> = emptyList()
     val restaurantList by viewModel.stateRestaurants.collectAsState()
 //    val restaurantList = restaurantsSim // mock here, not below
@@ -86,16 +85,11 @@ fun MainScreen(
     ) { offer ->
         onOfferFavClicked(offer)
     }
-
-    Thread.sleep(100)
-//    Log.d("Tag","🎉MainScreen > MainScreenContent > sleep 500ms > restaurantList:\n count = ${restaurantList.count()}\nvalue = $restaurantList") //
-//    Log.d("Tag","MainScreen > MainScreenContent > sleep 500ms > offerList: $offerList") //
 }
 
 @Composable
-fun MainScreenContent( // Blue
-    offers: List<Offers>, // a change fm List<LocalOffer>
-//    offers = restaurant.offers
+fun MainScreenContent(
+    offers: List<Offers>,
     restaurants: List<LocalRestaurant>,
     onOfferClicked: (String) -> Unit,
     onRestaurantClicked: (String) -> Unit,
@@ -118,7 +112,6 @@ fun MainScreenContent( // Blue
                     contentDescription = "Menu")
             }
         }
-
         TabSection(
             offersList = {
                 OfferTabSection (
@@ -167,10 +160,6 @@ fun TabSection( // Green
                 )
             }
         }
-//        when (tabIndex) {
-//            0 -> OffersList(offersList, onOfferClick) // ⭐️ Fix for click nav??
-//            1 -> RestaurantList(restaurantsList, onRestaurantClick)
-//        }
         when (tabIndex) {
             0 -> offersList()
             1 -> restaurantsList()
@@ -178,25 +167,20 @@ fun TabSection( // Green
     }
 }
 
-@Composable // Red
+@Composable
 fun OfferTabSection(
-    restaurants: List<LocalRestaurant>, // w List<Offers>
-//    offers: List<LocalOffer>,
+    restaurants: List<LocalRestaurant>,
     offers: List<Offers>, // todo: remove?
     onOfferClick: (String) -> Unit,
     onRestaurantClick: (String) -> Unit) // todo: remove?
 {
     if(restaurants.isNotEmpty()){
-//        Log.d("Tag","⭐️OfferTabSection > restaurants:\ncount = ${restaurants.count()}\nvalue = $restaurants") // only 1 restaurant comes though... prints all restaurantsSim
-//        Log.d("Tag","⭐️OfferTabSection > offers: $offers")
         LazyColumn(
             modifier = Modifier,
 //                .background(Color.Red), // todo: remove after testing
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             items(restaurants) { restaurant ->
-                var counter: Int = 1
-//                Log.d("Tag","OfferTabSection > items(restaurant)$counter: ${restaurant.name}")
                 Text(text = restaurant.name, style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold))
                 LazyRow(
                     modifier = Modifier
@@ -205,16 +189,11 @@ fun OfferTabSection(
                     horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     var offersPack = restaurant.offers
-//                    items(offers) { offer ->
-//                        OfferItem(offer = offer, onOfferClick = onOfferClick)
-//                    }
-//                    items(restaurant.offers, key = { it.hashCode()}) {
                     items(offersPack, key = { it.hashCode()}) {
 //                        Log.d("Tag","   offers.count() ${restaurant.offers.count()}")
                         OfferItem(it, onOfferClick = onOfferClick)
                     }
                 }
-                counter +=1
             }
         }
     } // TODO: Incluir progressview para dar feedback de carga al usuario
@@ -227,7 +206,8 @@ fun OfferItem(offer: Offers, modifier: Modifier = Modifier, onOfferClick: (Strin
     ElevatedCard(
         modifier = modifier
 //            .background(Color.Blue) // todo: remove after debugging
-            .fillMaxWidth()
+//            .fillMaxWidth()
+            .width(300.dp)
             .height(200.dp)
             .padding(10.dp)
             .shadow(
@@ -251,14 +231,25 @@ fun OfferItem(offer: Offers, modifier: Modifier = Modifier, onOfferClick: (Strin
             .weight(1f)){
             AsyncImage(
                 model = offer.image,
-                contentDescription = offer.description,
+                contentDescription = offer.offerName,
                 placeholder = painterResource(R.mipmap.image_resto_example),
                 modifier = Modifier
-                    .fillMaxWidth(), // or fillMaxSize()??
-                contentScale = ContentScale.Crop,
+                    .fillMaxWidth()
+                    .drawWithCache {
+                        val gradient = Brush.verticalGradient(
+                            colors = listOf(Color.Transparent, Color.Black),
+                            startY = size.height / 3,
+                            endY = size.height
+                        )
+                        onDrawWithContent {
+                            drawContent()
+                            drawRect(gradient, blendMode = BlendMode.Multiply)
+                        }
+                    }, // .fillMaxWidth() or fillMaxSize()??
+                contentScale = ContentScale.FillBounds,
             )
             Row() {
-                Text(
+                Text( // text on top of image
                     text = offer.offerName,
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
@@ -281,9 +272,9 @@ fun OfferItem(offer: Offers, modifier: Modifier = Modifier, onOfferClick: (Strin
 }
 
 
-// region Restaruantes "tab-clicked" elements...
+// region Restaurants "tab-clicked" elements...
 
-@Composable // used when "Restaurantes" tab selected, showing vert list of Restaurant items
+@Composable // used when "Restaurants" tab selected, showing vert list of Restaurant items
 fun RestaurantTabSection(restaurants: List<LocalRestaurant>, onRestaurantClick: (String) -> Unit){ // LocalOffer instead of Sting?
 
     if(restaurants.isNotEmpty()){
@@ -382,7 +373,12 @@ fun MainScreen_Preview() {
     val onOfferFavClick: (String) -> Unit = {}
     offerMockList.add(offerMock3)
     offerMockList.add(offerMock4)
-    MainScreenContent(offerMockList, restaurantMockList, { _ -> }, { _ -> }, onOfferFavClicked = onOfferFavClick)
+    MainScreenContent(
+        offerMockList,
+        restaurantsSim,
+        { _ -> },
+        { _ -> },
+        onOfferFavClicked = onOfferFavClick)
 }
 
 @Preview
@@ -413,7 +409,6 @@ fun TabScreen_Preview(
 @Composable
 fun OfferItem_Preview() {
     val onOfferClick: (String) -> Unit = {}
-//    OfferItem(LocalOffer("1", restaurant = LocalRestaurantShortInfo("1", "Restaurant Name"),"2x1 in Menu", "2x1 in all dishes (desserts and beverages not included).", "", "14:30", "17:30", ""), onOfferClick = onOfferClick)
     OfferItem(Offers("1","2x1 in Menu", "2x1 in all dishes (desserts and beverages not included).", "", "14:30", "17:30", ""), onOfferClick = onOfferClick)
 }
 //endregion
