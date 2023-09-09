@@ -782,6 +782,7 @@ var restauranteMock3 = LocalRestaurant(
 
 var restaurantsSim = listOf<LocalRestaurant>(restauranteMock4, restauranteMock5, restauranteMock6)
 
+var offers3to4Sim = listOf<Offers>(offerMock3, offerMock4)
 //var offerMockList = mutableListOf<LocalOffer>()
 var offerMockList = mutableListOf<Offers>()
 

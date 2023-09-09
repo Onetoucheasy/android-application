@@ -1,12 +1,10 @@
-package com.onetoucheasy.restauranteofertas
+package com.onetoucheasy.restauranteofertas.ui.scaffolds
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
-import com.onetoucheasy.restauranteofertas.ui.scaffolds.MainScreenContent
-import com.onetoucheasy.restauranteofertas.ui.scaffolds.offers3to4Sim
-import com.onetoucheasy.restauranteofertas.ui.scaffolds.restaurantsSim
+import com.onetoucheasy.restauranteofertas.MainActivity
 import org.junit.Rule
 import org.junit.Test
 

@@ -18,7 +18,7 @@ class DetailScreenContentTest {
 
             // Given
             setContent {
-                DetailScreenContent(offer = offerSample2)
+                DetailScreenContent(offer = restauranteMock1.offers.first())
             }
 
             // When
