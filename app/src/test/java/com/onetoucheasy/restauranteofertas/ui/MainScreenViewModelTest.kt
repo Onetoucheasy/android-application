@@ -66,7 +66,7 @@ class MainScreenViewModelTest {
     @Test
     fun `WHEN getOfferById EXPECT successful response value` () {
         // GIVEN
-        val offerId: String = "3"
+        val offerId: String = "b2e21a5e-958f-4ab8-84fe-7d78b63b9101"
         coEvery { repository.getOfferById(offerId) } returns generateOfferById(offerId)
 
         // WHEN
@@ -76,7 +76,7 @@ class MainScreenViewModelTest {
 
         // THEN
 //        assert(result.equals(offerMock3))
-        assert(actualLiveData.offerName == "3x1 en Carta")
+        assert(actualLiveData.offerName == "OfferNameMock1-1")
     } // pass 20230910 12:28 CET
 
     @OptIn(ExperimentalCoroutinesApi::class)

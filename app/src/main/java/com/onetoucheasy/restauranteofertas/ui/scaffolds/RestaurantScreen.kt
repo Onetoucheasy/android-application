@@ -37,7 +37,7 @@ import androidx.compose.ui.unit.min
 import coil.compose.AsyncImage
 import com.onetoucheasy.restauranteofertas.R
 import com.onetoucheasy.restauranteofertas.repository.local.model.LocalRestaurant
-import com.onetoucheasy.restauranteofertas.repository.restauranteMock4
+import com.onetoucheasy.restauranteofertas.repository.localRestaurantMock1
 import com.onetoucheasy.restauranteofertas.ui.viewModels.MainScreenViewModel
 
 @Composable
@@ -165,5 +165,5 @@ fun ClickableContactLink(info: String) {
 @Preview(showBackground = true)
 @Composable
 fun RestaurantScreen_Preview() {
-    RestaurantScreenContent(restauranteMock4, telephone = "Tel: +34.123.456.789", website = "www.example.com")
+    RestaurantScreenContent(localRestaurantMock1, telephone = "Tel: +34.123.456.789", website = "www.example.com")
 }

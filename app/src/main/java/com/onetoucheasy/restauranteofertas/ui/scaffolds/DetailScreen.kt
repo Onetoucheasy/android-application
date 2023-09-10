@@ -40,9 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.min
 import coil.compose.AsyncImage
 import com.onetoucheasy.restauranteofertas.R
-import com.onetoucheasy.restauranteofertas.repository.local.model.LocalOffer
-import com.onetoucheasy.restauranteofertas.repository.local.model.LocalRestaurantShortInfo
-import com.onetoucheasy.restauranteofertas.repository.offerMock4
+import com.onetoucheasy.restauranteofertas.repository.offerMock11
 import com.onetoucheasy.restauranteofertas.repository.remote.response.Offer
 import com.onetoucheasy.restauranteofertas.ui.QRCodeGenerator
 import com.onetoucheasy.restauranteofertas.ui.viewModels.MainScreenViewModel
@@ -166,19 +164,5 @@ fun ReviewSection(modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun DetailScreenPreview() {
-    DetailScreenContent(offerMock4)
+    DetailScreenContent(offerMock11)
 }
-
-val localOfferSample = LocalOffer(
-    id = "123",
-    restaurant = LocalRestaurantShortInfo(
-        id = "789",
-        name = "Tapas Restaurante Ejemplo"
-    ),
-    offerName = "10 por 1!",
-    description = "¡Ben para disfruta la comida! Tenemos 10 por 1 solamente ésta tarde!",
-    image = "https://cdn.alfabetajuega.com/alfabetajuega/2020/12/goku1.jpg?width=300",
-    startTime = "1600",
-    endTime = "1800",
-    postTime = "1500",
-)

@@ -56,11 +56,11 @@ import com.onetoucheasy.restauranteofertas.repository.remote.response.Offer
 import com.onetoucheasy.restauranteofertas.ui.theme.White
 import com.onetoucheasy.restauranteofertas.ui.viewModels.MainScreenViewModel
 import com.onetoucheasy.restauranteofertas.repository.localRestaurantListMock
-import com.onetoucheasy.restauranteofertas.repository.offerListMock
-import com.onetoucheasy.restauranteofertas.repository.offerMock1
-import com.onetoucheasy.restauranteofertas.repository.offerMock2
-import com.onetoucheasy.restauranteofertas.repository.offerMock3
-import com.onetoucheasy.restauranteofertas.repository.offerMock4
+import com.onetoucheasy.restauranteofertas.repository.offerMutableListMock
+import com.onetoucheasy.restauranteofertas.repository.localOfferMock1
+import com.onetoucheasy.restauranteofertas.repository.localOfferMock2
+import com.onetoucheasy.restauranteofertas.repository.offerMock11
+import com.onetoucheasy.restauranteofertas.repository.offerMock12
 
 @Composable
 fun MainScreen(
@@ -370,16 +370,14 @@ fun CustomSearchBar(text: String, screenWidth: Dp, modifier: Modifier, onValueCh
     )
 }
 
-// region PREVIEWS
-
 @Preview(showBackground = true)
 @Composable
 fun MainScreen_Preview() {
     val onOfferFavClick: (String) -> Unit = {}
-    offerListMock.add(offerMock3)
-    offerListMock.add(offerMock4)
+    offerMutableListMock.add(offerMock11)
+    offerMutableListMock.add(offerMock12)
     MainScreenContent(
-        offerListMock,
+        offerMutableListMock,
         localRestaurantListMock,
         { _ -> },
         { _ -> },
@@ -395,8 +393,8 @@ fun CustomSearchBar_Preview() {
 @Preview
 @Composable
 fun TabScreen_Preview(
-    offers: List<LocalOffer> = listOf(offerMock1, offerMock2),
-    restaurants: List<LocalRestaurant> = listOf()
+    offers: List<LocalOffer> = listOf(localOfferMock1, localOfferMock2),
+    restaurants: List<LocalRestaurant> = localRestaurantListMock
 ) {
     val offersListMock: @Composable () -> Unit = {}
     val restaurantsList: @Composable () -> Unit = {}
@@ -414,10 +412,5 @@ fun TabScreen_Preview(
 @Composable
 fun OfferItem_Preview() {
     val onOfferClick: (String) -> Unit = {}
-    OfferItem(Offer("1","2x1 in Menu", "2x1 in all dishes (desserts and beverages not included).", "", "14:30", "17:30", ""), onOfferClick = onOfferClick)
+    OfferItem(offerMock11, onOfferClick = onOfferClick)
 }
-//endregion
-
-// region MOCK DATA
-
-// endregion

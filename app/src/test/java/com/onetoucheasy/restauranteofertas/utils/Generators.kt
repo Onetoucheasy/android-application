@@ -3,7 +3,7 @@ package com.onetoucheasy.restauranteofertas.utils
 import com.onetoucheasy.restauranteofertas.repository.local.model.LocalOffer
 import com.onetoucheasy.restauranteofertas.repository.local.model.LocalRestaurant
 import com.onetoucheasy.restauranteofertas.repository.local.model.LocalRestaurantShortInfo
-import com.onetoucheasy.restauranteofertas.repository.offerMock3
+import com.onetoucheasy.restauranteofertas.repository.offerMock11
 import com.onetoucheasy.restauranteofertas.repository.remote.response.Offer
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -15,7 +15,7 @@ fun generateUIOffers(): Flow<List<LocalOffer>> {
 }
 
 fun generateOfferById(offerId: String): Offer {
-    return offerMock3
+    return offerMock11
 }
 
 fun generateUIRestaurants():  Flow<List<LocalRestaurant>>{

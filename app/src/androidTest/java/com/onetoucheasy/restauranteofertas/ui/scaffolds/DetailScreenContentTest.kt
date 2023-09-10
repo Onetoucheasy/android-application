@@ -4,7 +4,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import com.onetoucheasy.restauranteofertas.repository.local.model.LocalOffer
 import com.onetoucheasy.restauranteofertas.repository.local.model.LocalRestaurantShortInfo
-import com.onetoucheasy.restauranteofertas.repository.restauranteMock1
+import com.onetoucheasy.restauranteofertas.repository.localRestaurantMock1
 import org.junit.Rule
 import org.junit.Test
 
@@ -19,7 +19,7 @@ class DetailScreenContentTest {
 
             // Given
             setContent {
-                DetailScreenContent(offer = restauranteMock1.offers.first())
+                DetailScreenContent(offer = localRestaurantMock1.offers.first())
             }
 
             // When

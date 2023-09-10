@@ -6,7 +6,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.onetoucheasy.restauranteofertas.MainActivity
 import com.onetoucheasy.restauranteofertas.repository.localRestaurantListMock
-import com.onetoucheasy.restauranteofertas.repository.offerListMock3to4
+import com.onetoucheasy.restauranteofertas.repository.offerListMock
 import org.junit.Rule
 import org.junit.Test
 
@@ -29,7 +29,7 @@ class MainScreenContentTest {
             // Given
             setContent {
                 MainScreenContent(
-                    offers = offerListMock3to4,
+                    offers = offerListMock,
                     restaurants = localRestaurantListMock,
                     onOfferClicked = onOfferClick,
                     onRestaurantClicked = onRestaurantClick,
