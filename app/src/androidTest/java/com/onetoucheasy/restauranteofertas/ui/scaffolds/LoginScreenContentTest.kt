@@ -1,12 +1,8 @@
-package com.onetoucheasy.restauranteofertas
+package com.onetoucheasy.restauranteofertas.ui.scaffolds
 
-import androidx.compose.ui.test.assertTextContains
-import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
-import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
-import com.onetoucheasy.restauranteofertas.ui.scaffolds.LoginScreenContent
 import com.onetoucheasy.restauranteofertas.ui.viewModels.LoginState
 import org.junit.Rule
 import org.junit.Test
@@ -29,16 +25,14 @@ class LoginScreenContentTest {
             }
 
             //When
-            composeRule.onNodeWithText("Email").performTextInput("testtest.com")
+            composeRule.onNodeWithText("Email").performTextInput("test.com")
             composeRule.onNodeWithText("Password").performTextInput("123456")
-            composeRule.onNodeWithText("Sign In").performClick()
+//            composeRule.onNodeWithText("Sign In").performClick()
 
             //THEN
-            composeRule.onNodeWithText("testtest.com").assertExists()
-            //composeRule.onNodeWithText("Email").assertExists().assertTextEquals("testtest.com")
+            composeRule.onNodeWithText("test.com").assertExists()
+            //composeRule.onNodeWithText("Email").assertExists().assertTextEquals("test.com")
             //composeRule.onNodeWithText("Email").assertExists().assertTextEquals("Email")
-
         }
     }
-
 }

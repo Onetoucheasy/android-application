@@ -4,12 +4,11 @@ import com.onetoucheasy.restauranteofertas.repository.remote.request.SignUpReque
 import com.onetoucheasy.restauranteofertas.repository.remote.response.JWTResponse
 import com.onetoucheasy.restauranteofertas.repository.remote.response.Offers
 import com.onetoucheasy.restauranteofertas.repository.remote.response.OffersResponse
-import okhttp3.ResponseBody
-import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Url
 
 
@@ -42,16 +41,11 @@ interface OneTouchApi {
         @Header("Authorization") authHeader: String
     ): OffersResponse
 
-    @GET("offers/") // add <offerID> used to fetch offer for DetailScreen
+    @GET("offers/{offerId}") // add <offerID> used to fetch offer for DetailScreen
     suspend fun getOffersById(
         @Header("CDS-ApiKey") apiKey: String,
         @Header("Authorization") authHeader: String,
-        @Header("") offerId: String
-    ): Offers
-
-//    @GET("restaurantsWithOffer")
-//    suspend fun getRestaurants(
-//        @Header("CDS-ApiKey") apiKey: String,
-//        @Header("Authorization") authHeader: String
-//    ): OffersResponse
+//        @Query("id") offerId: String // leads to [array] type response w multiple offers
+        @Path("offerId") offerId: String
+    ): Offers // return type of Array<Offers> if using @Query method
 }

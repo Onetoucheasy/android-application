@@ -56,8 +56,7 @@ fun DetailScreen (viewModel: MainScreenViewModel, offerId: String) {
 
     LaunchedEffect(Unit){
         Log.d("Tag", "🎉 DetailScreen > offer id: $offerId")
-//        viewModel.getOfferById(offerId) // not working
-        // TODO: get offer using endpoint http://127.0.0.1:8080/api/offers/id=123...789
+        val test = viewModel.getOfferById(offerId) // alternate method to fetch desired offerWithId
     }
     if (offer != null) {
         DetailScreenContent(offer = offer) // try detailState too

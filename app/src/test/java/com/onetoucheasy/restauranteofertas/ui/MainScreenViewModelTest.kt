@@ -3,6 +3,7 @@ package com.onetoucheasy.restauranteofertas.ui
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.onetoucheasy.restauranteofertas.repository.Repository
 import com.onetoucheasy.restauranteofertas.ui.viewModels.MainScreenViewModel
+import com.onetoucheasy.restauranteofertas.utils.generateOfferById
 import com.onetoucheasy.restauranteofertas.utils.generateUIOffers
 import com.onetoucheasy.restauranteofertas.utils.generateUIRestaurants
 import io.mockk.coEvery
@@ -61,6 +62,22 @@ class MainScreenViewModelTest {
         assert(actualLiveData.isNotEmpty())
 
     }
+
+    @Test
+    fun `WHEN getOfferById EXPECT successful response value` () {
+        // GIVEN
+        val offerId: String = "3"
+        coEvery { repository.getOfferById(offerId) } returns generateOfferById(offerId)
+
+        // WHEN
+        val result = viewModel.getOfferById(offerId)
+        viewModel.getOfferById(offerId)
+        val actualLiveData = viewModel.detailState.value
+
+        // THEN
+//        assert(result.equals(offerMock3))
+        assert(actualLiveData.offerName == "3x1 en Carta")
+    } // pass 20230910 12:28 CET
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @After

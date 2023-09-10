@@ -3,6 +3,7 @@ package com.onetoucheasy.restauranteofertas.data.remote.fakes
 import com.onetoucheasy.restauranteofertas.repository.remote.RemoteDataSource
 import com.onetoucheasy.restauranteofertas.repository.remote.request.SignUpRequestBody
 import com.onetoucheasy.restauranteofertas.repository.remote.response.JWTResponse
+import com.onetoucheasy.restauranteofertas.repository.remote.response.Offers
 import com.onetoucheasy.restauranteofertas.repository.remote.response.OffersResponse
 
 class FakeRemoteDataSource: RemoteDataSource {
@@ -15,6 +16,9 @@ class FakeRemoteDataSource: RemoteDataSource {
         TODO("Not yet implemented")
     }
 
+    override suspend fun getOfferById(offerId: String): Offers {
+        TODO("Not yet implemented")
+    }
     override suspend fun getOffers(): OffersResponse {
         TODO("Not yet implemented")
     }
