@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RestauranteOfertas</string>
+    <string name="app_name">Papeo Ya!</string>
 
     <string name="form_name_hint">Name</string>
     <string name="form_surname_hint">Surname</string>
