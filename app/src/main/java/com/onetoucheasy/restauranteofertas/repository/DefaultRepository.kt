@@ -6,7 +6,7 @@ import com.onetoucheasy.restauranteofertas.repository.mappers.RemoteToLocalMappe
 import com.onetoucheasy.restauranteofertas.repository.remote.response.JWTResponse
 import com.onetoucheasy.restauranteofertas.repository.remote.RemoteDataSource
 import com.onetoucheasy.restauranteofertas.repository.remote.request.SignUpRequestBody
-import com.onetoucheasy.restauranteofertas.repository.remote.response.Offers
+import com.onetoucheasy.restauranteofertas.repository.remote.response.Offer
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -25,7 +25,7 @@ class DefaultRepository @Inject constructor(
         return remoteToLocalMapper.mapRestaurantsResponseToLocalOffers(remoteDataSource.getOffers())
     }
 
-    override suspend fun getOfferById(offerId: String): Offers {
+    override suspend fun getOfferById(offerId: String): Offer {
         return remoteDataSource.getOfferById(offerId)
     }
 

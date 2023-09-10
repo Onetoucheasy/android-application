@@ -3,7 +3,7 @@ package com.onetoucheasy.restauranteofertas.repository.remote
 import android.util.Log
 import com.onetoucheasy.restauranteofertas.repository.remote.request.SignUpRequestBody
 import com.onetoucheasy.restauranteofertas.repository.remote.response.JWTResponse
-import com.onetoucheasy.restauranteofertas.repository.remote.response.Offers
+import com.onetoucheasy.restauranteofertas.repository.remote.response.Offer
 import com.onetoucheasy.restauranteofertas.repository.remote.response.OffersResponse
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -44,7 +44,7 @@ class DefaultRemoteDataSource @Inject constructor(
             throw exception
         }
     }
-    override suspend fun getOfferById(offerId: String): Offers {
+    override suspend fun getOfferById(offerId: String): Offer {
         return try {
             val authHeaderValue = "Bearer ${tokenData.accessToken}"
             api.getOffersById(this.apiKey, authHeaderValue, offerId)

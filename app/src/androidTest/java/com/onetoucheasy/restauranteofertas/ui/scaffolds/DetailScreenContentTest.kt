@@ -24,14 +24,14 @@ class DetailScreenContentTest {
             // When
 
             // Then
-            onNodeWithText(text = offerSample2.offerName)
-            onNodeWithText(text = offerSample2.description)
-            onNodeWithText(text = offerSample2.restaurant.name)
+            onNodeWithText(text = localOfferSample2.offerName)
+            onNodeWithText(text = localOfferSample2.description)
+            onNodeWithText(text = localOfferSample2.restaurant.name)
         }
     }
 }
 
-val offerSample2 = LocalOffer(
+val localOfferSample2 = LocalOffer(
     id = "123",
     restaurant = LocalRestaurantShortInfo(
         id = "789",

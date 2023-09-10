@@ -3,7 +3,7 @@ package com.onetoucheasy.restauranteofertas.repository.mappers
 import com.onetoucheasy.restauranteofertas.repository.local.model.LocalOffer
 import com.onetoucheasy.restauranteofertas.repository.local.model.LocalRestaurant
 import com.onetoucheasy.restauranteofertas.repository.local.model.LocalRestaurantShortInfo
-import com.onetoucheasy.restauranteofertas.repository.remote.response.Offers
+import com.onetoucheasy.restauranteofertas.repository.remote.response.Offer
 import com.onetoucheasy.restauranteofertas.repository.remote.response.OffersResponse
 import com.onetoucheasy.restauranteofertas.repository.remote.response.Restaurant
 import kotlinx.coroutines.flow.Flow
@@ -41,7 +41,7 @@ class RemoteToLocalMapper @Inject constructor(){
         ))
     }
 
-    private fun mapGetOffers(offer: Offers, restaurant: Restaurant): LocalOffer{ // try offer: LocalOffer??
+    private fun mapGetOffers(offer: Offer, restaurant: Restaurant): LocalOffer{ // try offer: LocalOffer??
         return LocalOffer(
             offer.id,
             LocalRestaurantShortInfo(restaurant.id, restaurant.name),
@@ -53,8 +53,8 @@ class RemoteToLocalMapper @Inject constructor(){
             offer.postTime)
     }
 
-    fun mapLocalOfferToOffers(localOffer: LocalOffer): Offers {
-        return Offers(
+    fun mapLocalOfferToOffers(localOffer: LocalOffer): Offer {
+        return Offer(
             id = localOffer.id,
             offerName = localOffer.offerName,
             description = localOffer.description,

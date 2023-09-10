@@ -2,7 +2,7 @@ package com.onetoucheasy.restauranteofertas.repository.remote
 
 import com.onetoucheasy.restauranteofertas.repository.remote.request.SignUpRequestBody
 import com.onetoucheasy.restauranteofertas.repository.remote.response.JWTResponse
-import com.onetoucheasy.restauranteofertas.repository.remote.response.Offers
+import com.onetoucheasy.restauranteofertas.repository.remote.response.Offer
 import com.onetoucheasy.restauranteofertas.repository.remote.response.OffersResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -47,5 +47,5 @@ interface OneTouchApi {
         @Header("Authorization") authHeader: String,
 //        @Query("id") offerId: String // leads to [array] type response w multiple offers
         @Path("offerId") offerId: String
-    ): Offers // return type of Array<Offers> if using @Query method
+    ): Offer // return type of Array<Offer> if using @Query method
 }

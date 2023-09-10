@@ -42,7 +42,7 @@ import coil.compose.AsyncImage
 import com.onetoucheasy.restauranteofertas.R
 import com.onetoucheasy.restauranteofertas.repository.local.model.LocalOffer
 import com.onetoucheasy.restauranteofertas.repository.local.model.LocalRestaurantShortInfo
-import com.onetoucheasy.restauranteofertas.repository.remote.response.Offers
+import com.onetoucheasy.restauranteofertas.repository.remote.response.Offer
 import com.onetoucheasy.restauranteofertas.ui.QRCodeGenerator
 import com.onetoucheasy.restauranteofertas.ui.viewModels.MainScreenViewModel
 
@@ -66,7 +66,7 @@ fun DetailScreen (viewModel: MainScreenViewModel, offerId: String) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailScreenContent(
-    offer: Offers
+    offer: Offer
 ){
     Scaffold(
     ) { it ->
@@ -88,7 +88,7 @@ fun DetailScreenContent(
     }
 }
 @Composable
-fun DetailOfferItem(offer: Offers, modifier: Modifier = Modifier) {
+fun DetailOfferItem(offer: Offer, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -168,7 +168,7 @@ fun DetailScreenPreview() {
     DetailScreenContent(offerMock4)
 }
 
-val offerSample = LocalOffer(
+val localOfferSample = LocalOffer(
     id = "123",
     restaurant = LocalRestaurantShortInfo(
         id = "789",

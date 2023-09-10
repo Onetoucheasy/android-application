@@ -6,13 +6,12 @@ import androidx.lifecycle.viewModelScope
 import com.onetoucheasy.restauranteofertas.repository.Repository
 import com.onetoucheasy.restauranteofertas.repository.local.model.LocalOffer
 import com.onetoucheasy.restauranteofertas.repository.local.model.LocalRestaurant
-import com.onetoucheasy.restauranteofertas.repository.remote.response.Offers
+import com.onetoucheasy.restauranteofertas.repository.remote.response.Offer
 import com.onetoucheasy.restauranteofertas.ui.scaffolds.offerMock4
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -29,8 +28,8 @@ class MainScreenViewModel @Inject constructor(
     private val _stateRestaurants = MutableStateFlow<List<LocalRestaurant>>(emptyList())
     val stateRestaurants: StateFlow<List<LocalRestaurant>> get() = _stateRestaurants
 
-    private val _stateDetail = MutableStateFlow<Offers>(offerMock4)
-    val detailState: StateFlow<Offers> get() = _stateDetail
+    private val _stateDetail = MutableStateFlow<Offer>(offerMock4)
+    val detailState: StateFlow<Offer> get() = _stateDetail
 
     fun getOffers() {
         viewModelScope.launch {

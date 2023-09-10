@@ -53,7 +53,7 @@ import com.onetoucheasy.restauranteofertas.R
 import com.onetoucheasy.restauranteofertas.repository.local.model.LocalOffer
 import com.onetoucheasy.restauranteofertas.repository.local.model.LocalRestaurant
 import com.onetoucheasy.restauranteofertas.repository.local.model.LocalRestaurantShortInfo
-import com.onetoucheasy.restauranteofertas.repository.remote.response.Offers
+import com.onetoucheasy.restauranteofertas.repository.remote.response.Offer
 import com.onetoucheasy.restauranteofertas.ui.theme.White
 import com.onetoucheasy.restauranteofertas.ui.viewModels.MainScreenViewModel
 
@@ -64,7 +64,7 @@ fun MainScreen(
     onOfferClick: (String)-> Unit = { _->},
     onRestaurantClick: (String)-> Unit = { _->}
 ) {
-    val offersList: List<Offers> = emptyList()
+    val offerList: List<Offer> = emptyList()
     val restaurantList by viewModel.stateRestaurants.collectAsState()
 //    val restaurantList = restaurantsSim // mock here, not below
 
@@ -74,11 +74,11 @@ fun MainScreen(
     }
 
     fun onOfferFavClicked(offerID: String) {
-        //viewModel.updateFavClicked(offerID) // TODO: to save Favs Offers
+        //viewModel.updateFavClicked(offerID) // TODO: to save Favs Offer
     }
 
     MainScreenContent(
-        offersList, // List<Offers>, different than offerList
+        offerList, // List<Offer>, different than offerList
         restaurantList,
         onOfferClicked = onOfferClick,
         onRestaurantClicked = onRestaurantClick,
@@ -89,7 +89,7 @@ fun MainScreen(
 
 @Composable
 fun MainScreenContent(
-    offers: List<Offers>,
+    offers: List<Offer>,
     restaurants: List<LocalRestaurant>,
     onOfferClicked: (String) -> Unit,
     onRestaurantClicked: (String) -> Unit,
@@ -170,7 +170,7 @@ fun TabSection( // Green
 @Composable
 fun OfferTabSection(
     restaurants: List<LocalRestaurant>,
-    offers: List<Offers>, // todo: remove?
+    offers: List<Offer>, // todo: remove?
     onOfferClick: (String) -> Unit,
     onRestaurantClick: (String) -> Unit) // todo: remove?
 {
@@ -202,7 +202,7 @@ fun OfferTabSection(
 }
 
 @Composable
-fun OfferItem(offer: Offers, modifier: Modifier = Modifier, onOfferClick: (String) -> Unit) { // todo: change to UUID
+fun OfferItem(offer: Offer, modifier: Modifier = Modifier, onOfferClick: (String) -> Unit) { // todo: change to UUID
     ElevatedCard(
         modifier = modifier
 //            .background(Color.Blue) // todo: remove after debugging
@@ -371,11 +371,11 @@ fun CustomSearchBar(text: String, screenWidth: Dp, modifier: Modifier, onValueCh
 @Composable
 fun MainScreen_Preview() {
     val onOfferFavClick: (String) -> Unit = {}
-    offerMockList.add(offerMock3)
-    offerMockList.add(offerMock4)
+    offerListMock.add(offerMock3)
+    offerListMock.add(offerMock4)
     MainScreenContent(
-        offerMockList,
-        restaurantsSim,
+        offerListMock,
+        localRestaurantListMock,
         { _ -> },
         { _ -> },
         onOfferFavClicked = onOfferFavClick)
@@ -409,7 +409,7 @@ fun TabScreen_Preview(
 @Composable
 fun OfferItem_Preview() {
     val onOfferClick: (String) -> Unit = {}
-    OfferItem(Offers("1","2x1 in Menu", "2x1 in all dishes (desserts and beverages not included).", "", "14:30", "17:30", ""), onOfferClick = onOfferClick)
+    OfferItem(Offer("1","2x1 in Menu", "2x1 in all dishes (desserts and beverages not included).", "", "14:30", "17:30", ""), onOfferClick = onOfferClick)
 }
 //endregion
 
@@ -435,7 +435,7 @@ var offerMock2 = LocalOffer("2",
     "20:30",
     "")
 
-var offerMock3 = Offers(
+var offerMock3 = Offer(
     "3",
     "3x1 en Carta",
     "3x1 en toda la carta, excepto postres y bebidas.",
@@ -444,7 +444,7 @@ var offerMock3 = Offers(
     "17:30",
     "")
 
-var offerMock4 = Offers(
+var offerMock4 = Offer(
     "4",
     "40% descuento ahora!",
     "4x1 en toda la carta, excepto postres y bebidas. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
@@ -464,7 +464,7 @@ var restauranteMock1 = LocalRestaurant(
 //    closingHour = "2359",
     offers = listOf(
 //        LocalOffer(
-        Offers(
+        Offer(
             id = "b2e21a5e-958f-4ab8-84fe-7d78b63b9101",
 //            restaurant = LocalRestaurantShortInfo(
 //                id = "123",
@@ -478,7 +478,7 @@ var restauranteMock1 = LocalRestaurant(
             postTime = "22023-08-09T11:00:00Z"
         ),
 //        LocalOffer(
-        Offers(
+        Offer(
             id = "b2e21a5e-958f-4ab8-84fe-7d78b63b9102",
 //            restaurant = LocalRestaurantShortInfo(
 //                id = "123",
@@ -492,7 +492,7 @@ var restauranteMock1 = LocalRestaurant(
             postTime = "22023-08-09T11:00:00Z"
         ),
 //        LocalOffer(
-        Offers(
+        Offer(
             id = "b2e21a5e-958f-4ab8-84fe-7d78b63b9103",
 //            restaurant = LocalRestaurantShortInfo(
 //                id = "123",
@@ -519,7 +519,7 @@ var restauranteMock2 = LocalRestaurant(
 //    closingHour = "2359",
     offers = listOf(
 //        LocalOffer(
-        Offers(
+        Offer(
             id = "b2e21a5e-958f-4ab8-84fe-7d78b63b9201",
 //            restaurant = LocalRestaurantShortInfo(
 //                id = "456",
@@ -533,7 +533,7 @@ var restauranteMock2 = LocalRestaurant(
             postTime = "22023-08-09T11:00:00Z"
         ),
 //        LocalOffer(
-            Offers(
+            Offer(
             id = "b2e21a5e-958f-4ab8-84fe-7d78b63b9202",
 //            restaurant = LocalRestaurantShortInfo(
 //                id = "456",
@@ -547,7 +547,7 @@ var restauranteMock2 = LocalRestaurant(
             postTime = "22023-08-09T11:00:00Z"
         ),
 //        LocalOffer(
-            Offers(
+            Offer(
             id = "b2e21a5e-958f-4ab8-84fe-7d78b63b9203",
 //            restaurant = LocalRestaurantShortInfo(
 //                id = "456",
@@ -574,7 +574,7 @@ var restauranteMock4 = LocalRestaurant(
 //    closingHour = "2304",
     offers = listOf(
 //        LocalOffer(
-            Offers(
+            Offer(
             id = "401",
 //            restaurant = LocalRestaurantShortInfo(
 //                id = "4",
@@ -588,7 +588,7 @@ var restauranteMock4 = LocalRestaurant(
             postTime = "1504"
         ),
 //        LocalOffer(
-            Offers(
+            Offer(
             id = "402",
 //            restaurant = LocalRestaurantShortInfo(
 //                id = "4",
@@ -602,7 +602,7 @@ var restauranteMock4 = LocalRestaurant(
             postTime = "1504"
         ),
 //        LocalOffer(
-            Offers(
+            Offer(
             id = "403",
 //            restaurant = LocalRestaurantShortInfo(
 //                id = "4",
@@ -628,7 +628,7 @@ var restauranteMock5 = LocalRestaurant(
 //    closingHour = "2305",
     offers = listOf(
 //        LocalOffer(
-            Offers(
+            Offer(
             id = "501",
 //            restaurant = LocalRestaurantShortInfo(
 //                id = "5",
@@ -642,7 +642,7 @@ var restauranteMock5 = LocalRestaurant(
             postTime = "1505"
         ),
 //        LocalOffer(
-            Offers(
+            Offer(
             id = "502",
 //            restaurant = LocalRestaurantShortInfo(
 //                id = "5",
@@ -656,7 +656,7 @@ var restauranteMock5 = LocalRestaurant(
             postTime = "1505"
         ),
 //        LocalOffer(
-            Offers(
+            Offer(
             id = "503",
 //            restaurant = LocalRestaurantShortInfo(
 //                id = "5",
@@ -682,7 +682,7 @@ var restauranteMock6 = LocalRestaurant(
 //    closingHour = "2306",
     offers = listOf(
 //        LocalOffer(
-            Offers(
+            Offer(
             id = "601",
 //            restaurant = LocalRestaurantShortInfo(
 //                id = "6",
@@ -696,7 +696,7 @@ var restauranteMock6 = LocalRestaurant(
             postTime = "1506"
         ),
 //        LocalOffer(
-            Offers(
+            Offer(
             id = "602",
 //            restaurant = LocalRestaurantShortInfo(
 //                id = "6",
@@ -710,7 +710,7 @@ var restauranteMock6 = LocalRestaurant(
             postTime = "1506"
         ),
 //        LocalOffer(
-            Offers(
+            Offer(
             id = "603",
 //            restaurant = LocalRestaurantShortInfo(
 //                id = "6",
@@ -736,7 +736,7 @@ var restauranteMock3 = LocalRestaurant(
 //    closingHour = "2359",
     offers = listOf(
 //        LocalOffer(
-            Offers(
+            Offer(
             id = "b2e21a5e-958f-4ab8-84fe-7d78b63b9301",
 //            restaurant = LocalRestaurantShortInfo(
 //                id = "789",
@@ -750,7 +750,7 @@ var restauranteMock3 = LocalRestaurant(
             postTime = "22023-08-09T11:00:00Z"
         ),
 //        LocalOffer(
-            Offers(
+            Offer(
             id = "b2e21a5e-958f-4ab8-84fe-7d78b63b9302",
 //            restaurant = LocalRestaurantShortInfo(
 //                id = "789",
@@ -764,7 +764,7 @@ var restauranteMock3 = LocalRestaurant(
             postTime = "22023-08-09T11:00:00Z"
         ),
 //        LocalOffer(
-            Offers(
+            Offer(
             id = "b2e21a5e-958f-4ab8-84fe-7d78b63b9303",
 //            restaurant = LocalRestaurantShortInfo(
 //                id = "789",
@@ -780,12 +780,8 @@ var restauranteMock3 = LocalRestaurant(
     )
 )
 
-var restaurantsSim = listOf<LocalRestaurant>(restauranteMock4, restauranteMock5, restauranteMock6)
-
-var offers3to4Sim = listOf<Offers>(offerMock3, offerMock4)
-//var offerMockList = mutableListOf<LocalOffer>()
-var offerMockList = mutableListOf<Offers>()
-
-var restaurantMockList = mutableListOf<LocalRestaurant>()
-
+var localRestaurantListMock = listOf<LocalRestaurant>(restauranteMock4, restauranteMock5, restauranteMock6)
+var offerListMock3to4 = listOf<Offer>(offerMock3, offerMock4)
+var offerListMock = mutableListOf<Offer>()
+var localRestaurantMutableListMock = mutableListOf<LocalRestaurant>()
 // endregion

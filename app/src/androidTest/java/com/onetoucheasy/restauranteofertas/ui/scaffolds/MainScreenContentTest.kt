@@ -27,8 +27,8 @@ class MainScreenContentTest {
             // Given
             setContent {
                 MainScreenContent(
-                    offers = offers3to4Sim,
-                    restaurants = restaurantsSim,
+                    offers = offerListMock3to4,
+                    restaurants = localRestaurantListMock,
                     onOfferClicked = onOfferClick,
                     onRestaurantClicked = onRestaurantClick,
                     onOfferFavClicked = onOfferFavClick
