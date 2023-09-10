@@ -21,7 +21,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -109,19 +108,19 @@ fun LoginScreenContent(loginState: LoginState, onRegisterClicked: () -> (Unit),o
        modifier = Modifier
    ) {
        Box(modifier = Modifier.fillMaxSize()) {
-           Image(painter = painterResource(R.mipmap.login_background),
+           Image(painter = painterResource(R.mipmap.login_background_black),
                contentDescription = stringResource(id = R.string.login_background_image_description),
                 modifier = Modifier.fillMaxSize(),
                contentScale = ContentScale.FillBounds
                )
-           Text(
-               text = stringResource(id = R.string.login_access),
-               modifier = Modifier
-                   .width(230.dp)
-                   .padding(start = 70.dp, top = 70.dp),
-               maxLines = 2,
-               style = MaterialTheme.typography.headlineLarge
-           )
+//           Text(
+//               text = stringResource(id = R.string.login_access),
+//               modifier = Modifier
+//                   .width(230.dp)
+//                   .padding(start = 70.dp, top = 70.dp),
+//               maxLines = 2,
+//               style = MaterialTheme.typography.headlineLarge
+//           )
 
            Column(modifier = Modifier.align(Alignment.Center)) {
                Text(text = stringResource(id = R.string.login_authentication_error),
