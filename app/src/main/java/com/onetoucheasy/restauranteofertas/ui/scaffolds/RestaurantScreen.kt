@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.min
 import coil.compose.AsyncImage
 import com.onetoucheasy.restauranteofertas.R
 import com.onetoucheasy.restauranteofertas.repository.local.model.LocalRestaurant
+import com.onetoucheasy.restauranteofertas.repository.restauranteMock4
 import com.onetoucheasy.restauranteofertas.ui.viewModels.MainScreenViewModel
 
 @Composable

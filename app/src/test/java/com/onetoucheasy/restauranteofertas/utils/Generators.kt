@@ -3,8 +3,8 @@ package com.onetoucheasy.restauranteofertas.utils
 import com.onetoucheasy.restauranteofertas.repository.local.model.LocalOffer
 import com.onetoucheasy.restauranteofertas.repository.local.model.LocalRestaurant
 import com.onetoucheasy.restauranteofertas.repository.local.model.LocalRestaurantShortInfo
+import com.onetoucheasy.restauranteofertas.repository.offerMock3
 import com.onetoucheasy.restauranteofertas.repository.remote.response.Offer
-import com.onetoucheasy.restauranteofertas.ui.scaffolds.offerMock3
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 

@@ -6,8 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.onetoucheasy.restauranteofertas.repository.Repository
 import com.onetoucheasy.restauranteofertas.repository.local.model.LocalOffer
 import com.onetoucheasy.restauranteofertas.repository.local.model.LocalRestaurant
+import com.onetoucheasy.restauranteofertas.repository.offerMock4
 import com.onetoucheasy.restauranteofertas.repository.remote.response.Offer
-import com.onetoucheasy.restauranteofertas.ui.scaffolds.offerMock4
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

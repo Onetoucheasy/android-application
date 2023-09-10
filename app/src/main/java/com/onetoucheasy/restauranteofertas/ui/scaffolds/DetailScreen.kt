@@ -42,6 +42,7 @@ import coil.compose.AsyncImage
 import com.onetoucheasy.restauranteofertas.R
 import com.onetoucheasy.restauranteofertas.repository.local.model.LocalOffer
 import com.onetoucheasy.restauranteofertas.repository.local.model.LocalRestaurantShortInfo
+import com.onetoucheasy.restauranteofertas.repository.offerMock4
 import com.onetoucheasy.restauranteofertas.repository.remote.response.Offer
 import com.onetoucheasy.restauranteofertas.ui.QRCodeGenerator
 import com.onetoucheasy.restauranteofertas.ui.viewModels.MainScreenViewModel
