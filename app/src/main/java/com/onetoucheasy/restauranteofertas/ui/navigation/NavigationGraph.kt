@@ -64,11 +64,13 @@ fun NavigationGraph(loginViewModel: LoginViewModel, signUpViewModel: SignUpViewM
             }
         )
         ) {
-            Log.d("Tag","NavigationGraph > NavHost > composable > Screens.DetailScreen.route\nARG_OFFER_ID: $ARG_OFFER_ID")
             val id = it.arguments?.getString(Screens.DetailScreen.ARG_OFFER_ID)
             if (id != null) {
-                DetailScreen(viewModel = mainViewModel, offerId = id)
-                Log.d("Tag","NavigationGraph > NavHost > composable > Screens.DetailScreen.route\nid != null, ARG_OFFER_ID: $ARG_OFFER_ID\nid: $id")
+                DetailScreen(
+                    viewModel = mainViewModel,
+                    offerId = id,
+                    onBackClick = { navController.navigate(Screens.MainScreen.route)}
+                )
             } else {
                 Log.d("Tag","id == null")
             }
@@ -80,11 +82,13 @@ fun NavigationGraph(loginViewModel: LoginViewModel, signUpViewModel: SignUpViewM
                 }
             )
         ) {
-            Log.d("Tag","NavigationGraph > NavHost > composable > Screens.RestaurantScreen.route")
             val id = it.arguments?.getString(Screens.RestaurantScreen.ARG_RESTAURANT_ID)
             if (id != null) {
-                RestaurantScreen(viewModel = mainViewModel, id = id)
-                Log.d("Tag","NavigationGraph > NavHost > composable > Screens.RestaurantScreen.route\nid != null, ARG_OFFER_ID: $ARG_RESTAURANT_ID\nid: $id")
+                RestaurantScreen(
+                    viewModel = mainViewModel,
+                    id = id,
+                    onBackClick = { navController.navigate(Screens.MainScreen.route)}
+                )
             } else {
                 Log.d("Tag","id == null")
             }

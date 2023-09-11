@@ -24,4 +24,6 @@
     <string name="sign_up_login_button">Registrarme</string>
 
     <string name="main_view_search_bar_hint">Busca un artículo o un establecimiento...</string>
+
+    <string name="back">Atrás</string>
 </resources>

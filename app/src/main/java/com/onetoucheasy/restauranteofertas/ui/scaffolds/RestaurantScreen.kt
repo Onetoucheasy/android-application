@@ -38,10 +38,15 @@ import coil.compose.AsyncImage
 import com.onetoucheasy.restauranteofertas.R
 import com.onetoucheasy.restauranteofertas.repository.local.model.LocalRestaurant
 import com.onetoucheasy.restauranteofertas.repository.localRestaurantMock1
+import com.onetoucheasy.restauranteofertas.ui.components.TopBar
 import com.onetoucheasy.restauranteofertas.ui.viewModels.MainScreenViewModel
 
 @Composable
-fun RestaurantScreen (viewModel: MainScreenViewModel, id: String) {
+fun RestaurantScreen (
+    viewModel: MainScreenViewModel,
+    id: String,
+    onBackClick: (Unit) -> Unit = { _ -> }
+) {
     val restaurantState by viewModel.stateRestaurants.collectAsState()
     val restaurant = restaurantState.find { it.id == id }
     val telephoneMock: String = "Tel: +34.123.456.789"
@@ -53,6 +58,7 @@ fun RestaurantScreen (viewModel: MainScreenViewModel, id: String) {
     if (restaurant != null) {
         RestaurantScreenContent(
             restaurant = restaurant,
+            onBackClick = onBackClick,
             telephone = telephoneMock,
             website = websiteMock
         )
@@ -62,6 +68,7 @@ fun RestaurantScreen (viewModel: MainScreenViewModel, id: String) {
 @Composable
 fun RestaurantScreenContent (
     restaurant: LocalRestaurant,
+    onBackClick: (Unit) -> Unit = { _ -> },
     telephone: String,
     website: String
 ) {
@@ -69,13 +76,7 @@ fun RestaurantScreenContent (
     ) { it ->
         LazyColumn(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp), contentPadding = it) {
             item {
-                Text(
-                    text = "Restaurante", // tested, pass
-                    style = MaterialTheme.typography.headlineLarge,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
-                )
+                TopBar(onBackClick = onBackClick)
             }
             item {
                 DetailRestaurantItem(

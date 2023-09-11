@@ -43,11 +43,16 @@ import com.onetoucheasy.restauranteofertas.R
 import com.onetoucheasy.restauranteofertas.repository.offerMock11
 import com.onetoucheasy.restauranteofertas.repository.remote.response.Offer
 import com.onetoucheasy.restauranteofertas.ui.QRCodeGenerator
+import com.onetoucheasy.restauranteofertas.ui.components.TopBar
 import com.onetoucheasy.restauranteofertas.ui.viewModels.MainScreenViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun DetailScreen (viewModel: MainScreenViewModel, offerId: String) {
+fun DetailScreen (
+    viewModel: MainScreenViewModel,
+    offerId: String,
+    onBackClick: (Unit) -> Unit = { _ -> }
+) {
     val restaurantState by viewModel.stateRestaurants.collectAsState()
     val offer = restaurantState.find { restaurant ->
         restaurant.offers.any { offer -> offer.id == offerId }
@@ -58,26 +63,24 @@ fun DetailScreen (viewModel: MainScreenViewModel, offerId: String) {
         val test = viewModel.getOfferById(offerId) // alternate method to fetch desired offerWithId
     }
     if (offer != null) {
-        DetailScreenContent(offer = offer) // try detailState too
+        DetailScreenContent(
+            offer = offer,
+            onBackClick = onBackClick
+        )
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailScreenContent(
-    offer: Offer
+    offer: Offer,
+    onBackClick: (Unit) -> Unit
 ){
     Scaffold(
     ) { it ->
         LazyColumn(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp), contentPadding = it) {
             item {
-                Text(
-                    text = "Oferta", // tested, pass
-                    style = MaterialTheme.typography.headlineLarge,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
-                )
+                TopBar(onBackClick = onBackClick)
             }
             item {
                 DetailOfferItem(offer = offer) // show full detail item card
@@ -104,8 +107,17 @@ fun DetailOfferItem(offer: Offer, modifier: Modifier = Modifier) {
                 .padding(12.dp)
             )
         }
-//        Text(text = offer.offerName.toString(), style = MaterialTheme.typography.headlineSmall, modifier = Modifier.padding(8.dp))
-        Text(text = "De ${offer.startTime.substringAfter("T").substringBefore(":00Z")} a ${offer.endTime.substringAfter("T").substringBefore(":00Z")}", style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(8.dp))
+        Text(
+            text = "Restaurant Placeholder",
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier
+                .padding(8.dp)
+        )
+        Text(
+            text = "${offer.startTime.substringAfter("T").substringBefore(":00Z")} hs a ${offer.endTime.substringAfter("T").substringBefore(":00Z")} hs",
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier.padding(8.dp)
+        )
         AsyncImage(
             model = offer.image,
             contentDescription = offer.description,
@@ -117,12 +129,19 @@ fun DetailOfferItem(offer: Offer, modifier: Modifier = Modifier) {
                 .weight(1f),
             contentScale = ContentScale.Crop
         )
-        Text(text = offer.description.toString(), style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(8.dp))
+        Text(
+            text = offer.description.toString(),
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier
+                .padding(8.dp)
+                .align(Alignment.CenterHorizontally)
+        )
         QRCodeGenerator(
             data = offer.id,
             modifier = Modifier
                 .width(200.dp)
                 .height(200.dp)
+                .padding(bottom = 9.dp)
                 .align(Alignment.CenterHorizontally)
         )
     }
@@ -158,11 +177,13 @@ fun ReviewSection(modifier: Modifier = Modifier) {
     ) {
         Text(text = "Reseñas", style = MaterialTheme.typography.headlineSmall, modifier = Modifier.padding(8.dp))
         Text(text = "¡Muy buena!", style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(8.dp))
+        Text(text = "Cenamos en \"Tapas Bar\" anoche y quedamos completamente encantados. Desde el momento en que entramos, el ambiente fue acogedor, con suaves melodías de jazz llenando el espacio. El menú fue una deliciosa fusión de clásico y contemporáneo, y cada plato demostraba la destreza del chef. El servicio fue impecable, haciendo nuestra noche verdaderamente inolvidable. ¡Altamente recomendado!", style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(8.dp))
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun DetailScreenPreview() {
-    DetailScreenContent(offerMock11)
+    val onBackClick: (Unit) -> Unit = {}
+    DetailScreenContent(offerMock11, onBackClick = onBackClick)
 }

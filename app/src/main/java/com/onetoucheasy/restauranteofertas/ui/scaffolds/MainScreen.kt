@@ -181,8 +181,7 @@ fun OfferTabSection(
 {
     if(restaurants.isNotEmpty()){
         LazyColumn(
-            modifier = Modifier,
-//                .background(Color.Red), // todo: remove after testing
+            modifier = Modifier.padding(top = 16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             items(restaurants) { restaurant ->
@@ -195,7 +194,6 @@ fun OfferTabSection(
                 ) {
                     var offersPack = restaurant.offers
                     items(offersPack, key = { it.hashCode()}) {
-//                        Log.d("Tag","   offers.count() ${restaurant.offers.count()}")
                         OfferItem(it, onOfferClick = onOfferClick)
                     }
                 }
@@ -212,13 +210,11 @@ fun OfferItem(offer: Offer, modifier: Modifier = Modifier, onOfferClick: (String
         modifier = modifier
 //            .background(Color.Blue) // todo: remove after debugging
 //            .fillMaxWidth()
-            .width(300.dp)
+            .width(340.dp)
             .height(200.dp)
             .padding(10.dp)
             .shadow(
                 elevation = 10.dp,
-                spotColor = Color(0x40000000),
-                ambientColor = Color(0x40000000)
             )
             .clickable {
                 Log.d("Tag","⭐️ OfferItem > ElevatedCard > click > \noffer.name: ${offer.offerName}\n${offer.id}")

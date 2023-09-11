@@ -23,5 +23,5 @@
     <string name="sign_up_login_button">Sign Up</string>
     <string name="main_view_search_bar_hint">Search for a dish or restaurant...</string>
 
-
+    <string name="back">Back</string>
 </resources>
