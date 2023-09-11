@@ -30,6 +30,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -106,8 +107,11 @@ fun DetailRestaurantItem(
             containerColor = Color(0xFFFFF9E8)
         )
     ) {
-        Text(text = restaurant.name.toString(), style = MaterialTheme.typography.headlineSmall, modifier = Modifier
-            .padding(8.dp)
+        Text(
+            text = restaurant.name.toString(),
+            style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
+            modifier = Modifier
+                .padding(8.dp)
 //            .weight(1f)
         )
         Text(text = "Horario: 12:00 a 23:00", style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(8.dp))

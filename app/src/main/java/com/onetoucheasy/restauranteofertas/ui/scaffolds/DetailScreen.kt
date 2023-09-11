@@ -2,6 +2,8 @@ package com.onetoucheasy.restauranteofertas.ui.scaffolds
 
 import android.annotation.SuppressLint
 import android.util.Log
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -9,13 +11,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredHeightIn
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
@@ -35,9 +36,9 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.min
 import coil.compose.AsyncImage
 import com.onetoucheasy.restauranteofertas.R
 import com.onetoucheasy.restauranteofertas.repository.offerMock11
@@ -78,7 +79,11 @@ fun DetailScreenContent(
 ){
     Scaffold(
     ) { it ->
-        LazyColumn(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp), contentPadding = it) {
+        LazyColumn(
+            Modifier.padding(8.dp),
+            verticalArrangement = Arrangement.spacedBy(9.dp),
+            contentPadding = it
+        ) {
             item {
                 TopBar(onBackClick = onBackClick)
             }
@@ -92,24 +97,43 @@ fun DetailScreenContent(
 @Composable
 fun DetailOfferItem(offer: Offer, modifier: Modifier = Modifier) {
     Card(
-        modifier = modifier
+        Modifier
+            .shadow(
+                elevation = 6.dp,
+                spotColor = Color(0x40000000),
+                ambientColor = Color(0x40000000)
+            )
+            .border(
+                width = 0.2.dp,
+                color = Color(0xFF383737),
+                shape = RoundedCornerShape(size = 8.dp)
+            )
             .fillMaxWidth()
-//            .height(750.dp),
-//        .fillMaxHeight(), // image doesn't appear using this
-            .requiredHeightIn(min(200.dp, 200.dp), max = 650.dp),
+            .height(650.dp)
+            .background(
+                color = Color.White,//Color(0xFFFFFFFF),
+                shape = RoundedCornerShape(size = 8.dp)
+            ),
         colors = CardDefaults.cardColors(
-            containerColor = Color(0xFFFFF9E8))
+            containerColor = Color(0x00000000))
     ) {
-        Row(modifier = Modifier) {
-            Text(text = offer.offerName.toString(), style = MaterialTheme.typography.headlineSmall, modifier = Modifier.padding(8.dp).weight(1f))
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(6.dp)
+        ) {
+            Text(
+                text = offer.offerName.toString(),
+                style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
+                modifier = Modifier
+                    .padding(top = 9.dp)
+                    .weight(0.1f))
             FavoriteHeart(modifier = Modifier
-                .align(Alignment.Bottom)
-                .padding(12.dp)
+                .padding(end = 12.dp)
             )
         }
         Text(
             text = "Restaurant Placeholder",
-            style = MaterialTheme.typography.bodyLarge,
+            style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
             modifier = Modifier
                 .padding(8.dp)
         )
@@ -149,19 +173,15 @@ fun DetailOfferItem(offer: Offer, modifier: Modifier = Modifier) {
 
 @Composable
 fun FavoriteHeart(modifier: Modifier = Modifier) {
-    Row (
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.clickable {
-            Log.d("Tag","Favorite clicked!")
-        }
-    ) {
-        Icon(
-            imageVector = Icons.Default.Favorite,
-            contentDescription = "Favorite",
-//            tint = if (hero.favorite) Color.Yellow else Color.LightGray,
-            modifier = Modifier.size(32.dp)
-        )
-    }
+    Icon(
+        imageVector = Icons.Default.FavoriteBorder,
+        contentDescription = "Favorite",
+        modifier = Modifier
+            .size(32.dp)
+            .clickable {
+                Log.d("Tag","Favorite clicked!")
+            }
+    )
 }
 @Composable
 fun ReviewSection(modifier: Modifier = Modifier) {

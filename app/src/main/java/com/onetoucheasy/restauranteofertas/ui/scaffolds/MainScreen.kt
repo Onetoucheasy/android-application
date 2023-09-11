@@ -61,6 +61,7 @@ import com.onetoucheasy.restauranteofertas.repository.localOfferMock1
 import com.onetoucheasy.restauranteofertas.repository.localOfferMock2
 import com.onetoucheasy.restauranteofertas.repository.offerMock11
 import com.onetoucheasy.restauranteofertas.repository.offerMock12
+import androidx.compose.runtime.Composable
 
 @Composable
 fun MainScreen(
@@ -265,7 +266,7 @@ fun OfferItem(offer: Offer, modifier: Modifier = Modifier, onOfferClick: (String
             modifier = Modifier
                 .padding(start = 20.dp, top= 20.dp))
         Text(
-            text = "De ${offer.startTime.substringAfter("T").substringBefore(":00Z")} a ${offer.endTime.substringAfter("T").substringBefore(":00Z")}", // TODO: Add to Strings Resources
+            text = "${offer.startTime.substringAfter("T").substringBefore(":00Z")} hs a ${offer.endTime.substringAfter("T").substringBefore(":00Z")} hs", // TODO: Add to Strings Resources
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier
                 .padding(start = 20.dp, bottom = 20.dp, top = 10.dp))
