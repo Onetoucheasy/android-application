@@ -11,7 +11,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 open class BaseNetworkMockTest {
 
-    private lateinit var api: OneTouchApi
+    lateinit var api: OneTouchApi
     private lateinit var mockWebServer: MockWebServer
     private val moshi = Moshi.Builder()
         .addLast(KotlinJsonAdapterFactory())
