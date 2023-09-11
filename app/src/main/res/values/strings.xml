@@ -24,4 +24,6 @@
     <string name="main_view_search_bar_hint">Search for a dish or restaurant...</string>
 
     <string name="back">Back</string>
+    <string name="leave_review">Leave your review</string>
+    <string name="open_table">Open table</string>
 </resources>

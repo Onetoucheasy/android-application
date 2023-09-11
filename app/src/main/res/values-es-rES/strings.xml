@@ -26,4 +26,6 @@
     <string name="main_view_search_bar_hint">Busca un artículo o un establecimiento...</string>
 
     <string name="back">Atrás</string>
+    <string name="leave_review">Deja tu reseña</string>
+    <string name="open_table">Open table</string>
 </resources>

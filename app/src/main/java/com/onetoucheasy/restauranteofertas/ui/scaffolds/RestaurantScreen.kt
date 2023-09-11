@@ -74,7 +74,7 @@ fun RestaurantScreenContent (
     website: String
 ) {
     Scaffold(
-    ) { it ->
+    ) {
         LazyColumn(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp), contentPadding = it) {
             item {
                 TopBar(onBackClick = onBackClick)
