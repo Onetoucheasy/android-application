@@ -1,5 +1,6 @@
 package com.onetoucheasy.restauranteofertas.repository
 
+import com.auth0.android.jwt.JWT
 import com.onetoucheasy.restauranteofertas.repository.local.model.LocalOffer
 import com.onetoucheasy.restauranteofertas.repository.local.model.LocalRestaurant
 import com.onetoucheasy.restauranteofertas.repository.mappers.RemoteToLocalMapper
@@ -8,6 +9,8 @@ import com.onetoucheasy.restauranteofertas.repository.remote.RemoteDataSource
 import com.onetoucheasy.restauranteofertas.repository.remote.request.SignUpRequestBody
 import com.onetoucheasy.restauranteofertas.repository.remote.response.Offer
 import kotlinx.coroutines.flow.Flow
+import okhttp3.Credentials
+import java.nio.charset.Charset
 import javax.inject.Inject
 
 class DefaultRepository @Inject constructor(

@@ -26,9 +26,6 @@ interface OneTouchApi {
         @Body signUpRequestBody: SignUpRequestBody
     ): JWTResponse
 
-    @GET
-    suspend fun getOffersEndpoint2(@Url url : String): OffersResponse//Response<JsonObject>
-
     @GET("offers")
     suspend fun getOffers(
         @Header("CDS-ApiKey") apiKey: String,
