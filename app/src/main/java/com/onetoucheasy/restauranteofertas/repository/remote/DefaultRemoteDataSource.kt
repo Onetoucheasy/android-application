@@ -57,7 +57,6 @@ class DefaultRemoteDataSource @Inject constructor(
     override suspend fun getRestaurants(): OffersResponse {
         return try {
             val authHeaderValue = "Bearer ${tokenData.accessToken}"
-//            api.getOffersEndpoint2("https://oneapibackend.free.beeceptor.com/api/offers")
 //            api.getOffersEndpoint2("https://us-central1-projectkc-6ca03.cloudfunctions.net/offers")
             api.getRestaurants(this.apiKey, authHeaderValue)
         }catch (exception: Exception){
