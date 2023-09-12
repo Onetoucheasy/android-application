@@ -1,0 +1,157 @@
+{
+  "items": 4,
+  "result": [
+    {
+      "id": "10F1226E-976A-4842-B6BF-500F91424E3D",
+      "picture": "https:\/\/images.pexels.com\/photos\/7317358\/pexels-photo-7317358.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      "name": "Pizza Pera",
+      "type": "Pizzeria",
+      "offers": [
+        {
+          "id": "7B811A1A-02C0-4CA8-B3A2-2463D1F8E542",
+          "startHour": "2023-08-09T13:00:00Z",
+          "description": "Pizzas para todos",
+          "idCurrency": "841F0816-0C97-4820-A3DE-7CFA543B481D",
+          "maximumCustomers": 5,
+          "createdDate": "2023-09-07T11:49:32Z",
+          "title": "3 x 1 en pizzas",
+          "quantityOffered": 9,
+          "image": "https:\/\/images.pexels.com\/photos\/12046657\/pexels-photo-12046657.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+          "price": 0,
+          "minimumCustomers": 1,
+          "idRestaurant": "10F1226E-976A-4842-B6BF-500F91424E3D",
+          "endHour": "2023-08-09T15:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "DDF628A3-916F-4E60-9ADE-64F3BA3B914B",
+      "picture": "https:\/\/www.camarero10.com\/wp-content\/uploads\/2020\/02\/como-distribuir-un-restaurante.jpg",
+      "name": "El Paraíso",
+      "type": "Chino",
+      "offers": [
+        {
+          "id": "806D5C89-676F-4B0D-B4F3-2DE121DE4C69",
+          "startHour": "2023-08-09T13:00:00Z",
+          "description": "Todo al 50% de descuento excepto en bebidas.",
+          "idCurrency": "841F0816-0C97-4820-A3DE-7CFA543B481D",
+          "maximumCustomers": 8,
+          "createdDate": "2023-09-07T11:49:32Z",
+          "title": "Todo al 50% de Descuento",
+          "quantityOffered": 8,
+          "image": "https:\/\/images.pexels.com\/photos\/5595427\/pexels-photo-5595427.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+          "price": 0,
+          "minimumCustomers": 3,
+          "idRestaurant": "DDF628A3-916F-4E60-9ADE-64F3BA3B914B",
+          "endHour": "2023-08-09T15:00:00Z"
+        },
+        {
+          "id": "6C0F45FA-E32B-4B7C-88EE-E01407E8A5C6",
+          "startHour": "2023-08-09T13:00:00Z",
+          "description": "Más arroz, más sabor.",
+          "idCurrency": "841F0816-0C97-4820-A3DE-7CFA543B481D",
+          "maximumCustomers": 3,
+          "createdDate": "2023-09-07T11:49:32Z",
+          "title": "2 por 1 Onigiri",
+          "quantityOffered": 5,
+          "image": "https:\/\/cdn.pixabay.com\/photo\/2022\/10\/13\/17\/52\/onigiri-7519669_1280.jpg",
+          "price": 0,
+          "minimumCustomers": 1,
+          "idRestaurant": "DDF628A3-916F-4E60-9ADE-64F3BA3B914B",
+          "endHour": "2023-08-09T15:30:00Z"
+        }
+      ]
+    },
+    {
+      "id": "251328B0-1E37-426E-8CC5-0DBB78E3A11C",
+      "picture": "https:\/\/images.pexels.com\/photos\/3421920\/pexels-photo-3421920.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      "name": "Mao Sushi",
+      "type": "Japonés",
+      "offers": [
+        {
+          "id": "40F715A7-5C78-41E4-8804-F9544682D3A1",
+          "startHour": "2023-08-09T13:30:00Z",
+          "description": "Disfruta a tope de la comida.",
+          "idCurrency": "841F0816-0C97-4820-A3DE-7CFA543B481D",
+          "maximumCustomers": 1,
+          "createdDate": "2023-09-07T11:49:32Z",
+          "title": "50% dto en Sushi",
+          "quantityOffered": 9,
+          "image": "https:\/\/images.pexels.com\/photos\/6249501\/pexels-photo-6249501.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+          "price": 0,
+          "minimumCustomers": 1,
+          "idRestaurant": "251328B0-1E37-426E-8CC5-0DBB78E3A11C",
+          "endHour": "2023-08-09T15:40:00Z"
+        },
+        {
+          "id": "3751C41D-E712-43F8-BE3E-9B8BA4A7D139",
+          "startHour": "2023-08-09T13:00:00Z",
+          "description": "Tapa gratis con cualquier bebida.",
+          "idCurrency": "841F0816-0C97-4820-A3DE-7CFA543B481D",
+          "maximumCustomers": 5,
+          "createdDate": "2023-09-07T11:49:32Z",
+          "title": "Tapas a Tope",
+          "quantityOffered": 15,
+          "image": "https:\/\/images.pexels.com\/photos\/14907793\/pexels-photo-14907793.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+          "price": 0,
+          "minimumCustomers": 1,
+          "idRestaurant": "251328B0-1E37-426E-8CC5-0DBB78E3A11C",
+          "endHour": "2023-08-09T17:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "C04C4656-84AC-415A-9BB9-5617D177A1C4",
+      "picture": "https:\/\/images.pexels.com\/photos\/18078297\/pexels-photo-18078297\/free-photo-of-ciudad-calle-barra-urbano.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      "name": "Shushi Bar",
+      "type": "Japonés",
+      "offers": [
+        {
+          "id": "3B31A218-CC0B-43DD-889C-A8CACCB33B05",
+          "startHour": "2023-08-09T13:00:00Z",
+          "description": "Disfruta doble de la comida.",
+          "idCurrency": "841F0816-0C97-4820-A3DE-7CFA543B481D",
+          "maximumCustomers": 6,
+          "createdDate": "2023-09-07T11:49:32Z",
+          "title": "2 por 1 Sushi",
+          "quantityOffered": 4,
+          "image": "https:\/\/www.camarero10.com\/wp-content\/uploads\/2020\/02\/como-distribuir-un-restaurante.jpg",
+          "price": 10,
+          "minimumCustomers": 1,
+          "idRestaurant": "C04C4656-84AC-415A-9BB9-5617D177A1C4",
+          "endHour": "2023-08-09T15:00:00Z"
+        },
+        {
+          "id": "CF1BDCA5-B514-4A71-AE77-492446009296",
+          "startHour": "2023-08-09T13:00:00Z",
+          "description": "Disfruta muchoooo de la comida.",
+          "idCurrency": "841F0816-0C97-4820-A3DE-7CFA543B481D",
+          "maximumCustomers": 6,
+          "createdDate": "2023-09-07T11:49:32Z",
+          "title": "3 por 1 Ramen",
+          "quantityOffered": 15,
+          "image": "https:\/\/www.restaurantelua.com\/wp-content\/uploads\/2020\/11\/01_slider_restaurante_movil.jpg",
+          "price": 104,
+          "minimumCustomers": 3,
+          "idRestaurant": "C04C4656-84AC-415A-9BB9-5617D177A1C4",
+          "endHour": "2023-08-09T15:30:00Z"
+        },
+        {
+          "id": "C482004D-CF95-4A83-A187-C5DE62F1DFBF",
+          "startHour": "2023-08-09T13:00:00Z",
+          "description": "Disfruta doble la comida.",
+          "idCurrency": "841F0816-0C97-4820-A3DE-7CFA543B481D",
+          "maximumCustomers": 2,
+          "createdDate": "2023-09-07T11:49:32Z",
+          "title": "2 por 1 Sushi",
+          "quantityOffered": 10,
+          "image": "https:\/\/www.hotelaiguablava.com\/media\/restaurante\/espacios\/restaurante\/01a-restaurante-hotel-aigua-blava.jpg",
+          "price": 42,
+          "minimumCustomers": 1,
+          "idRestaurant": "C04C4656-84AC-415A-9BB9-5617D177A1C4",
+          "endHour": "2023-08-09T15:00:00Z"
+        }
+      ]
+    }
+  ]
+}

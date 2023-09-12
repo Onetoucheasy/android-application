@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">RestauranteOfertas</string>
+
+    <string name="form_name_hint">Nombre</string>
+    <string name="form_surname_hint">Apellido</string>
+    <string name="form_email_hint">Correo electrónico</string>
+    <string name="form_password_hint">Contraseña</string>
+    <string name="form_repeat_password_hint">Repita Contraseña</string>
+    <string name="form_phone_number_hint">Teléfono</string>
+
+    <string name="login_customer_access">Acceso Clientes</string>
+    <string name="login_login_button">Acceder</string>
+    <string name="login_no_account_customer">No tengo cuenta</string>
+    <string name="login_no_account_company">Alta profesionales</string>
+    <string name="login_background_image_description">Fondo de la pantalla de acceso.</string>
+    <string name="login_password_hint">Contraseña</string>
+    <string name="login_access">Acceso</string>
+    <string name="login_authentication_error">Error: Credenciales no válidas, intentelo de nuevo.</string>
+
+    <string name="sign_up_company">Registro Profesionales</string>
+    <string name="sign_up_customer">Registro Clientes</string>
+    <string name="sign_up_already_have_account">Ya estoy registrado :)</string>
+    <string name="sign_up_login_button">Registrarme</string>
+
+    <string name="main_view_search_bar_hint">Busca un artículo o un establecimiento...</string>
+
+    <string name="back">Atrás</string>
+    <string name="leave_review">Deja tu reseña</string>
+    <string name="open_table">Open table</string>
+</resources>
