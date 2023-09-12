@@ -157,7 +157,9 @@ fun TabSection( // Green
         TabRow(
             selectedTabIndex = tabIndex,
             containerColor = Color(0xFFFFF9E8),
-            contentColor = Color.Black)
+            contentColor = Color.Black
+//        indicator = modifier. // todo: change tab color to yellow
+        )
         {
             tabs.forEachIndexed { index, title ->
                 Tab(text = { Text(title) },
@@ -211,14 +213,14 @@ fun OfferItem(offer: Offer, modifier: Modifier = Modifier, onOfferClick: (String
         modifier = modifier
 //            .background(Color.Blue) // todo: remove after debugging
 //            .fillMaxWidth()
-            .width(340.dp)
+            .width(300.dp)
             .height(200.dp)
             .padding(10.dp)
             .shadow(
                 elevation = 10.dp,
             )
             .clickable {
-                Log.d("Tag","⭐️ OfferItem > ElevatedCard > click > \noffer.name: ${offer.offerName}\n${offer.id}")
+                Log.d("Tag","OfferItem > ElevatedCard > click > \noffer.name: ${offer.offerName}\n${offer.id}")
                 onOfferClick(offer.id)
             },
         shape = CardDefaults.elevatedShape,
