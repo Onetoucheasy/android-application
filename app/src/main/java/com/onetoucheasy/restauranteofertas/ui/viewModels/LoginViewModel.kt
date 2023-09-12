@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.auth0.android.jwt.JWT
 import com.onetoucheasy.restauranteofertas.repository.Repository
+import com.onetoucheasy.restauranteofertas.repository.remote.response.JWTResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -39,10 +40,11 @@ class LoginViewModel @Inject constructor(
             withContext(Dispatchers.IO) {
                 try {
                     val jwt = repository.performLogin(headerAuthorizationData)
+
                     val decodedJwt = jwt?.let { response ->
                         JWT(response.accessToken).getClaim("isCompany").asBoolean()
                     }
-                    if(decodedJwt == true){
+                    if(decodedJwt == true){//decodedJwt == true){
                         _loginType.postValue(LoginType.COMPANY)
                     }else{
                         _loginType.postValue(LoginType.USER)
@@ -57,4 +59,6 @@ class LoginViewModel @Inject constructor(
         }
     }
 }
+
+
 

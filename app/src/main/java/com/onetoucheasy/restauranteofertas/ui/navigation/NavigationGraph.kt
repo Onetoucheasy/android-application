@@ -43,20 +43,6 @@ fun NavigationGraph(loginViewModel: LoginViewModel, signUpViewModel: SignUpViewM
             )
             Log.d("Tag","NavigationGraph > NavHost > composable > Screens.MainScreen.route")
         }
-        // region Previous Screens.MainScreen
-//        composable(Screens.MainScreen.route, arguments = listOf(
-//            navArgument(Screens.MainScreen.ARG_USER_TYPE){
-//                this.type = NavType.StringType
-//            }
-//        )){
-//            val userType = it.arguments?.getString(Screens.MainScreen.ARG_USER_TYPE)
-//            if(userType != null){
-//                MainScreen(viewModel = mainViewModel, userType)
-//            }else{
-//                navController.navigateUp()
-//            }
-//        }
-        //endregion
         composable(Screens.DetailScreen.route,
         arguments = listOf(
             navArgument(Screens.DetailScreen.ARG_OFFER_ID) {

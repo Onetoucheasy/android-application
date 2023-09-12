@@ -4,6 +4,7 @@ import com.onetoucheasy.restauranteofertas.repository.local.model.LocalOffer
 import com.onetoucheasy.restauranteofertas.repository.local.model.LocalRestaurant
 import com.onetoucheasy.restauranteofertas.repository.local.model.LocalRestaurantShortInfo
 import com.onetoucheasy.restauranteofertas.repository.remote.response.Offer
+import com.onetoucheasy.restauranteofertas.repository.remote.response.Restaurant
 
 var offerMock11 = Offer(
     id = "b2e21a5e-958f-4ab8-84fe-7d78b63b9101",
@@ -129,6 +130,17 @@ var localOfferMock2 = LocalOffer("2",
     "20:30",
     ""
 )
+var restaurant1 = Restaurant("1",
+"",
+"Mao Sushi",
+"",
+listOf(Offer("1", "2x1","","","","","")))
+
+var restaurant2 = Restaurant("2",
+    "",
+    "Pizzeria di Carlo",
+    "",
+    listOf(Offer("2", "3x2","3x2 de 22:00 a 23:00","","22:00","23:00","")))
 
 var localRestaurantListMock = listOf<LocalRestaurant>(localRestaurantMock1, localRestaurantMock2, localRestaurantMock3)
 var offerListMock = listOf<Offer>(offerMock11, offerMock12)
