@@ -17,12 +17,6 @@ class RemoteToLocalMapper @Inject constructor(){
         val localOffers =  getOfferResponse.restaurants.map { mapGetRestaurantResponseToLocalOfferList(it) }
         return localOffers.asFlow()
     }
-
-    fun mapRestaurantsResponseToLocalRestaurants(getRestaurantResponse: OffersResponse): Flow<List<LocalRestaurant>> {
-        val localRestaurants =  getRestaurantResponse.restaurants.map { mapGetRestaurantResponseToLocalRestaurantList(it) }
-        return localRestaurants.asFlow()
-    }
-
     private fun mapGetRestaurantResponseToLocalOfferList(restaurant: Restaurant): List<LocalOffer> {
         return restaurant.offers.map { mapGetOffers(it, restaurant)}
     }
@@ -51,18 +45,6 @@ class RemoteToLocalMapper @Inject constructor(){
             offer.startTime,
             offer.endTime,
             offer.postTime)
-    }
-
-    fun mapLocalOfferToOffers(localOffer: LocalOffer): Offer {
-        return Offer(
-            id = localOffer.id,
-            offerName = localOffer.offerName,
-            description = localOffer.description,
-            image = localOffer.image,
-            startTime = localOffer.startTime,
-            endTime = localOffer.endTime,
-            postTime = localOffer.postTime
-        )
     }
 
     fun mapRestaurantsResponseToLocalRestaurantsSingleList(getRestaurantResponse: OffersResponse): Flow<List<LocalRestaurant>> {

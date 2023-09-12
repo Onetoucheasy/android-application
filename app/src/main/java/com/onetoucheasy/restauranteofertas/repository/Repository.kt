@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.Flow
 interface Repository {
     suspend fun performLogin(loginData: String): JWTResponse?
     suspend fun performSignUp(signUpRequestBody: SignUpRequestBody): JWTResponse?
-    //suspend fun getOffers(): OffersResponse
     suspend fun getOfferList(): Flow<List<LocalOffer>>
     suspend fun getOfferById(offerId: String): Offer
     suspend fun getRestaurantList(): Flow<List<LocalRestaurant>>

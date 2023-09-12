@@ -51,9 +51,3 @@ fun BackButton(onBackClick: (Unit) -> (Unit) = {}) {
 fun TopBar_Preview() {
     TopBarContent()
 }
-
-@Preview
-@Composable
-fun BackButton_Preview() {
-    BackButton()
-}

@@ -19,7 +19,7 @@ class DetailScreenContentTest {
 
             // Given
             setContent {
-                DetailScreenContent(offer = localRestaurantMock1.offers.first(), onBackClick = { })
+                DetailScreenContent(offer = localRestaurantMock1.offers.first(), localRestaurantMock1, onBackClick = { })
             }
 
             // When
