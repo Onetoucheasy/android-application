@@ -13,7 +13,7 @@ sealed class Screens(val route: String) {
             return SCREEN3_BASE_ROUTE_TO_FORMAT.format(userType)
         }
     }
-    object DetailScreen: Screens(SCREEN4_BASE_ROUTE_TEMPLATE) { // DetailScreen/offerId
+    object DetailScreen: Screens(SCREEN4_BASE_ROUTE_TEMPLATE) {
         const val ARG_OFFER_ID = "offerId"
         fun createRouteWithArgs(id: String): String {
             return SCREEN4_BASE_ROUTE_TO_FORMAT.format(id)

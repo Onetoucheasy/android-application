@@ -1,29 +1,20 @@
 package com.onetoucheasy.restauranteofertas.ui
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.auth0.android.jwt.JWT
 import com.onetoucheasy.restauranteofertas.repository.Repository
-import com.onetoucheasy.restauranteofertas.repository.remote.response.JWTResponse
-import com.onetoucheasy.restauranteofertas.ui.viewModels.LoginState
 import com.onetoucheasy.restauranteofertas.ui.viewModels.LoginViewModel
-import com.onetoucheasy.restauranteofertas.utils.generateBoolData
-import com.onetoucheasy.restauranteofertas.utils.generateClaims
 import com.onetoucheasy.restauranteofertas.utils.generateJWTResponse
-import io.mockk.Runs
 import io.mockk.coEvery
-import io.mockk.just
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
-import okhttp3.Credentials
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import java.nio.charset.Charset
 
 class LoginViewModelTest {
 

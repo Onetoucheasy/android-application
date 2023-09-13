@@ -30,7 +30,6 @@ fun TopBarContent(onBackClick: (Unit) -> Unit = {}) {
         },
         navigationIcon = { BackButton(onBackClick) },
         modifier = Modifier.testTag("extended_top_bar")
-//            .padding(bottom = 6.dp)
     )
 }
 

@@ -69,7 +69,7 @@ fun DetailScreen (
 
     LaunchedEffect(Unit){
         Log.d("Tag", "🎉 DetailScreen > offer id: $offerId")
-        val test = viewModel.getOfferById(offerId) // alternate method to fetch desired offerWithId
+        val test = viewModel.getOfferById(offerId)
     }
     if (offer != null) {
         if (restaurant != null) {
@@ -94,7 +94,6 @@ fun DetailScreenContent(
         LazyColumn(
             Modifier
                 .padding(9.dp),
-//                .background(color = Color.White),
             verticalArrangement = Arrangement.spacedBy(9.dp),
             contentPadding = it
         ) {
@@ -141,7 +140,7 @@ fun DetailOfferItem(
             .fillMaxWidth()
             .height(650.dp)
             .background(
-                color = Color.White,//Color(0xFFFFFFFF),
+                color = Color.White,
                 shape = RoundedCornerShape(size = 8.dp)
             ),
         colors = CardDefaults.cardColors(
@@ -247,13 +246,10 @@ fun ReviewSection(modifier: Modifier = Modifier) {
                 shape = RoundedCornerShape(size = 12.dp)
             )
             .fillMaxWidth()
-//            .fillMaxHeight()
             .heightIn(100.dp, 500.dp)
             .wrapContentHeight(Alignment.Top)
-//            .verticalScroll()
-//            .height(450.dp)
             .background(
-                color = Color.White,//Color(0xFFFFFFFF),
+                color = Color.White,
                 shape = RoundedCornerShape(size = 8.dp)
             ),
         colors = CardDefaults.cardColors(

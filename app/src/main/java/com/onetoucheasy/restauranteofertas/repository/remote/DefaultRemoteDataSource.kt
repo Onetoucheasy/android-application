@@ -1,6 +1,7 @@
 package com.onetoucheasy.restauranteofertas.repository.remote
 
 import android.util.Log
+import com.onetoucheasy.restauranteofertas.BuildConfig.API_KEY
 import com.onetoucheasy.restauranteofertas.repository.remote.request.SignUpRequestBody
 import com.onetoucheasy.restauranteofertas.repository.remote.response.JWTResponse
 import com.onetoucheasy.restauranteofertas.repository.remote.response.Offer
@@ -13,7 +14,7 @@ class DefaultRemoteDataSource @Inject constructor(
     private val api: OneTouchApi
 ) : RemoteDataSource{
     private lateinit var tokenData: JWTResponse
-    private val apiKey: String = "uciEfKBulHfMpavLobwGaIE0XwZBaCqBQuSRQu4YaZiNWGyON1XNlG7djMJ9Ogt5"
+    private val apiKey: String = API_KEY
 
     override suspend fun performLogin(loginData: String): JWTResponse? {
         return try {

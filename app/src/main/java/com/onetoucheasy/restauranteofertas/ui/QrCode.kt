@@ -51,7 +51,6 @@ fun QRCodePreview() {
     Box(
         modifier = Modifier
             .size(200.dp)
-//            .background(Color.Gray)
     ) {
         QRCodeGenerator(data = "https://www.example.com")
     }

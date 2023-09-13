@@ -113,15 +113,6 @@ fun LoginScreenContent(loginState: LoginState, onRegisterClicked: () -> (Unit),o
                 modifier = Modifier.fillMaxSize(),
                contentScale = ContentScale.FillBounds
                )
-//           Text(
-//               text = stringResource(id = R.string.login_access),
-//               modifier = Modifier
-//                   .width(230.dp)
-//                   .padding(start = 70.dp, top = 70.dp),
-//               maxLines = 2,
-//               style = MaterialTheme.typography.headlineLarge
-//           )
-
            Column(modifier = Modifier.align(Alignment.Center)) {
                Text(text = stringResource(id = R.string.login_authentication_error),
                modifier = Modifier
@@ -140,7 +131,6 @@ fun LoginScreenContent(loginState: LoginState, onRegisterClicked: () -> (Unit),o
                    email = it
                    invalidCredentials = false
                    emailValid = it.contains("@")
-                   //emailValid = true
                },
                    screenWidth = width,
                    isInvalidCredential = invalidCredentials
@@ -151,9 +141,7 @@ fun LoginScreenContent(loginState: LoginState, onRegisterClicked: () -> (Unit),o
                FormField(text = password, leadingIcon = Icons.Default.Lock, trailingIcon = Icons.Default.Warning, isPassword = true, onValueChange = {
                    password = it
                    invalidCredentials = false
-                   //  passwordValid = it.length > 8 && it.contains()
                    passwordValid = it.length > 8 //TODO Add RegEx?
-                   //passwordValid = true
                }, screenWidth = width,
                    isInvalidCredential = invalidCredentials
                ){

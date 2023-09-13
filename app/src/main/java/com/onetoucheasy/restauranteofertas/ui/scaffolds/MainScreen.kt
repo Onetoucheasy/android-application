@@ -72,11 +72,10 @@ fun MainScreen(
 ) {
     val offerList: List<Offer> = emptyList()
     val restaurantList by viewModel.stateRestaurants.collectAsState()
-//    val restaurantList = restaurantsSim // mock here, not below
 
     LaunchedEffect(Unit) {
         viewModel.getRestaurants()
-//        viewModel.getOffers() // ⚠️ Error: Expected BEGIN_OBJECT but was BEGIN_ARRAY at path $
+//        viewModel.getOffers() // TODO: use this alternative option if desired
     }
 
     fun onOfferFavClicked(offerID: String) {

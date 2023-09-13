@@ -18,13 +18,6 @@ class FakeRemoteDataSource: RemoteDataSource {
     }
 
     override suspend fun getOfferById(offerId: String): Offer {
-        /*return Offer("1",
-            "2x1",
-            "2x1 en Toda la carta",
-            "",
-            "11:00",
-            "13:00",
-            "10:00")*/
         TODO("Not yet implemented")
     }
     override suspend fun getOffers(): OffersResponse {

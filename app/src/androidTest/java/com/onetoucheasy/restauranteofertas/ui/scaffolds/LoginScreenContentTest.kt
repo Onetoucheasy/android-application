@@ -31,8 +31,6 @@ class LoginScreenContentTest {
 
             //THEN
             composeRule.onNodeWithText("test.com").assertExists()
-            //composeRule.onNodeWithText("Email").assertExists().assertTextEquals("test.com")
-            //composeRule.onNodeWithText("Email").assertExists().assertTextEquals("Email")
         }
     }
 }
